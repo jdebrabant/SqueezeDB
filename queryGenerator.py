@@ -15,7 +15,7 @@ queryJoinSelTemp = "SELECT * FROM TEMPT WHERE SA = SB;\n"
 origDir = "orig/"
 sampleDir = "sample/"
 
-columnBase = "T_"
+columnBase = "c_"
 
 ops = ["<", "<=", ">=", ">"]
 boolops = [" AND ", " OR "] 
@@ -78,6 +78,7 @@ def genSelQuery(k, b, d, tprefix=""):
     return sel
 
 def genQueries(n, k, b, d, j, outDir):
+    outFILE = open('queries.sql', 'w'); 
     for i in range(n):
         index = str(i+1).zfill(len(str(n)))
         if j:
@@ -95,7 +96,7 @@ def genQueries(n, k, b, d, j, outDir):
             pred = querySelWhere + pred
             #outFileName = outDir + "/" + outFileNameBase + index + outFileNameSuff
             outFileName = "queries.sql"
-            with open(outFileName, 'wt') as outFILE:
+            #with open(outFileName, 'wt') as outFILE:
                 outFILE.write(queryBase + pred + querySuff)
         print(queryBase + pred + querySuff)
 

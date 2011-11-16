@@ -1,13 +1,13 @@
 from sys import argv, exit, stderr, stdout
 import getopt, os, os.path, random
 
-outFileNameBase = "qt_"
+outFileNameBase = "query_"
 outFileNameSuff = ".sql"
 
 queryBase = "SELECT * FROM "
 queryJoinLargeBase = "SELECT COUNT(*) FROM "
 queryJoinSampleBase = "CREATE TEMP TABLE TEMPT(SA, SB) AS SELECT A.SAMPLEINDEX,B.SAMPLEINDEX FROM "
-querySelWhere = "%%TABLE%% WHERE ("
+querySelWhere = "table1 WHERE ("
 queryJoinWhere = "%%TABLE1%% A,%%TABLE2%% B WHERE A.T_1 = B.T_1 AND ("
 querySuff = ";\n"
 queryJoinSelTemp = "SELECT * FROM TEMPT WHERE SA = SB;\n"
@@ -93,7 +93,8 @@ def genQueries(n, k, b, d, j, outDir):
         else:
             pred = genSelQuery(k, b, d)
             pred = querySelWhere + pred
-            outFileName = outDir + "/" + outFileNameBase + index + outFileNameSuff
+            #outFileName = outDir + "/" + outFileNameBase + index + outFileNameSuff
+            outFileName = "queries.sql"
             with open(outFileName, 'wt') as outFILE:
                 outFILE.write(queryBase + pred + querySuff)
         print(queryBase + pred + querySuff)

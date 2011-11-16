@@ -97,7 +97,7 @@ def genQueries(n, k, b, d, j, outDir):
             #outFileName = outDir + "/" + outFileNameBase + index + outFileNameSuff
             outFileName = "queries.sql"
             #with open(outFileName, 'wt') as outFILE:
-                outFILE.write(queryBase + pred + querySuff)
+            outFILE.write(queryBase + pred + querySuff)
         print(queryBase + pred + querySuff)
 
 def main():

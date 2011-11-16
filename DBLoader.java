@@ -1,9 +1,16 @@
-
+/********************************************************************************************************
+ - File: DBLoader.java
+ - Author: Justin A. DeBrabant (debrabant@cs.brown.edu)
+ - Usage: java DBLoader 
+ - Description: 
+	Prompts the user for a filename and the database information and will load the table contained in
+	the file into the specified database. The primary key for each tuple is the line number. The format
+	of the table in the file is one tuple per line with columns separated by spaces. 
+ ********************************************************************************************************/ 
 
 import java.util.*;
 import java.sql.*;
 import java.io.*;
-//import util.*;
 
 public class DBLoader
 {
@@ -50,7 +57,6 @@ public class DBLoader
 		
 		System.out.print("Enter table name: ");
 		table = in.next(); 
-	
 		
 		try   // establish database connection and open data file
 		{

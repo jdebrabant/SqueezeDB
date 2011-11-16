@@ -60,7 +60,9 @@ public class DBLoader
 		
 		try   // establish database connection and open data file
 		{
-			conn = DriverManager.getConnection(db_url, user, "");
+			conn = DriverManager.getConnection(db_url, user, ""); 
+			
+			
 			stmt = conn.createStatement();
 						
 			data_in = new BufferedReader(new FileReader(filename)); // open input file
@@ -78,12 +80,19 @@ public class DBLoader
 				}
 				
 				query += ");"; 
-								
-				stmt.executeUpdate(query); 
+				
+				stmt.addBatch(query); // add query to batch update
 				
 				tuple_id++; 
+				
+				if(tuple_id % 1000 == 0) // insert tuples in batches of INSERT_BATCH_SIZE
+				{
+					stmt.executeBatch(); 
+					stmt.clearBatch(); 
+				}
 			}
 			
+			stmt.executeBatch(); // execute last batch 
 		}
 		catch (Exception e) 
 		{

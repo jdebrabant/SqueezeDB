@@ -21,7 +21,7 @@ ops = ["<", "<=", ">=", ">"]
 boolops = [" AND ", " OR "] 
 
 def usage():
-    stderr.write("Usage: {} [-j] -n numQuery -b booleanClauses -k columns -d domainSize outDir\n".format(argv[0]))
+    stderr.write("Usage: {} [-j] -n numQuery -b booleanClauses -k columns -d domainSize outDir\n")
 
 def genJoinQuery(k, b, d):
     sel1 = genSelQuery(k, b, d, "A.")

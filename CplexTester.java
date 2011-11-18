@@ -41,21 +41,21 @@ public class CplexTester
 			
 			// write objective function 
 			out.write(min + " x" + min); 
-			for(int i = min+1; i < max; i++)
+			for(int i = min+1; i <= max; i++)
 			{
 				out.write(" + " + i + " x" + i); 
 			}
 			out.write("\nSubject To \n");
 			
 			out.write("c1: " + "x" + min); 
-			for(int i = min+1; i < max; i++)
+			for(int i = min+1; i <= max; i++)
 			{
 				out.write(" + " + "x" + i); 
 			}
 			out.write(" <= " + ((max - min + 2) * EPSILON) + "\n"); 
 			
 			out.write("Bounds\n"); 
-			for(int i = min; i < max; i++)
+			for(int i = min; i <= max; i++)
 			{
 				out.write("0 <= x" + i + " <= " + (2 * EPSILON) + "\n"); 
 			}

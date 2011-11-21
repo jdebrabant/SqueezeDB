@@ -3,6 +3,7 @@
  - Author: Justin A. DeBrabant (debrabant@cs.brown.edu)
  - Usage: java CplexTester <[max, min]> <output file> <domain min> <domain max> 
  - Description:
+	
  ********************************************************************************************************/ 
 
 import java.util.*; 

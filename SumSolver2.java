@@ -58,6 +58,10 @@ public class SumSolver
 			{
 				double[] val = cplex.getValues(epsilonV);
 				cplex.end();
+				/**
+				 * XXX We should return (also) the optimal value of the
+				 * function, not just the value for the variables.
+				 */
 				return val;
 			} 
 			else 

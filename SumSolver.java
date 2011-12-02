@@ -5,6 +5,11 @@ import ilog.cplex.*;
 
 public class SumSolver 
 {
+	/**
+	 * XXX The returned solution should be multiplied by the size of the
+	 * original (large) database. Or we could pass it as a parameter here
+	 * and do the multiplication in this method.
+	 */
 	public static double[] sumSolver(int min, int max, double epsilon, boolean solveMax)
 	{
 		try 

@@ -10,7 +10,9 @@ public class SumSolver
 	 * original (large) database. Or we could pass it as a parameter here
 	 * and do the multiplication in this method.
 	 */
-	public static double[] sumSolver(int min, int max, double querySelectivity, double[] selectivities, double eta, double epsilon, boolean solveMax)
+	public static double[] sumSolver(int min, int max, double
+			querySelectivity, double[] selectivities, double eta,
+			double epsilon, boolean solveMax)
 	{
 		try 
 		{

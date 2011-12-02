@@ -29,7 +29,7 @@ public class SumSolver
 			double[] coeffs = new double[max - min + 1];
 			for(int i=0; i<max-min+1; i++)
 			{
-				coeffs[i] = (double)(i+1);
+				coeffs[i] = (double)(min+i);
 			}
 			
 			if(solveMax)

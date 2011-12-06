@@ -119,7 +119,7 @@ public class QueryExecuter
 			while(result.next())
 			{
 				k = new Integer(result.getInt("c_1")); 
-				sum += k.intValue(); 
+				//sum += k.intValue(); 
 				
 				// update max and min
 				if(k.intValue() > max)
@@ -155,6 +155,10 @@ public class QueryExecuter
 				query_selectivity += selectivity[i]; 
 			}
 			
+			for(int i = 0; i < (max-min+1); i++)
+			{
+				sum += selectivity[i] * (min+i) * db_size; 
+			}
 			
 			for(int i = 0; i < (max-min+1); i++)
 				System.out.println("selectivity " + i + " = " + selectivity[i] + "\n"); 

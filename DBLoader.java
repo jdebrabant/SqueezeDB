@@ -44,7 +44,7 @@ public class DBLoader
 		System.out.print("Enter the data file: ");
 		filename = in.next(); 
 		
-		db_url = "jdbc:postgresql://";
+		db_url = "jdbc:mysql:://";
 		System.out.print("Enter db server: ");
 		db_url += in.next();
 		db_url += "/";
@@ -61,7 +61,6 @@ public class DBLoader
 		try   // establish database connection and open data file
 		{
 			conn = DriverManager.getConnection(db_url, user, ""); 
-			
 			
 			stmt = conn.createStatement();
 						
@@ -99,4 +98,6 @@ public class DBLoader
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	
 }

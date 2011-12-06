@@ -30,7 +30,7 @@ public class Sampler
 		
 		int [] rows_sampled; 
 		
-		if(args.length != 3)
+		if(args.length != 4)
 		{
 			System.out.println("usage: java Sampler <input file> <output file> <db size> <sample size>");
 			System.exit(1); 

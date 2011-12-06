@@ -50,9 +50,10 @@ public class QueryExecuter
 			{
 				result = stmt.executeQuery(queries.get(i)); 
 				
-				//processResult(result, out); 
+				processResult(result, out); 
 			}
 			
+			out.close(); 
 		}
 		catch(Exception e)
 		{
@@ -64,12 +65,38 @@ public class QueryExecuter
 	
 	public static void processResult(ResultSet result, BufferedWriter result_out)
 	{
+		HashMap<Integer, Integer> frequencies = new HashMap<Integer, Integer>(); 
+		
 		try 
 		{
+			Integer k; 
+			Integer v; 
+			
+			int min = 10000, max = 0; 
+			
 			while(result.next())
 			{
+				k = new Integer(result.getInt("c_1")); 
 				
+				// update max and min
+				if(k.intValue() > max)
+					max = k.intValue(); 
+				else if(k.intValue() < min)
+					min = k.intValue(); 
+				
+				
+				if(frequencies.containsKey(k))  // already in the list
+				{
+					v = frequencies.get(k); 
+					v += 1; 
+				}
+				else
+				{
+					frequencies.put(k, new Integer(1)); 
+				}
 			}
+			
+			result_out.write("(" + min + ", " + max + ")"); 
 		}
 		catch(Exception e)
 		{

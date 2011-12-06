@@ -161,7 +161,14 @@ public class QueryExecuter
 			{	
 				v = frequencies.get(new Integer(i)); 
 				
-				selectivity[index] = v.intValue() / ((double)sample_size); 
+				if(v != null)
+				{
+					selectivity[index] = v.intValue() / ((double)sample_size); 
+				}
+				else
+				{
+					selectivity[index] = 0; 
+				}
 			}
 			
 			for(int i = 0; i < (max-min+1); i++)

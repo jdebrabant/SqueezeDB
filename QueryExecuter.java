@@ -164,6 +164,9 @@ public class QueryExecuter
 			solution1_min = SumSolver.sumSolver(min, max, .01, false); 
 			solution1_max = SumSolver.sumSolver(min, max, .01, true); 
 			
+			solution1_min *= db_size; 
+			solution1_max *= db_size; 
+			
 			result_out.write("\t SumSolver1 confidence interval (" + 
 					  solution1_min.objective_value + ", " + solution1_max.objective_value + ")\n"); 
 			

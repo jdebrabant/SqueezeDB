@@ -128,16 +128,15 @@ public class QueryExecuter
 		CplexSolution solution2_min;
 		CplexSolution solution2_max; 
 
+		Integer k; 
+		Integer v; 
+		
+		int min = 10000, max = 0; 
+		
+		int sum = 0; 
 		
 		try 
-		{
-			Integer k; 
-			Integer v; 
-			
-			int min = 10000, max = 0; 
-			
-			int sum = 0; 
-			
+		{			
 			while(result.next())
 			{
 				k = new Integer(result.getInt("c_1")); 

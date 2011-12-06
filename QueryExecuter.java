@@ -24,6 +24,11 @@ public class QueryExecuter
 		Statement stmt;
 		ResultSet result; 
 		
+		int exact_sum; 
+		int estimate_sum; 
+		
+		double sum_ratio = 0; 
+		
 		Vector<String> queries = new Vector<String>(); 
 		
 		if(args.length != 4)
@@ -48,26 +53,26 @@ public class QueryExecuter
 			
 			System.out.println("...executing " + queries.size() + " queries"); 
 			
+			out.write("exact sum,estimated sum,solution 1 min,solution 1 max,solution 2 min,solution 2 max,sum ratio\n"); 
+			
 			for(int i = 0; i < queries.size(); i++)
 			{
 				query = queries.get(i); 
 				result = stmt.executeQuery(query); 
-				processResultSum(result, out); 
+				exact_sum = processResultSum(result, out); 
 				result.close(); 
 				
 				i++; 
 				query = queries.get(i); 
 				result = stmt.executeQuery(query); 
+				
+				estimate_sum = processResultSumSampled(result, out); 
+				result.close(); 
+				
+				sum_ratio = Math.abs(exact_sum-estimate_sum)/exact_sum
+				System.out.print("sum ratio: " + sum_ratio + "\n\n"); 
+				out.write(sum_ratio + "\n"); 
 
-				if(result != null)
-				{
-					processResultSumSampled(result, out); 
-					result.close(); 
-				}
-				else 
-				{
-					System.out.println("ERROR: Result is null"); 
-				}
 			}
 			
 			out.close(); 
@@ -80,7 +85,7 @@ public class QueryExecuter
 		
 	}
 	
-	public static void processResultSum(ResultSet result, BufferedWriter result_out)
+	public static int processResultSum(ResultSet result, BufferedWriter result_out)
 	{
 		int sum = 0; 
 		
@@ -91,7 +96,7 @@ public class QueryExecuter
 				sum += result.getInt("c_1"); 
 			}
 			
-			System.out.println("Sum: " + sum); 
+			System.out.println("sum: " + sum); 
 			
 			result_out.write(sum + ","); 
 		}
@@ -102,7 +107,7 @@ public class QueryExecuter
 	}
 	
 	
-	public static void processResultSumSampled(ResultSet result, BufferedWriter result_out)
+	public static int processResultSumSampled(ResultSet result, BufferedWriter result_out)
 	{
 		HashMap<Integer, Integer> frequencies = new HashMap<Integer, Integer>(); 
 		
@@ -188,7 +193,7 @@ public class QueryExecuter
 			System.out.println("eta = " + eta); 
 			*/
 			
-			System.out.println("Estimated Sum:  " + sum);
+			System.out.println("estimated:  " + sum);
 			
 			solution1_min = SumSolver.sumSolver(min, max, .01, false); 
 			solution1_max = SumSolver.sumSolver(min, max, .01, true); 
@@ -196,7 +201,7 @@ public class QueryExecuter
 			solution1_min.objective_value *= db_size; 
 			solution1_max.objective_value *= db_size; 
 			
-			System.out.print("SumSolver1 confidence interval (" + 
+			System.out.print("confidence interval 1: (" + 
 					  solution1_min.objective_value + ", " + solution1_max.objective_value + ")\n"); 
 						
 			solution2_min = SumSolver2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, false); 
@@ -205,11 +210,11 @@ public class QueryExecuter
 			solution2_min.objective_value *= db_size; 
 			solution2_max.objective_value *= db_size; 
 			
-			System.out.print("SumSolver2 confidence interval (" + 
-							 solution2_min.objective_value + ", " + solution2_max.objective_value + ")\n\n");
+			System.out.print("confidence interval 2: (" + 
+							 solution2_min.objective_value + ", " + solution2_max.objective_value + ")\n");
 			
 			result_out.write(sum + "," + solution1_min.objective_value + "," + solution1_max.objective_value +
-					  solution2_min.objective_value + "," + solution2_max.objective_value + "\n"); 
+					  solution2_min.objective_value + "," + solution2_max.objective_value + ","); 
 			
 		}
 		catch(Exception e)

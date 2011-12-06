@@ -161,8 +161,8 @@ public class QueryExecuter
 			result_out.write("\t SumSolver1 confidence interval (" + 
 					  solution1_min.objective_value + ", " + solution1_max.objective_value + ")\n"); 
 			
-			solution2_min = SumSolve2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, false); 
-			solution2_max = SumSolve2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, true); 
+			solution2_min = SumSolver2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, false); 
+			solution2_max = SumSolver2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, true); 
 			
 			result_out.write("\t SumSolver2 confidence interval (" + 
 							 solution2_min.objective_value + ", " + solution2_max.objective_value + ")\n");

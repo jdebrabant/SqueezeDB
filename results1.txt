@@ -1,4 +1,0 @@
-Actual Sum: 122657227
-Sampled Sum:  126379100
-	 SumSolver1 confidence interval (-6.1751E8, 6.1751E8)
-	 SumSolver2 confidence interval (-1.1922049230145007E8, 1.2562392470628782E8)

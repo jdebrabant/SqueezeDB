@@ -50,12 +50,22 @@ public class QueryExecuter
 			
 			for(int i = 0; i < queries.size(); i++)
 			{
-				result = stmt.executeQuery(queries.get(i)); 
+				query = queries.get(i); 
+				result = stmt.executeQuery(query); 
 				processResultSum(result, out); 
 				result.close(); 
 				
 				i++; 
-				result = stmt.executeQuery(queries.get(i)); 
+				query = queries.get(i); 
+				
+				if(query != null)
+				{
+					result = stmt.executeQuery(queries.get(i)); 
+				}
+				else 
+				{
+					System.out.println("ERROR: Query is null"); 
+				}
 				
 				if(result != null)
 				{

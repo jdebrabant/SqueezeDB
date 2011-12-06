@@ -153,6 +153,11 @@ public class QueryExecuter
 				query_selectivity += selectivity[i]; 
 			}
 			
+			for(int i = 0; i < (max-min+1); i++)
+				System.out.println("selectivity " + i + " = " + selectivity[i] + "\n"); 
+			
+			
+			
 			result_out.write("Sampled Sum:  " + sum + "\n");
 			
 			solution1_min = SumSolver.sumSolver(min, max, .01, false); 

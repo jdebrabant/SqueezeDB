@@ -84,19 +84,7 @@ public class SumSolver2
 	// XXX Fix for the new optimization problem
 	public static void main(String[] args) 
 	{
-		// Max
-		double[] val1 = sumSolver(1, 100, 0.02, true);
-		for (int j = 0; j < val1.length; j++)
-		{
-			System.out.println("EpsilonV" + (j + 1) + " = " + val1[j]);
-		}
-		
-		// Min
-		double[] val2 = sumSolver(1, 100, 0.02, false);
-		for (int j = 0; j < val2.length; j++)
-		{
-			System.out.println("EpsilonV" + (j + 1) + " = " + val2[j]);
-		}
+]
 	}
 } 
 

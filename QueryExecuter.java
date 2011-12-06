@@ -49,8 +49,13 @@ public class QueryExecuter
 			for(int i = 0; i < queries.size(); i++)
 			{
 				result = stmt.executeQuery(queries.get(i)); 
+				processResultSum(result, out); 
+				result.close(); 
 				
-				processResult(result, out); 
+				i++; 
+				result = stmt.executeQuery(queries.get(i)); 
+				processResultSumSampled(result, out); 
+				result.close(); 
 			}
 			
 			out.close(); 
@@ -74,7 +79,7 @@ public class QueryExecuter
 				sum += result.getInt("c_1"); 
 			}
 			
-			result_out.write("\t Actual Sum: " + sum + "\n"); 
+			result_out.write("Actual Sum: " + sum + "\n"); 
 		}
 		catch(Exception e)
 		{
@@ -95,6 +100,13 @@ public class QueryExecuter
 		
 		double query_selectivity; 
 		
+		CplexSolution solution1_min; 
+		CplexSolution solution1_max; 
+		
+		CplexSolution solution2_min;
+		CplexSolution solution2_max; 
+
+		
 		try 
 		{
 			Integer k; 
@@ -102,9 +114,12 @@ public class QueryExecuter
 			
 			int min = 10000, max = 0; 
 			
+			int sum = 0; 
+			
 			while(result.next())
 			{
 				k = new Integer(result.getInt("c_1")); 
+				sum += k.intValue(); 
 				
 				// update max and min
 				if(k.intValue() > max)
@@ -138,11 +153,16 @@ public class QueryExecuter
 				query_selectivity += selectivity[i]; 
 			}
 			
-			// divide by size of sample
+			solution1_min = SumSolver.sumSolver(min, max, .01, 0); 
+			solution1_max = SumSolver.sumSolver(min, max, .01, 1); 
+
+			out.write("Sampled Sum:  " + sum + "\n");
 			
-			// sum to get query selectivity 
+			out.write("\t SumSolver1 confidence interval (" + 
+					  solution1_min.objective_value + ", " + solution1_max.objective_value + ")\n"); 
 			
-			// ratio between db and sample 
+			//solution2 = SumSolve2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, 1); 
+			
 			
 		}
 		catch(Exception e)

@@ -81,7 +81,7 @@ public class QueryExecuter
 				sum += result.getInt("c_1"); 
 			}
 			
-			System.out.println("Sum: " + sum + "\n"); 
+			System.out.println("Sum: " + sum); 
 			
 			result_out.write(sum + ","); 
 		}
@@ -171,7 +171,7 @@ public class QueryExecuter
 			System.out.println("eta = " + eta); 
 			*/
 			
-			System.out.println("Estimated Sum:  " + sum + "\n");
+			System.out.println("Estimated Sum:  " + sum);
 			
 			solution1_min = SumSolver.sumSolver(min, max, .01, false); 
 			solution1_max = SumSolver.sumSolver(min, max, .01, true); 

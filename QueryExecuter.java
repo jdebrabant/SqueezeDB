@@ -96,7 +96,7 @@ public class QueryExecuter
 		int sample_size = 15379; 
 		int db_size = 1000000; 
 		
-		double eta = ((double)sample_size)/db_size; 
+		double eta = db_size/((double)sample_size); 
 		
 		double query_selectivity = 0; 
 		
@@ -155,8 +155,11 @@ public class QueryExecuter
 				query_selectivity += selectivity[i]; 
 			}
 			
+			
 			for(int i = 0; i < (max-min+1); i++)
 				System.out.println("selectivity " + i + " = " + selectivity[i] + "\n"); 
+			
+			System.out.println("eta = " + eta); 
 			
 			
 			result_out.write("Sampled Sum:  " + sum + "\n");

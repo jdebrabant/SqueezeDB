@@ -156,9 +156,9 @@ public class QueryExecuter
 			solution1_min = SumSolver.sumSolver(min, max, .01, 0); 
 			solution1_max = SumSolver.sumSolver(min, max, .01, 1); 
 
-			out.write("Sampled Sum:  " + sum + "\n");
+			result_out.write("Sampled Sum:  " + sum + "\n");
 			
-			out.write("\t SumSolver1 confidence interval (" + 
+			result_out.write("\t SumSolver1 confidence interval (" + 
 					  solution1_min.objective_value + ", " + solution1_max.objective_value + ")\n"); 
 			
 			//solution2 = SumSolve2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, 1); 

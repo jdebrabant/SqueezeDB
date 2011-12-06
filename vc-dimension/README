@@ -1,0 +1,17 @@
+initRand.m :	support code (seed random number generator)
+randht.m : 	support code (power law)
+vcDimSel.m:	compute the vcdim of the range space of selection queries
+		involving k columns and b boolean clauses.
+genUnif.m : 	create a table with uniform distribution along the columns
+genPower.m : 	create a table with powerlaw distribution along the columns
+genCorrMat.m : 	create a table with correlated values across the columns
+sampleSize.m : 	compute the sample size for an eps-approxim with prob 1-delta of
+		a range space of vcdim d.
+createSample.m : create a random sample with replacement
+createEapproxSel : create an eps-approxim with prob 1-delta of a range space.
+printMat.m : 	write table to .tbl file
+readMat.m : 	parse table from .tbl file
+createTable.sh : create schema and populate table
+queryGen.py : 	generate queries
+runQueries.sh : run queries on a specific table in a specific database.
+README : 	this file

@@ -1,0 +1,282 @@
+#! /usr/bin/env python2.5
+
+# psql -d tpcd -U luser < ../../wload/test/qt1_1.sql
+
+import os
+import glob
+import subprocess
+import string
+import re
+import sys
+import threading
+import Queue
+import time
+import signal
+import random
+
+import psycopg2
+
+SIMULATE = 0
+
+RUN_FOLDER = "/home/lview/matteo/vcdimexp/data/20101113/queries/test"
+DROP_FS_CACHE = 1 # drop fs cache before running
+                  #   a query (first sync, then drop)
+NCLIENTS = 1      # number of query submitting clients
+PSQL_BIN = "/home/lview/dbs/postgresql-8.4.1/bin/psql"
+DB_USER = "-Ulview"
+dbnm = "vcdim20101113sample"
+DB_NAME = "-d" + dbnm
+TIME_LIMIT = ( ( 1 * 60 ) + 32 ) * 60 + 3
+
+os.chdir(RUN_FOLDER)
+
+xlock = threading.RLock()
+    
+ppid_l = []
+for i in range(NCLIENTS):    
+    ppid_l.append("")
+
+query_stack = []
+file_q = Queue.Queue();
+
+class query_th ( threading.Thread ):
+
+    def __init__ (self, name):
+        self.name = name
+        threading.Thread.__init__(self)
+
+    def drop_fs_cache(self):                
+        # sync first
+        cmd = "sync"
+        process = subprocess.Popen([cmd] , shell=False, stdout=subprocess.PIPE)
+        process.poll()      
+        output = process.communicate()[0]
+        #print self.name + ":\t" + output;
+
+        # drop the FS cache       
+        cmd = "sudo"
+        args_0 = "sysctl"
+        args_1 = "vm.drop_caches=3"
+        process = subprocess.Popen([cmd,args_0,args_1] , shell=False, stdout=subprocess.PIPE)
+        process.poll()
+        output = process.communicate()[0]
+        #print self.name + ":\t" + output;
+
+        # restart the cache
+        cmd = "sudo"
+        args_0 = "sysctl"
+        args_1 = "vm.drop_caches=0"
+        process = subprocess.Popen([cmd,args_0,args_1] , shell=False, stdout=subprocess.PIPE)
+        process.poll()
+        output = process.communicate()[0]
+        #print self.name + ":\t" + output;
+
+    def run (self):        
+            try:
+                while True:
+                    fname = file_q.get(True, 1) #wait to get a new file for 1 sec                    
+                    print self.name + ":\t" + "running query " + fname + "\t" + str(file_q.qsize())
+
+                    if SIMULATE == 1:
+                        continue
+                    
+                    ppid_l[int(self.name)-1] = ""
+                    
+                    # drop the FS cache if set                    
+                    if DROP_FS_CACHE == 1:
+                        if NCLIENTS == 1:
+                            #clear the database shared buffer cache
+                            try:
+                                conn = psycopg2.connect("dbname="+dbnm+" host=localhost port=5432")
+                                cur = conn.cursor()
+                                cur.execute("select * from pg_buffercache_free('{" + \
+                                            "customer,lineitem,nation,orders,part,partsupp," + \
+                                            "region,supplier," + \
+                                            "cust_pkey,lineitem_pkey,nation_pkey,orders_pkey," + \
+                                            "part_pkey,ps_pkey,region_pkey,supplier_pkey"
+                                            "}')")
+                                cur.close()
+                                conn.close()
+                            except:
+                                self.name, ":\tUnexpected error:", sys.exc_info()[0], " ",
+                                sys.exc_info()[1]                                
+                                sys.exit("exited at psycopg2 connection")
+                        self.drop_fs_cache()
+
+
+                    # run the query
+                    cmd = PSQL_BIN
+                    args_0 = DB_NAME
+                    args_1 = DB_USER
+                    args_2 = "-f" + RUN_FOLDER + "/" + fname
+
+
+                    xlock.acquire()
+
+                    while True:
+                        st_time =time.time()
+                        process =subprocess.Popen([cmd, args_0, args_1, args_2] , shell=False, stdout=subprocess.PIPE)
+                        retCode =process.poll()
+
+                        pdone = False
+                        if retCode == None:                        
+                            try:
+                                time.sleep(2) # to make sure the process is still running after a couple seconds
+                                pid_set = 0
+                                ntries = 0
+
+                                while pid_set == 0:                            
+                                    p1=subprocess.Popen(["ps", "x"], shell=False, stdout=subprocess.PIPE)
+                                    p2=subprocess.Popen(["grep","postgres"],shell=False,stdin=p1.stdout,
+                                                        stdout=subprocess.PIPE)
+                                    p3=subprocess.Popen(["grep", "local"], shell=False, stdin=p2.stdout,
+                                                        stdout=subprocess.PIPE)                                    
+                                    o_lines = p3.communicate()[0].splitlines()
+
+                                    for l in o_lines:                                  
+                                        ppid = l.strip().split(" ")[0]
+                                        ppid_cnt = ppid_l.count(ppid)
+                                        if ppid_cnt == 0:
+                                            print self.name + ":\t" + ppid + " not found"
+                                            ppid_l[int(self.name)-1] = ppid
+                                            pid_set = 1
+                                            break
+                                    #else:
+                                    #    print self.name + ":\t" + ppid + " found"
+
+                                    ntries = ntries + 1
+
+                                    if pid_set == 0:
+                                        time.sleep(2)
+                                        if ntries >= 4:
+                                            print self.name + ":\t" + "could not get postmaster pid in " \
+                                                  + str(ntries) + " tries. Assuming success."
+                                            pdone = True
+                                            break
+                                        
+                                # break when pid is set
+                                if pid_set == 1 or pdone:                                
+                                    break
+
+                            except:
+                                self.name, ":\tUnexpected error:", sys.exc_info()[0], " ", sys.exc_info()[1]
+                        else:
+                            pdone = True                        
+                        
+                        if pdone:
+                            break
+
+                    #push onto the stack        
+                    query_stack.append(fname)
+                    xlock.release()                    
+
+                    #print retCode, pdone
+                    
+                    elapsed_time = 0
+                    while retCode == None and not pdone:
+                        elapsed_time = time.time() - st_time
+                        if elapsed_time >= TIME_LIMIT:
+                            # send ctrl-c
+                            try:
+                                #pop elements from stack till we find this query
+                                xlock.acquire()
+                                while True:
+                                    _q = query_stack.pop()
+                                    if _q == fname or _q == "STOP_MARKER":
+                                        query_stack.append("STOP_MARKER") # (re-)mark and break
+                                        break
+                                    else:
+                                        print self.name + ":\t" + "adding back " + _q
+                                        file_q.put(_q)
+
+                                xlock.release()
+                                
+                                if process.pid > 0:
+                                    os.kill(process.pid, signal.SIGINT)
+                            except: 
+                                print self.name + ":\t" + "os.kill error"
+                            break
+                        time.sleep(10)
+                        retCode = process.poll()
+
+                    print "1"
+
+                    if retCode == None and not pdone:
+                        #wait for the process to quit                        
+                        try:
+                            if process.pid > 0:
+                                os.waitpid(process.pid, os.WNOHANG)
+                        except:
+                            print self.name + ":\t" + "os.waitpid error"
+
+                        output = "query_killed in " + str(elapsed_time) + " seconds.\n"
+                        print self.name + ":\t" + output
+
+                        time.sleep(5)
+                        # make sure the postgres process is killed
+                        try:
+                            #os.system("ps x | grep postgres |" +
+                            #          " grep local | awk '{print $1}' | xargs kill -9")
+                            os.system("kill -9 " + ppid_l[int(self.name)-1])                            
+                        except:
+                            print "Unexpected error:", sys.exc_info()[0], " ", sys.exc_info()[1]
+                        
+                        time.sleep(10)
+                    else:
+                        try:
+                            output = process.communicate()[0]
+                        except:
+                            print "could not comm with process"
+                            output = ""
+
+                    query_result = output
+
+                    # save query output                    
+                    out_fname = fname[:string.find(fname,".")] + ".out"
+                    try:
+                        fileout = open(out_fname,'w')                    
+                        fileout.write(query_result)
+                        fileout.close()
+                    except:
+                        print "Unexpected error:", sys.exc_info()[0], " ", sys.exc_info()[1]
+
+            except Queue.Empty:
+                print self.name + ":\t" + "could not get a query file"
+                print self.name + ":\t" + "exited."
+            except:
+                print "Unexpected error:", sys.exc_info()[0], " ", sys.exc_info()[1]
+                
+
+#get the query file list to process
+file_l = []
+for fname in glob.glob("q*.sql"):
+    file_l.append(fname)
+
+#shuffle the queue
+for i in range(len(file_l)):
+    swp_idx = random.randint(0,len(file_l)-1)
+    cur_val = file_l[i]
+    file_l[i] = file_l[swp_idx]
+    file_l[swp_idx] = cur_val    
+
+#file_q.put("qt12_21.sql")
+for fname in file_l:
+    #print fname 
+    file_q.put(fname)
+print "Number of queries:\t" + str(file_q.qsize())
+
+#initialize the threads
+thread_l = []
+for i in range(NCLIENTS):
+    new_th = query_th( str(i+1) )    
+    thread_l.append(new_th)
+
+#start the threads
+for i in range(NCLIENTS):
+    thread_l[i].start()
+
+#wait till they die
+for i in range(NCLIENTS):
+    thread_l[i].join() # wait till the thread terminates
+
+

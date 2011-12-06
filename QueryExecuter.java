@@ -153,15 +153,19 @@ public class QueryExecuter
 				query_selectivity += selectivity[i]; 
 			}
 			
+			result_out.write("Sampled Sum:  " + sum + "\n");
+			
 			solution1_min = SumSolver.sumSolver(min, max, .01, false); 
 			solution1_max = SumSolver.sumSolver(min, max, .01, true); 
-
-			result_out.write("Sampled Sum:  " + sum + "\n");
 			
 			result_out.write("\t SumSolver1 confidence interval (" + 
 					  solution1_min.objective_value + ", " + solution1_max.objective_value + ")\n"); 
 			
-			//solution2 = SumSolve2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, true); 
+			solution2_min = SumSolve2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, false); 
+			solution2_max = SumSolve2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, true); 
+			
+			result_out.write("\t SumSolver2 confidence interval (" + 
+							 solution2_min.objective_value + ", " + solution2_max.objective_value + ")\n");
 			
 			
 		}

@@ -8,6 +8,7 @@ queryBase = "SELECT * FROM "
 queryJoinLargeBase = "SELECT COUNT(*) FROM "
 queryJoinSampleBase = "CREATE TEMP TABLE TEMPT(SA, SB) AS SELECT A.SAMPLEINDEX,B.SAMPLEINDEX FROM "
 querySelWhere = "table1 WHERE ("
+querySelWhereSample = "table1_sample WHERE ("
 queryJoinWhere = "%%TABLE1%% A,%%TABLE2%% B WHERE A.T_1 = B.T_1 AND ("
 querySuff = ";\n"
 queryJoinSelTemp = "SELECT * FROM TEMPT WHERE SA = SB;\n"
@@ -93,11 +94,12 @@ def genQueries(n, k, b, d, j, outDir):
                 outFILE.write(queryJoinSelTemp);
         else:
             pred = genSelQuery(k, b, d)
-            pred = querySelWhere + pred
-            #outFileName = outDir + "/" + outFileNameBase + index + outFileNameSuff
+            pred1 = querySelWhere + pred
+            pred2 = querySelWhereSample + pred
             outFileName = "queries.sql"
-            #with open(outFileName, 'wt') as outFILE:
-            outFILE.write(queryBase + pred + querySuff)
+            outFILE.write(queryBase + pred1 + querySuff)
+            outFILE.write(queryBase + pred2 + querySuff) 
+            
         print(queryBase + pred + querySuff)
 
 def main():

@@ -24,12 +24,15 @@ public class Sampler
 		int table_size; 
 		int sample_size; 
 		int random_tuple; 
+		int db_size; 
 		
-		StringTokenizer tokenizer; 
+		StringTokenizer tokenizer;
+		
+		int [] rows_sampled; 
 		
 		if(args.length != 3)
 		{
-			System.out.println("usage: java Sampler <input file> <output file> <sample size>");
+			System.out.println("usage: java Sampler <input file> <output file> <db size> <sample size>");
 			System.exit(1); 
 		}
 		
@@ -38,33 +41,33 @@ public class Sampler
 			in = new RandomAccessFile(new File(args[0]), "r"); 
 			out = new BufferedWriter(new FileWriter(args[1]));
 			
-			sample_size = Integer.parseInt(args[2]); 
+			db_size = Integer.parseInt(args[2]); 
+			sample_size = Integer.parseInt(args[3]); 
+			
+			rows_sampled = new int[db_size]; 
+			
+			for(int i = 0; i < db_size; i++)
+				rows_sampled[i] = 0; 
 			
 			rand = new Random(); 
-			
-			// determine the number of tuples in the table being sample from 
-			table_size = 0; 
-			while(((tuple = in.readLine()) != null))
-			{
-				table_size++; 
-			}
-			in.seek(0); // reset read pointer to start of file
 			
 			// randomly sample s tuples
 			for(int i = 0; i < sample_size; i++)
 			{
-				random_tuple = rand.nextInt(table_size); 
+				random_tuple = rand.nextInt(db_size); 
 				
-				for(int j = 0; j < random_tuple; j++) // skip past first (random_tuple - 1) tuples in table
-				{
-					in.readLine(); 
-				}
+				rows_sampled[random_tuple]++; 
+			}
+			
+			for(int i = 0; i < db_size; i++)
+			{
+				tuple = in.readLine();
 				
-				tuple = in.readLine(); // read the randomly selected tuple
+				if(tuple == null)
+					break; 
 				
-				out.write(tuple + "\n"); // write the tuple to the output file
-				
-				in.seek(0); // reset read pointer to start of file
+				for(int j = 0; j < rows_sampled[i]; j++)
+					out.write(tuple + "\n"); 
 			}
 
 			out.close(); 

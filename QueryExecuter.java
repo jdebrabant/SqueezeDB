@@ -56,8 +56,16 @@ public class QueryExecuter
 				
 				i++; 
 				result = stmt.executeQuery(queries.get(i)); 
-				processResultSumSampled(result, out); 
-				result.close(); 
+				
+				if(result != null)
+				{
+					processResultSumSampled(result, out); 
+					result.close(); 
+				}
+				else 
+				{
+					System.out.println("ERROR: Result is null"); 
+				}
 			}
 			
 			out.close(); 

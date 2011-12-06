@@ -16,6 +16,7 @@ public class SumSolver
 		{
 			CplexSolution solution = null; 
 			
+			double [] solution_values; 
 			double obj_value = 0; 
 			
 			IloCplex cplex = new IloCplex();
@@ -57,10 +58,10 @@ public class SumSolver
 			
 			if(cplex.solve()) 
 			{
-				solution = cplex.getValues(epsilonV);
+				solution_values = cplex.getValues(epsilonV);
 				obj_value = cplex.getObjValue(); 
 				
-				solution = new CplexSolution(solution, obj_value); 
+				solution = new CplexSolution(solution_values, obj_value); 
 				
 				cplex.end();
 				

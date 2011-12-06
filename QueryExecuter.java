@@ -26,7 +26,7 @@ public class QueryExecuter
 		
 		Vector<String> queries = new Vector<String>(); 
 		
-		if(args.length != 5)
+		if(args.length != 4)
 		{
 			System.out.println("Usage: <user> <db> <query file> <result file>"); 
 			System.exit(1); 
@@ -34,11 +34,11 @@ public class QueryExecuter
 		
 		try 
 		{
-			conn = DBConnect(args[0], "", args[2]);
+			conn = DBConnect(args[0], "", args[1]);
 			stmt = conn.createStatement(); 
 			
-			in = new BufferedReader(new FileReader(args[3])); 
-			out = new BufferedWriter(new FileWriter(args[4])); 
+			in = new BufferedReader(new FileReader(args[2])); 
+			out = new BufferedWriter(new FileWriter(args[3])); 
 			
 			// read in queries from file
 			while((query = in.readLine()) != null)

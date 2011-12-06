@@ -59,6 +59,8 @@ public class SumSolver2
 			cplex.addLe(sumExpr, Math.min(1-querySelectivity, epsilon));
 			cplex.addGe(sumExpr, Math.max(querySelectivity * (1 - eta) / eta , -epsilon));
 			
+			cplex.setOut(null); 
+			
 			if(cplex.solve()) 
 			{
 				solution_values = cplex.getValues(epsilonV);

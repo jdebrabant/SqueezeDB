@@ -56,6 +56,8 @@ public class SumSolver
 			cplex.addLe(sumExpr, epsilon);
 			cplex.addGe(sumExpr, -epsilon);
 			
+			cplex.setOut(null); 
+			
 			if(cplex.solve()) 
 			{
 				solution_values = cplex.getValues(epsilonV);

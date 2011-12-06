@@ -121,7 +121,6 @@ public class QueryExecuter
 			while(result.next())
 			{
 				k = new Integer(result.getInt("c_1")); 
-				//sum += k.intValue(); 
 				
 				// update max and min
 				if(k.intValue() > max)

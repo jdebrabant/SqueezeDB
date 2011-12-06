@@ -3,7 +3,7 @@
 import ilog.concert.*;
 import ilog.cplex.*;
 
-public class SumSolver 
+public class SumSolver2
 {
 	/**
 	 * XXX The returned solution should be multiplied by the size of the
@@ -16,7 +16,11 @@ public class SumSolver
 	{
 		try 
 		{
+			CplexSolution solution = null;
+			
+			double [] solution_values; 
 			double obj_value = 0; 
+			
 			IloCplex cplex = new IloCplex();
 			
 			double[] lowerBound = new double[max - min + 1];
@@ -26,7 +30,7 @@ public class SumSolver
 			{
 				lowerBound[i] = Math.max(selectivities[i] * (1 - eta) / eta, -epsilon);
 				upperBound[i] = Math.min((1 - ((querySelectivity - selectivities[i]) / eta) -
-							selectivities[i], epsilon);
+							selectivities[i], epsilon));
 			}
 			
 			IloNumVar[] epsilonV  = cplex.numVarArray(max-min+1, lowerBound, upperBound);
@@ -57,19 +61,18 @@ public class SumSolver
 			
 			if(cplex.solve()) 
 			{
-				solution = cplex.getValues(epsilonV);
+				solution_values = cplex.getValues(epsilonV);
+				obj_value = cplex.getObjValue(); 
+										 
+				solution = new CplexSolution(solution_values, obj_value); 
 				cplex.end();
-				/**
-				 * XXX We should return (also) the optimal value of the
-				 * function, not just the value for the variables.
-				 */
-				return val;
 			} 
 			else 
 			{
 				cplex.end();
-				return null;
 			}
+										
+			return solution; 
 		} 
 		catch (IloException e) 
 		{

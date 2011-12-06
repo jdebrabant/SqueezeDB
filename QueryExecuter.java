@@ -63,9 +63,37 @@ public class QueryExecuter
 		
 	}
 	
-	public static void processResult(ResultSet result, BufferedWriter result_out)
+	public static void processResultSum(ResultSet result, BufferedWriter result_out)
+	{
+		int sum = 0; 
+		
+		try
+		{
+			while(result.next())
+			{
+				sum += result.getInt("c_1"); 
+			}
+			
+			result_out.write("\t Actual Sum: " + sum + "\n"); 
+		}
+		catch(Exception e)
+		{
+		}
+	}
+	
+	
+	public static void processResultSumSampled(ResultSet result, BufferedWriter result_out)
 	{
 		HashMap<Integer, Integer> frequencies = new HashMap<Integer, Integer>(); 
+		
+		double [] selectivity;  
+		
+		int sample_size = 15379; 
+		int db_size = 1000000; 
+		
+		double eta = ((double)sample_size)/db_size; 
+		
+		double query_selectivity; 
 		
 		try 
 		{
@@ -96,7 +124,26 @@ public class QueryExecuter
 				}
 			}
 			
-			result_out.write("(" + min + ", " + max + ")\n"); 
+			selectivity = new double[max-min+1]; 
+			
+			for(int i = min, index = 0; i <= max; i++, index++)
+			{	
+				v = frequencies.get(new Integer(i)); 
+				
+				selectivity[index] = v.intValue() / ((double)sample_size); 
+			}
+			
+			for(int i = 0; i < (max-min+1); i++)
+			{
+				query_selectivity += selectivity[i]; 
+			}
+			
+			// divide by size of sample
+			
+			// sum to get query selectivity 
+			
+			// ratio between db and sample 
+			
 		}
 		catch(Exception e)
 		{

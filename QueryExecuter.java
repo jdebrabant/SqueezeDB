@@ -79,7 +79,9 @@ public class QueryExecuter
 				sum += result.getInt("c_1"); 
 			}
 			
-			result_out.write("Actual Sum: " + sum + "\n"); 
+			System.out.println("Sum: " + sum + "\n"); 
+			
+			result_out.write(sum + ","); 
 		}
 		catch(Exception e)
 		{
@@ -160,13 +162,14 @@ public class QueryExecuter
 				sum += selectivity[i] * (min+i) * db_size; 
 			}
 			
+			/*
 			for(int i = 0; i < (max-min+1); i++)
 				System.out.println("selectivity " + i + " = " + selectivity[i] + "\n"); 
 			
 			System.out.println("eta = " + eta); 
+			*/
 			
-			
-			result_out.write("Sampled Sum:  " + sum + "\n");
+			System.out.println("Estimated Sum:  " + sum + "\n");
 			
 			solution1_min = SumSolver.sumSolver(min, max, .01, false); 
 			solution1_max = SumSolver.sumSolver(min, max, .01, true); 
@@ -174,20 +177,20 @@ public class QueryExecuter
 			solution1_min.objective_value *= db_size; 
 			solution1_max.objective_value *= db_size; 
 			
-			result_out.write("\t SumSolver1 confidence interval (" + 
+			System.out.print("SumSolver1 confidence interval (" + 
 					  solution1_min.objective_value + ", " + solution1_max.objective_value + ")\n"); 
-			
-			
-			
+						
 			solution2_min = SumSolver2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, false); 
 			solution2_max = SumSolver2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, true); 
 			
 			solution2_min.objective_value *= db_size; 
 			solution2_max.objective_value *= db_size; 
 			
-			result_out.write("\t SumSolver2 confidence interval (" + 
-							 solution2_min.objective_value + ", " + solution2_max.objective_value + ")\n");
+			System.out.print("SumSolver2 confidence interval (" + 
+							 solution2_min.objective_value + ", " + solution2_max.objective_value + ")\n\n");
 			
+			result_out.write(sum + "," + solution1_min.objective_value + "," + solution1_max.objective_value
+					  solution2_min.objective_value + "," + solution2_max.objective_value + "\n"); 
 			
 		}
 		catch(Exception e)

@@ -104,6 +104,8 @@ public class QueryExecuter
 		{
 			System.out.println(e.getMessage()); 
 		}
+		
+		return sum; 
 	}
 	
 	
@@ -222,6 +224,8 @@ public class QueryExecuter
 			e.printStackTrace(System.out); 
 			//System.out.println(e.getMessage()); 
 		}
+		
+		return sum; 
 	}
 	
 	

@@ -50,7 +50,7 @@ public class QueryExecuter
 			{
 				result = stmt.executeQuery(queries.get(i)); 
 				
-				processResult(result, out); 
+				//processResult(result, out); 
 			}
 			
 		}
@@ -76,17 +76,18 @@ public class QueryExecuter
 		}
 	}
 	
+	
 	public static Connection DBConnect(String user, String password, String db)
 	{
 		Connection c = null; 
 
-		String url = new String("jdbc:mysql:");
+		String url = new String("jdbc:postgresql:");
 		
 		url += db; 
 		
 		try 
 		{
-			Class.forName("com.mysql.jdbc.Driver").newInstance();  // load the driver
+			Class.forName("org.postgresql.Driver");  // load the driver
 			c = DriverManager.getConnection(url, user, password);
 			
 		}

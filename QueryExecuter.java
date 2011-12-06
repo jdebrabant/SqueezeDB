@@ -132,6 +132,8 @@ public class QueryExecuter
 				{
 					v = frequencies.get(k); 
 					v += 1; 
+					
+					frequencies.put(k, new Integer(v)); 
 				}
 				else
 				{
@@ -155,7 +157,6 @@ public class QueryExecuter
 			
 			for(int i = 0; i < (max-min+1); i++)
 				System.out.println("selectivity " + i + " = " + selectivity[i] + "\n"); 
-			
 			
 			
 			result_out.write("Sampled Sum:  " + sum + "\n");

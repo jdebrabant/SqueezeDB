@@ -46,6 +46,8 @@ public class QueryExecuter
 				queries.add(query); 
 			}
 			
+			System.out.println("...executing " + queries.size() + " queries"); 
+			
 			for(int i = 0; i < queries.size(); i++)
 			{
 				result = stmt.executeQuery(queries.get(i)); 
@@ -85,6 +87,7 @@ public class QueryExecuter
 		}
 		catch(Exception e)
 		{
+			System.out.println(e.getMessage()); 
 		}
 	}
 	
@@ -194,6 +197,7 @@ public class QueryExecuter
 		}
 		catch(Exception e)
 		{
+			System.out.println(e.getMessage()); 
 		}
 	}
 	

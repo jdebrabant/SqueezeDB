@@ -10,7 +10,7 @@ queryJoinSampleBase = "CREATE TEMP TABLE TEMPT(SA, SB) AS SELECT A.SAMPLEINDEX,B
 querySelWhere = "table1 WHERE ("
 querySelWhereSample = "table1_sample WHERE ("
 queryJoinWhere = "%%TABLE1%% A,%%TABLE2%% B WHERE A.T_1 = B.T_1 AND ("
-querySuff = ";\n"
+querySuff = ";"
 queryJoinSelTemp = "SELECT * FROM TEMPT WHERE SA = SB;\n"
 
 origDir = "orig/"

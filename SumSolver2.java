@@ -30,7 +30,7 @@ public class SumSolver2
 			{
 				lowerBound[i] = Math.max(selectivities[i] * (1 - eta) / eta, -epsilon);
 				upperBound[i] = Math.min((1 - ((querySelectivity - selectivities[i]) / eta) -
-							selectivities[i], epsilon));
+							selectivities[i]), epsilon);
 			}
 			
 			IloNumVar[] epsilonV  = cplex.numVarArray(max-min+1, lowerBound, upperBound);

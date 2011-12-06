@@ -69,7 +69,7 @@ public class QueryExecuter
 				
 				if(result != null)
 				{
-					processResultSumSampled(result, out); 
+					//processResultSumSampled(result, out); 
 					result.close(); 
 				}
 				else 

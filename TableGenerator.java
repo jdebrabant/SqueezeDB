@@ -40,7 +40,10 @@ public class TableGenerator
 				
 				for(int j = 0; j < num_columns; j++)
 				{
-					tuple += rand.nextInt(max_range) + " ";  
+					tuple += rand.nextInt(max_range + 1);  
+					
+					if(j != (num_columns-1))
+						tuple += " "; 
 				}
 				tuple += "\n"; 
 				

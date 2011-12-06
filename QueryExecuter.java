@@ -214,7 +214,7 @@ public class QueryExecuter
 			System.out.print("confidence interval 2: (" + 
 							 solution2_min.objective_value + ", " + solution2_max.objective_value + ")\n");
 			
-			result_out.write(sum + "," + solution1_min.objective_value + "," + solution1_max.objective_value +
+			result_out.write(sum + "," + solution1_min.objective_value + "," + solution1_max.objective_value + "," +
 					  solution2_min.objective_value + "," + solution2_max.objective_value + ","); 
 			
 		}

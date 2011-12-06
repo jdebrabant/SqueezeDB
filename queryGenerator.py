@@ -96,11 +96,11 @@ def genQueries(n, k, b, d, j, outDir):
             pred = genSelQuery(k, b, d)
             pred1 = querySelWhere + pred
             pred2 = querySelWhereSample + pred
-            outFileName = "queries.sql"
-            outFILE.write(queryBase + pred1 + querySuff)
-            outFILE.write(queryBase + pred2 + querySuff) 
-            
-        print(queryBase + pred + querySuff)
+            #outFileName = "queries.sql"
+            #outFILE.write(queryBase + pred1 + querySuff)
+            #outFILE.write(queryBase + pred2 + querySuff) 
+            print(queryBase + pred1 + querySuff)
+            print(queryBase + pred2 + querySuff)
 
 def main():
     j = False

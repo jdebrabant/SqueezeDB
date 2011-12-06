@@ -98,7 +98,7 @@ public class QueryExecuter
 		
 		double eta = ((double)sample_size)/db_size; 
 		
-		double query_selectivity; 
+		double query_selectivity = 0; 
 		
 		CplexSolution solution1_min; 
 		CplexSolution solution1_max; 

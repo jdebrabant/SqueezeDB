@@ -69,7 +69,7 @@ public class QueryExecuter
 				estimate_sum = processResultSumSampled(result, out); 
 				result.close(); 
 				
-				sum_ratio = Math.abs(exact_sum-estimate_sum)/exact_sum; 
+				sum_ratio = Math.abs(exact_sum-estimate_sum)/(double)exact_sum; 
 				System.out.print("sum ratio: " + sum_ratio + "\n\n"); 
 				out.write(sum_ratio + "\n"); 
 

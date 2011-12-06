@@ -84,7 +84,7 @@ public class SumSolver2
 	// XXX Fix for the new optimization problem
 	public static void main(String[] args) 
 	{
-]
+
 	}
 } 
 

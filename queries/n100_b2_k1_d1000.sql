@@ -1,200 +1,200 @@
-SELECT * FROM  ( c_1 <= 434 ) OR ( c_1 >= 931 ));
-
-SELECT * FROM  ( c_1 <= 128 ) OR ( c_1 >= 286 ));
-
-SELECT * FROM  ( c_1 >= 897 AND c_1<= 958 ));
-
-SELECT * FROM  ( c_1 <= 25 ) OR ( c_1 >= 32 ));
-
-SELECT * FROM  ( c_1 <= 226 ) OR ( c_1 >= 987 ));
-
-SELECT * FROM  ( c_1 >= 98 AND c_1<= 764 ));
-
-SELECT * FROM  ( c_1 <= 564 ) OR ( c_1 >= 792 ));
-
-SELECT * FROM  ( c_1 <= 64 ) OR ( c_1 >= 92 ));
-
-SELECT * FROM  ( c_1 >= 25 AND c_1<= 331 ));
-
-SELECT * FROM  ( c_1 <= 275 ) OR ( c_1 >= 542 ));
-
-SELECT * FROM  ( c_1 <= 580 ) OR ( c_1 >= 972 ));
-
-SELECT * FROM  ( c_1 >= 811 AND c_1<= 918 ));
-
-SELECT * FROM  ( c_1 <= 199 ) OR ( c_1 >= 606 ));
-
-SELECT * FROM  ( c_1 >= 545 AND c_1<= 940 ));
-
-SELECT * FROM  ( c_1 >= 187 AND c_1<= 978 ));
-
-SELECT * FROM  ( c_1 >= 577 AND c_1<= 708 ));
-
-SELECT * FROM  ( c_1 >= 239 AND c_1<= 378 ));
-
-SELECT * FROM  ( c_1 >= 298 AND c_1<= 834 ));
-
-SELECT * FROM  ( c_1 <= 794 ) OR ( c_1 >= 912 ));
-
-SELECT * FROM  ( c_1 >= 469 AND c_1<= 883 ));
-
-SELECT * FROM  ( c_1 >= 5 AND c_1<= 287 ));
-
-SELECT * FROM  ( c_1 <= 755 ) OR ( c_1 >= 812 ));
-
-SELECT * FROM  ( c_1 <= 941 ) OR ( c_1 >= 954 ));
-
-SELECT * FROM  ( c_1 >= 52 AND c_1<= 499 ));
-
-SELECT * FROM  ( c_1 >= 192 AND c_1<= 475 ));
-
-SELECT * FROM  ( c_1 <= 323 ) OR ( c_1 >= 827 ));
-
-SELECT * FROM  ( c_1 >= 723 AND c_1<= 845 ));
-
-SELECT * FROM  ( c_1 >= 376 AND c_1<= 592 ));
-
-SELECT * FROM  ( c_1 >= 195 AND c_1<= 944 ));
-
-SELECT * FROM  ( c_1 <= 138 ) OR ( c_1 >= 204 ));
-
-SELECT * FROM  ( c_1 <= 211 ) OR ( c_1 >= 376 ));
-
-SELECT * FROM  ( c_1 >= 469 AND c_1<= 698 ));
-
-SELECT * FROM  ( c_1 <= 301 ) OR ( c_1 >= 489 ));
-
-SELECT * FROM  ( c_1 <= 21 ) OR ( c_1 >= 686 ));
-
-SELECT * FROM  ( c_1 <= 412 ) OR ( c_1 >= 866 ));
-
-SELECT * FROM  ( c_1 <= 3 ) OR ( c_1 >= 903 ));
-
-SELECT * FROM  ( c_1 <= 240 ) OR ( c_1 >= 527 ));
-
-SELECT * FROM  ( c_1 >= 416 AND c_1<= 646 ));
-
-SELECT * FROM  ( c_1 <= 363 ) OR ( c_1 >= 589 ));
-
-SELECT * FROM  ( c_1 >= 31 AND c_1<= 853 ));
-
-SELECT * FROM  ( c_1 <= 33 ) OR ( c_1 >= 546 ));
-
-SELECT * FROM  ( c_1 <= 437 ) OR ( c_1 >= 772 ));
-
-SELECT * FROM  ( c_1 >= 364 AND c_1<= 670 ));
-
-SELECT * FROM  ( c_1 >= 37 AND c_1<= 773 ));
-
-SELECT * FROM  ( c_1 <= 431 ) OR ( c_1 >= 709 ));
-
-SELECT * FROM  ( c_1 <= 460 ) OR ( c_1 >= 686 ));
-
-SELECT * FROM  ( c_1 >= 345 AND c_1<= 510 ));
-
-SELECT * FROM  ( c_1 >= 173 AND c_1<= 592 ));
-
-SELECT * FROM  ( c_1 <= 11 ) OR ( c_1 >= 897 ));
-
-SELECT * FROM  ( c_1 >= 38 AND c_1<= 471 ));
-
-SELECT * FROM  ( c_1 >= 182 AND c_1<= 986 ));
-
-SELECT * FROM  ( c_1 >= 579 AND c_1<= 655 ));
-
-SELECT * FROM  ( c_1 <= 104 ) OR ( c_1 >= 335 ));
-
-SELECT * FROM  ( c_1 <= 709 ) OR ( c_1 >= 908 ));
-
-SELECT * FROM  ( c_1 <= 673 ) OR ( c_1 >= 953 ));
-
-SELECT * FROM  ( c_1 <= 288 ) OR ( c_1 >= 894 ));
-
-SELECT * FROM  ( c_1 >= 644 AND c_1<= 960 ));
-
-SELECT * FROM  ( c_1 >= 854 AND c_1<= 951 ));
-
-SELECT * FROM  ( c_1 >= 24 AND c_1<= 316 ));
-
-SELECT * FROM  ( c_1 <= 351 ) OR ( c_1 >= 451 ));
-
-SELECT * FROM  ( c_1 >= 82 AND c_1<= 586 ));
-
-SELECT * FROM  ( c_1 >= 3 AND c_1<= 341 ));
-
-SELECT * FROM  ( c_1 <= 238 ) OR ( c_1 >= 707 ));
-
-SELECT * FROM  ( c_1 <= 146 ) OR ( c_1 >= 471 ));
-
-SELECT * FROM  ( c_1 <= 457 ) OR ( c_1 >= 904 ));
-
-SELECT * FROM  ( c_1 >= 197 AND c_1<= 372 ));
-
-SELECT * FROM  ( c_1 <= 9 ) OR ( c_1 >= 361 ));
-
-SELECT * FROM  ( c_1 <= 109 ) OR ( c_1 >= 343 ));
-
-SELECT * FROM  ( c_1 >= 228 AND c_1<= 388 ));
-
-SELECT * FROM  ( c_1 >= 71 AND c_1<= 246 ));
-
-SELECT * FROM  ( c_1 >= 503 AND c_1<= 611 ));
-
-SELECT * FROM  ( c_1 <= 51 ) OR ( c_1 >= 653 ));
-
-SELECT * FROM  ( c_1 <= 863 ) OR ( c_1 >= 959 ));
-
-SELECT * FROM  ( c_1 >= 19 AND c_1<= 431 ));
-
-SELECT * FROM  ( c_1 <= 38 ) OR ( c_1 >= 555 ));
-
-SELECT * FROM  ( c_1 >= 121 AND c_1<= 235 ));
-
-SELECT * FROM  ( c_1 >= 58 AND c_1<= 446 ));
-
-SELECT * FROM  ( c_1 >= 326 AND c_1<= 359 ));
-
-SELECT * FROM  ( c_1 >= 712 AND c_1<= 816 ));
-
-SELECT * FROM  ( c_1 >= 248 AND c_1<= 361 ));
-
-SELECT * FROM  ( c_1 >= 375 AND c_1<= 907 ));
-
-SELECT * FROM  ( c_1 >= 338 AND c_1<= 493 ));
-
-SELECT * FROM  ( c_1 >= 124 AND c_1<= 294 ));
-
-SELECT * FROM  ( c_1 >= 573 AND c_1<= 979 ));
-
-SELECT * FROM  ( c_1 >= 432 AND c_1<= 917 ));
-
-SELECT * FROM  ( c_1 <= 327 ) OR ( c_1 >= 505 ));
-
-SELECT * FROM  ( c_1 >= 42 AND c_1<= 451 ));
-
-SELECT * FROM  ( c_1 >= 581 AND c_1<= 738 ));
-
-SELECT * FROM  ( c_1 >= 151 AND c_1<= 277 ));
-
-SELECT * FROM  ( c_1 >= 530 AND c_1<= 972 ));
-
-SELECT * FROM  ( c_1 >= 415 AND c_1<= 789 ));
-
-SELECT * FROM  ( c_1 >= 81 AND c_1<= 813 ));
-
-SELECT * FROM  ( c_1 >= 586 AND c_1<= 827 ));
-
-SELECT * FROM  ( c_1 <= 199 ) OR ( c_1 >= 431 ));
-
-SELECT * FROM  ( c_1 >= 711 AND c_1<= 730 ));
-
-SELECT * FROM  ( c_1 >= 42 AND c_1<= 262 ));
-
-SELECT * FROM  ( c_1 >= 795 AND c_1<= 934 ));
-
-SELECT * FROM  ( c_1 >= 642 AND c_1<= 813 ));
-
-SELECT * FROM  ( c_1 <= 499 ) OR ( c_1 >= 930 ));
-
-SELECT * FROM  ( c_1 >= 604 AND c_1<= 760 ));
-
+SELECT * FROM table1 WHERE ( ( c_1 <= 833 ) OR ( c_1 >= 899 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 833 ) OR ( c_1 >= 899 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 40 ) OR ( c_1 >= 325 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 40 ) OR ( c_1 >= 325 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 470 ) OR ( c_1 >= 585 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 470 ) OR ( c_1 >= 585 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 70 AND c_1<= 459 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 70 AND c_1<= 459 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 170 ) OR ( c_1 >= 615 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 170 ) OR ( c_1 >= 615 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 760 ) OR ( c_1 >= 942 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 760 ) OR ( c_1 >= 942 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 788 AND c_1<= 910 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 788 AND c_1<= 910 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 314 AND c_1<= 688 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 314 AND c_1<= 688 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 238 ) OR ( c_1 >= 816 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 238 ) OR ( c_1 >= 816 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 847 AND c_1<= 888 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 847 AND c_1<= 888 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 15 AND c_1<= 119 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 15 AND c_1<= 119 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 82 AND c_1<= 387 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 82 AND c_1<= 387 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 636 AND c_1<= 857 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 636 AND c_1<= 857 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 456 AND c_1<= 674 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 456 AND c_1<= 674 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 800 AND c_1<= 917 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 800 AND c_1<= 917 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 114 ) OR ( c_1 >= 809 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 114 ) OR ( c_1 >= 809 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 332 ) OR ( c_1 >= 887 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 332 ) OR ( c_1 >= 887 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 250 AND c_1<= 254 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 250 AND c_1<= 254 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 425 ) OR ( c_1 >= 688 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 425 ) OR ( c_1 >= 688 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 207 ) OR ( c_1 >= 285 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 207 ) OR ( c_1 >= 285 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 247 AND c_1<= 366 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 247 AND c_1<= 366 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 383 AND c_1<= 429 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 383 AND c_1<= 429 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 675 ) OR ( c_1 >= 733 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 675 ) OR ( c_1 >= 733 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 278 ) OR ( c_1 >= 527 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 278 ) OR ( c_1 >= 527 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 816 ) OR ( c_1 >= 884 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 816 ) OR ( c_1 >= 884 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 74 ) OR ( c_1 >= 628 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 74 ) OR ( c_1 >= 628 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 468 AND c_1<= 764 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 468 AND c_1<= 764 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 566 AND c_1<= 970 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 566 AND c_1<= 970 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 703 ) OR ( c_1 >= 840 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 703 ) OR ( c_1 >= 840 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 6 AND c_1<= 280 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 6 AND c_1<= 280 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 686 ) OR ( c_1 >= 726 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 686 ) OR ( c_1 >= 726 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 338 ) OR ( c_1 >= 574 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 338 ) OR ( c_1 >= 574 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 234 AND c_1<= 590 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 234 AND c_1<= 590 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 45 AND c_1<= 879 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 45 AND c_1<= 879 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 148 ) OR ( c_1 >= 238 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 148 ) OR ( c_1 >= 238 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 656 AND c_1<= 978 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 656 AND c_1<= 978 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 365 AND c_1<= 824 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 365 AND c_1<= 824 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 491 ) OR ( c_1 >= 641 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 491 ) OR ( c_1 >= 641 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 691 AND c_1<= 874 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 691 AND c_1<= 874 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 89 ) OR ( c_1 >= 250 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 89 ) OR ( c_1 >= 250 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 471 ) OR ( c_1 >= 758 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 471 ) OR ( c_1 >= 758 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 257 ) OR ( c_1 >= 527 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 257 ) OR ( c_1 >= 527 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 323 ) OR ( c_1 >= 866 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 323 ) OR ( c_1 >= 866 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 242 AND c_1<= 631 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 242 AND c_1<= 631 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 35 AND c_1<= 44 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 35 AND c_1<= 44 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 39 ) OR ( c_1 >= 354 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 39 ) OR ( c_1 >= 354 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 620 AND c_1<= 932 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 620 AND c_1<= 932 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 380 AND c_1<= 645 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 380 AND c_1<= 645 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 374 AND c_1<= 861 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 374 AND c_1<= 861 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 447 AND c_1<= 700 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 447 AND c_1<= 700 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 120 AND c_1<= 255 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 120 AND c_1<= 255 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 865 ) OR ( c_1 >= 893 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 865 ) OR ( c_1 >= 893 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 116 AND c_1<= 905 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 116 AND c_1<= 905 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 394 AND c_1<= 550 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 394 AND c_1<= 550 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 396 ) OR ( c_1 >= 453 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 396 ) OR ( c_1 >= 453 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 775 AND c_1<= 810 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 775 AND c_1<= 810 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 342 ) OR ( c_1 >= 756 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 342 ) OR ( c_1 >= 756 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 423 ) OR ( c_1 >= 424 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 423 ) OR ( c_1 >= 424 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 294 ) OR ( c_1 >= 674 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 294 ) OR ( c_1 >= 674 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 487 ) OR ( c_1 >= 512 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 487 ) OR ( c_1 >= 512 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 337 ) OR ( c_1 >= 685 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 337 ) OR ( c_1 >= 685 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 518 AND c_1<= 568 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 518 AND c_1<= 568 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 108 ) OR ( c_1 >= 590 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 108 ) OR ( c_1 >= 590 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 409 ) OR ( c_1 >= 956 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 409 ) OR ( c_1 >= 956 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 24 AND c_1<= 592 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 24 AND c_1<= 592 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 417 ) OR ( c_1 >= 925 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 417 ) OR ( c_1 >= 925 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 259 AND c_1<= 743 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 259 AND c_1<= 743 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 324 ) OR ( c_1 >= 768 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 324 ) OR ( c_1 >= 768 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 312 ) OR ( c_1 >= 752 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 312 ) OR ( c_1 >= 752 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 275 AND c_1<= 635 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 275 AND c_1<= 635 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 260 AND c_1<= 827 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 260 AND c_1<= 827 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 637 AND c_1<= 816 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 637 AND c_1<= 816 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 267 ) OR ( c_1 >= 424 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 267 ) OR ( c_1 >= 424 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 425 ) OR ( c_1 >= 610 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 425 ) OR ( c_1 >= 610 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 232 AND c_1<= 986 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 232 AND c_1<= 986 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 622 ) OR ( c_1 >= 657 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 622 ) OR ( c_1 >= 657 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 597 AND c_1<= 918 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 597 AND c_1<= 918 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 188 ) OR ( c_1 >= 328 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 188 ) OR ( c_1 >= 328 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 11 AND c_1<= 680 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 11 AND c_1<= 680 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 885 AND c_1<= 944 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 885 AND c_1<= 944 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 500 AND c_1<= 762 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 500 AND c_1<= 762 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 850 AND c_1<= 936 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 850 AND c_1<= 936 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 175 AND c_1<= 641 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 175 AND c_1<= 641 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 673 ) OR ( c_1 >= 759 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 673 ) OR ( c_1 >= 759 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 399 AND c_1<= 738 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 399 AND c_1<= 738 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 210 AND c_1<= 774 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 210 AND c_1<= 774 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 282 AND c_1<= 509 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 282 AND c_1<= 509 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 114 ) OR ( c_1 >= 520 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 114 ) OR ( c_1 >= 520 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 523 AND c_1<= 541 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 523 AND c_1<= 541 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 58 AND c_1<= 272 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 58 AND c_1<= 272 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 639 AND c_1<= 716 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 639 AND c_1<= 716 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 60 ) OR ( c_1 >= 905 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 60 ) OR ( c_1 >= 905 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 156 ) OR ( c_1 >= 926 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 156 ) OR ( c_1 >= 926 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 83 ) OR ( c_1 >= 689 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 83 ) OR ( c_1 >= 689 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 789 AND c_1<= 944 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 789 AND c_1<= 944 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 150 AND c_1<= 220 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 150 AND c_1<= 220 ));
+SELECT * FROM table1 WHERE ( ( c_1 <= 655 ) OR ( c_1 >= 681 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 <= 655 ) OR ( c_1 >= 681 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 79 AND c_1<= 334 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 79 AND c_1<= 334 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 862 AND c_1<= 936 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 862 AND c_1<= 936 ));
+SELECT * FROM table1 WHERE ( ( c_1 >= 101 AND c_1<= 270 ));
+SELECT * FROM table1_sample WHERE ( ( c_1 >= 101 AND c_1<= 270 ));

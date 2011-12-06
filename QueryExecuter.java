@@ -57,19 +57,11 @@ public class QueryExecuter
 				
 				i++; 
 				query = queries.get(i); 
-				
-				if(query != null)
-				{
-					result = stmt.executeQuery(queries.get(i)); 
-				}
-				else 
-				{
-					System.out.println("ERROR: Query is null"); 
-				}
-				
+				result = stmt.executeQuery(query); 
+
 				if(result != null)
 				{
-					//processResultSumSampled(result, out); 
+					processResultSumSampled(result, out); 
 					result.close(); 
 				}
 				else 
@@ -215,7 +207,8 @@ public class QueryExecuter
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.getMessage()); 
+			e.printStackTrace(System.out); 
+			//System.out.println(e.getMessage()); 
 		}
 	}
 	

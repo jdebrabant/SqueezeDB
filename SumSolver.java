@@ -10,10 +10,14 @@ public class SumSolver
 	 * original (large) database. Or we could pass it as a parameter here
 	 * and do the multiplication in this method.
 	 */
-	public static double[] sumSolver(int min, int max, double epsilon, boolean solveMax)
+	public static CplexSolution sumSolver(int min, int max, double epsilon, boolean solveMax)
 	{
 		try 
 		{
+			CplexSolution solution = null; 
+			
+			double obj_value = 0; 
+			
 			IloCplex cplex = new IloCplex();
 			
 			double[] lowerBound = new double[max - min + 1];
@@ -53,15 +57,20 @@ public class SumSolver
 			
 			if(cplex.solve()) 
 			{
-				double[] val = cplex.getValues(epsilonV);
+				solution = cplex.getValues(epsilonV);
+				obj_value = cplex.getObjValue(); 
+				
+				solution = new CplexSolution(solution, obj_value); 
+				
 				cplex.end();
-				return val;
+				
 			} 
 			else 
 			{
 				cplex.end();
-				return null;
 			}
+			
+			return solution; 
 		} 
 		catch (IloException e) 
 		{
@@ -72,6 +81,7 @@ public class SumSolver
 	
 	public static void main(String[] args) 
 	{
+		/*
 		// Max
 		double[] val1 = sumSolver(1, 100, 0.02, true);
 		for (int j = 0; j < val1.length; j++)
@@ -85,5 +95,6 @@ public class SumSolver
 		{
 			System.out.println("EpsilonV" + (j + 1) + " = " + val2[j]);
 		}
+		*/
 	}
 } 

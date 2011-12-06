@@ -10,12 +10,13 @@ public class SumSolver
 	 * original (large) database. Or we could pass it as a parameter here
 	 * and do the multiplication in this method.
 	 */
-	public static double[] sumSolver(int min, int max, double
+	public static CplexSolution sumSolver(int min, int max, double
 			querySelectivity, double[] selectivities, double eta,
 			double epsilon, boolean solveMax)
 	{
 		try 
 		{
+			double obj_value = 0; 
 			IloCplex cplex = new IloCplex();
 			
 			double[] lowerBound = new double[max - min + 1];
@@ -56,7 +57,7 @@ public class SumSolver
 			
 			if(cplex.solve()) 
 			{
-				double[] val = cplex.getValues(epsilonV);
+				solution = cplex.getValues(epsilonV);
 				cplex.end();
 				/**
 				 * XXX We should return (also) the optimal value of the

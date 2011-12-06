@@ -96,7 +96,7 @@ public class QueryExecuter
 				}
 			}
 			
-			result_out.write("(" + min + ", " + max + ")"); 
+			result_out.write("(" + min + ", " + max + ")\n"); 
 		}
 		catch(Exception e)
 		{

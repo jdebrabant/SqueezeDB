@@ -28,13 +28,13 @@ public class QueryExecuter
 		
 		if(args.length != 5)
 		{
-			System.out.println("Usage: <user> <password> <db> <query file> <result file>"); 
+			System.out.println("Usage: <user> <db> <query file> <result file>"); 
 			System.exit(1); 
 		}
 		
 		try 
 		{
-			conn = DBConnect(args[0], args[1], args[2]);
+			conn = DBConnect(args[0], "", args[2]);
 			stmt = conn.createStatement(); 
 			
 			in = new BufferedReader(new FileReader(args[3])); 

@@ -103,8 +103,8 @@ public class QueryExecuter
 				System.out.print("sum ratio: " + sum_ratio + "\n\n"); 
 				
 				out.write(sum_ratio + ","); 
-				out.write(exact_query_runtime, ","); 
-				out.write(sampled_query_runtime, ","); 
+				out.write(exact_query_runtime + ","); 
+				out.write(sampled_query_runtime + ","); 
 				out.write(runtime_ratio + "\n"); 
 			}
 			

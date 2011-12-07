@@ -65,12 +65,10 @@ public class QueryExecuter
 			
 			exact_in.close(); 
 			sampled_in.close(); 
-			
-			System.out.println("...executing " + queries.size() + " queries"); 
-			
+					
 			out.write("exact sum,estimated sum,solution 1 min,solution 1 max,solution 2 min,solution 2 max,sum ratio\n"); 
 			
-			for(int i = 0; i < queries.size(); i++)
+			for(int i = 0; i < exact_queries.size(); i++)
 			{
 				query = exact_queries.get(i); 
 				

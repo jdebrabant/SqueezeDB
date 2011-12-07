@@ -84,10 +84,10 @@ def genQueries(n, k, b, d, j, outDir):
     exact += '.sql'
     exactFILE = open(exact, 'w');
     sampleFILE = open(sample, 'w'); 
-    outFILE = open('queries.sql', 'w'); 
     for i in range(n):
         index = str(i+1).zfill(len(str(n)))
         if j:
+            outFILE = open('queries.sql', 'w'); 
             pred = genJoinQuery(k,b,d)
             pred = queryJoinWhere + pred
             outFileName = outDir + "/" + origDir + outFileNameBase + index + outFileNameSuff
@@ -104,9 +104,9 @@ def genQueries(n, k, b, d, j, outDir):
             #outFileName = "queries.sql"
             #outFILE.write(queryBase + pred1 + querySuff)
             #outFILE.write(queryBase + pred2 + querySuff) 
-            print(queryBase + pred1 + querySuff)
+            #print(queryBase + pred1 + querySuff)
             exactFILE.write(queryBase + pred1 + querySuff + '\n')
-            print(queryBase + pred2 + querySuff)
+            #print(queryBase + pred2 + querySuff)
             sampleFILE.write(queryBase + pred2 + querySuff + '\n'); 
 
 def main():
@@ -164,10 +164,10 @@ def main():
         stderr.write("Cannot find the output directory. Please create it\n")
         usage()
         exit(1)
-    if not os.path.exists(outDir + "/" + origDir):
-	    os.mkdir(outDir + "/" + origDir)
-    if not os.path.exists(outDir + "/" + sampleDir):
-	    os.mkdir(outDir + "/" + sampleDir)
+    #if not os.path.exists(outDir + "/" + origDir):
+#	    os.mkdir(outDir + "/" + origDir)
+ #   if not os.path.exists(outDir + "/" + sampleDir):
+#	    os.mkdir(outDir + "/" + sampleDir)
 
     genQueries(n, k, b, d, j, outDir) 
 

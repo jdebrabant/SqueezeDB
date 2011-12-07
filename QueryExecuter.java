@@ -97,8 +97,8 @@ public class QueryExecuter
 				sum_ratio = Math.abs(exact_sum-estimate_sum)/(double)exact_sum; 
 				runtime_ratio = 1 - ((double)sampled_query_runtime)/(double)exact_query_runtime; 
 				
-				System.out.println("exact query runtime (ms): " + exact_query_runtime + "\n"); 
-				System.out.println("sampled query runtime (ms): " + sampled_query_runtime + "\n"); 
+				System.out.print("exact query runtime (ms): " + exact_query_runtime + "\n"); 
+				System.out.print("sampled query runtime (ms): " + sampled_query_runtime + "\n"); 
 				System.out.print("runtime improvement: " + runtime_ratio + "\n"); 
 				System.out.print("sum ratio: " + sum_ratio + "\n\n"); 
 				

@@ -102,8 +102,8 @@ public class QueryExecuter
 				System.out.print("runtime improvement: " + runtime_ratio + "\n"); 
 				System.out.print("sum ratio: " + sum_ratio + "\n\n"); 
 				
-				out.write(runtime_ratio + ","); 
 				out.write(sum_ratio + "\n"); 
+				out.write(runtime_ratio + ","); 
 			}
 			
 			out.close(); 

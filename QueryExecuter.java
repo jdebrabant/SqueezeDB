@@ -67,7 +67,7 @@ public class QueryExecuter
 			exact_in.close(); 
 			sampled_in.close(); 
 					
-			out.write("exact sum,estimated sum,solution 1 min,solution 1 max,solution 2 min,solution 2 max,sum ratio,runtime ratio\n"); 
+			out.write("exact sum,estimated sum,solution 1 min,solution 1 max,solution 2 min,solution 2 max,sum ratio,runtime improvement\n"); 
 			
 			for(int i = 0; i < exact_queries.size(); i++)
 			{
@@ -94,9 +94,9 @@ public class QueryExecuter
 				result.close(); 
 				
 				sum_ratio = Math.abs(exact_sum-estimate_sum)/(double)exact_sum; 
-				runtime_ratio = (double)(exact_query_runtime-sampled_query_runtime)/(double)exact_query_runtime; 
+				runtime_ratio = 1 - ((double)sampled_query_runtime)/(double)exact_query_runtime; 
 				
-				System.out.print("runtime ratio: " + runtime_ratio + "\n"); 
+				System.out.print("runtime improvement: " + runtime_ratio + "\n"); 
 				System.out.print("sum ratio: " + sum_ratio + "\n\n"); 
 				
 				out.write(runtime_ratio + ","); 

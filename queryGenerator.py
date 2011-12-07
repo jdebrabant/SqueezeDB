@@ -79,7 +79,7 @@ def genSelQuery(k, b, d, tprefix=""):
     return sel
 
 def genQueries(n, k, b, d, j, outDir):
-    exact = 'N' + str(n) + '_K' + str(k) + '_B' + '_D' + str(d)
+    exact = outDir + '/n' + str(n) + '_k' + str(k) + '_b' + str(b) +  '_d' + str(d)
     sample = exact + '_sample.sql'
     exact += '.sql'
     exactFILE = open(exact, 'w');

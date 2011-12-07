@@ -27,14 +27,15 @@ public class QueryExecuter
 		int estimate_sum; 
 		
 		long start_time, end_time; 
+		long exact_query_runtime, sampled_query_runtime; 
 		long total_time_sampled, total_time_exact; 
 		
-		double sum_ratio = 0; 
+		double sum_ratio = 0;
+		double runtime_ratio = 0; 
 		
 		Vector<String> exact_queries = new Vector<String>(); 
 		Vector<String> sampled_queries = new Vector<String>(); 
 
-		
 		if(args.length != 5)
 		{
 			System.out.println("Usage: <user> <db> <exact query file> <sample query file> <result file>"); 
@@ -66,7 +67,7 @@ public class QueryExecuter
 			exact_in.close(); 
 			sampled_in.close(); 
 					
-			out.write("exact sum,estimated sum,solution 1 min,solution 1 max,solution 2 min,solution 2 max,sum ratio\n"); 
+			out.write("exact sum,estimated sum,solution 1 min,solution 1 max,solution 2 min,solution 2 max,sum ratio,runtime ratio\n"); 
 			
 			for(int i = 0; i < exact_queries.size(); i++)
 			{
@@ -75,7 +76,9 @@ public class QueryExecuter
 				start_time = System.currentTimeMillis(); 
 				result = stmt.executeQuery(query); 
 				exact_sum = processResultSum(result, out); 
-				start_time = System.currentTimeMillis(); 
+				end_time = System.currentTimeMillis(); 
+				
+				exact_query_runtime = end_time - start_time; 
 				
 				result.close(); 
 				
@@ -84,12 +87,19 @@ public class QueryExecuter
 				start_time = System.currentTimeMillis(); 
 				result = stmt.executeQuery(query);
 				estimate_sum = processResultSumSampled(result, out); 
-				start_time = System.currentTimeMillis(); 
+				end_time = System.currentTimeMillis(); 
+				
+				sampled_query_runtime = end_time - start_time; 
 
 				result.close(); 
 				
 				sum_ratio = Math.abs(exact_sum-estimate_sum)/(double)exact_sum; 
+				runtime_ratio = (double)(exact_query_runtime-sampled_query_runtime)/(double)exact_query_runtime; 
+				
+				System.out.print("runtime ratio: " + runtime_ratio + "\n"); 
 				System.out.print("sum ratio: " + sum_ratio + "\n\n"); 
+				
+				out.write(runtime_ratio + ","); 
 				out.write(sum_ratio + "\n"); 
 			}
 			

@@ -27,6 +27,9 @@ public class QueryExecuter
 		int exact_sum; 
 		int estimate_sum; 
 		
+		long start_time, end_time; 
+		long total_time_sampled, total_time_exact; 
+		
 		double sum_ratio = 0; 
 		
 		Vector<String> queries = new Vector<String>(); 
@@ -58,16 +61,24 @@ public class QueryExecuter
 			for(int i = 0; i < queries.size(); i++)
 			{
 				query = queries.get(i); 
+				
+				start_time = System.currentTimeMillis(); 
 				result = stmt.executeQuery(query); 
 				exact_sum = processResultSum(result, out); 
+				start_time = System.currentTimeMillis(); 
+				
 				result.close(); 
 				
-				i++; 
+				i++;  // every other query is a query for the sampled db
 				query = queries.get(i); 
-				result = stmt.executeQuery(query); 
 				
+				start_time = System.currentTimeMillis(); 
+				result = stmt.executeQuery(query);
 				estimate_sum = processResultSumSampled(result, out); 
+				start_time = System.currentTimeMillis(); 
+
 				result.close(); 
+				
 				
 				sum_ratio = Math.abs(exact_sum-estimate_sum)/(double)exact_sum; 
 				System.out.print("sum ratio: " + sum_ratio + "\n\n"); 

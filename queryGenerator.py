@@ -79,6 +79,11 @@ def genSelQuery(k, b, d, tprefix=""):
     return sel
 
 def genQueries(n, k, b, d, j, outDir):
+    exact = 'N' + str(n) + '_K' + str(k) + '_B' + '_D' + str(d)
+    sample = exact + '_sample.sql'
+    exact += '.sql'
+    exactFILE = open(exact, 'w');
+    sampleFILE = open(sample, 'w'); 
     outFILE = open('queries.sql', 'w'); 
     for i in range(n):
         index = str(i+1).zfill(len(str(n)))
@@ -100,7 +105,9 @@ def genQueries(n, k, b, d, j, outDir):
             #outFILE.write(queryBase + pred1 + querySuff)
             #outFILE.write(queryBase + pred2 + querySuff) 
             print(queryBase + pred1 + querySuff)
+            exactFILE.write(queryBase + pred1 + querySuff + '\n')
             print(queryBase + pred2 + querySuff)
+            sampleFILE.write(queryBase + pred2 + querySuff + '\n'); 
 
 def main():
     j = False

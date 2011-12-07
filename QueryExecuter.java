@@ -4,7 +4,6 @@
  * Description: 
  ***************************************************************************************************/ 
 
-
 import java.util.*; 
 import java.lang.*; 
 import java.io.*; 
@@ -15,7 +14,7 @@ public class QueryExecuter
 	
 	public static void main(String [] args)
 	{
-		BufferedReader in; 
+		BufferedReader exact_in, sampled_in; 
 		BufferedWriter out; 
 
 		String query; 
@@ -32,11 +31,13 @@ public class QueryExecuter
 		
 		double sum_ratio = 0; 
 		
-		Vector<String> queries = new Vector<String>(); 
+		Vector<String> exact_queries = new Vector<String>(); 
+		Vector<String> sampled_queries = new Vector<String>(); 
+
 		
-		if(args.length != 4)
+		if(args.length != 5)
 		{
-			System.out.println("Usage: <user> <db> <query file> <result file>"); 
+			System.out.println("Usage: <user> <db> <exact query file> <sample query file> <result file>"); 
 			System.exit(1); 
 		}
 		
@@ -45,14 +46,25 @@ public class QueryExecuter
 			conn = DBConnect(args[0], "", args[1]);
 			stmt = conn.createStatement(); 
 			
-			in = new BufferedReader(new FileReader(args[2])); 
-			out = new BufferedWriter(new FileWriter(args[3])); 
+			exact_in = new BufferedReader(new FileReader(args[2])); 
+			sampled_in = new BufferedReader(new FileReader(args[3])); 
+
+			out = new BufferedWriter(new FileWriter(args[4])); 
 			
 			// read in queries from file
-			while((query = in.readLine()) != null)
+			while((query = exact_in.readLine()) != null)
 			{
-				queries.add(query); 
+				exact_queries.add(query); 
 			}
+			
+			// read sampled queries from file
+			while((query = sampled_in.readLine()) != null)
+			{
+				sampled_queries.add(query); 
+			}
+			
+			exact_in.close(); 
+			sampled_in.close(); 
 			
 			System.out.println("...executing " + queries.size() + " queries"); 
 			
@@ -60,7 +72,7 @@ public class QueryExecuter
 			
 			for(int i = 0; i < queries.size(); i++)
 			{
-				query = queries.get(i); 
+				query = exact_queries.get(i); 
 				
 				start_time = System.currentTimeMillis(); 
 				result = stmt.executeQuery(query); 
@@ -69,8 +81,7 @@ public class QueryExecuter
 				
 				result.close(); 
 				
-				i++;  // every other query is a query for the sampled db
-				query = queries.get(i); 
+				query = sampled_queries.get(i); 
 				
 				start_time = System.currentTimeMillis(); 
 				result = stmt.executeQuery(query);
@@ -79,11 +90,9 @@ public class QueryExecuter
 
 				result.close(); 
 				
-				
 				sum_ratio = Math.abs(exact_sum-estimate_sum)/(double)exact_sum; 
 				System.out.print("sum ratio: " + sum_ratio + "\n\n"); 
 				out.write(sum_ratio + "\n"); 
-
 			}
 			
 			out.close(); 
@@ -197,13 +206,6 @@ public class QueryExecuter
 			{
 				sum += selectivity[i] * (min+i) * db_size; 
 			}
-			
-			/*
-			for(int i = 0; i < (max-min+1); i++)
-				System.out.println("selectivity " + i + " = " + selectivity[i] + "\n"); 
-			
-			System.out.println("eta = " + eta); 
-			*/
 			
 			System.out.println("estimated:  " + sum);
 			

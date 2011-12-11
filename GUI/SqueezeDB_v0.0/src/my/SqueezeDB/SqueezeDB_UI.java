@@ -10,6 +10,8 @@
  */
 package my.SqueezeDB;
 
+import java.sql.*;
+
 /**
  *
  * @author gideongoldin
@@ -264,6 +266,13 @@ private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
                 new SqueezeDB_UI().setVisible(true);
             }
         });
+        
+        System.out.println("Started");        
+        QueryExecuter.DBConnect(user, pass, db);
+        
+        
+        
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

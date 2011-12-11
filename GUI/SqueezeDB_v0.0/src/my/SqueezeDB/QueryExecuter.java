@@ -12,6 +12,67 @@ import java.sql.*;
 
 public class QueryExecuter
 {
+    Connection conn;
+
+
+    public QueryExecuter()
+    {
+        conn = DBConnect("debrabant", "", "squeeze");
+    }
+
+    public String executeQuery(String agg_func, String column_name, int min, int max, boolean approx)
+    {
+        ResultSet result;
+        Statement stmt;
+        String query = new String("");
+        String table;
+
+        String result_str = "";
+
+        if(approx)
+        {
+            table = "table1_sample";
+        }
+        else
+        {
+            table = "table1";
+        }
+
+        try
+        {
+            stmt = conn.createStatement();
+
+            query += "SELECT *" +
+                    " FROM " + table +
+                    " WHERE " + column_name  + " >= " + min  + " AND " + column_name + " <= " + max + ";";
+
+            result = stmt.executeQuery(query);
+
+            if(agg_func.toLowerCase().equals("sum"))
+            {
+                if(approx)
+                {
+                    result_str = processResultSumSampled(result);
+                }
+                else
+                {
+                    result_str = processResultSum(result);
+                }
+            }
+            else if(agg_func.toLowerCase().equals("avg"))
+            {
+                result_str = "NA";
+            }
+
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace(System.out);
+        }
+
+        return result_str;
+    }
 	
 	public static void main(String [] args)
 	{
@@ -141,7 +202,125 @@ public class QueryExecuter
 		
 		return sum; 
 	}
-	
+
+    public static String processResultSum(ResultSet result)
+	{
+		int sum = 0;
+
+		try
+		{
+			while(result.next())
+			{
+				sum += result.getInt("c_1");
+			}
+
+
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+
+		return ("" + sum);
+	}
+
+    public static String processResultSumSampled(ResultSet result)
+    {
+    		HashMap<Integer, Integer> frequencies = new HashMap<Integer, Integer>();
+
+		double [] selectivity;
+
+		int sample_size = 15379;
+		int db_size = 1000000;
+
+		double eta = db_size/((double)sample_size);
+
+		double query_selectivity = 0;
+
+		CplexSolution solution1_min;
+		CplexSolution solution1_max;
+
+		CplexSolution solution2_min;
+		CplexSolution solution2_max;
+
+		Integer k;
+		Integer v;
+
+		int min = 10000, max = 0;
+
+		int sum = 0;
+
+        String result_str = ""; 
+
+		try
+		{
+			while(result.next())
+			{
+				k = new Integer(result.getInt("c_1"));
+
+				// update max and min
+				if(k.intValue() > max)
+					max = k.intValue();
+				else if(k.intValue() < min)
+					min = k.intValue();
+
+
+				if(frequencies.containsKey(k))  // already in the list
+				{
+					v = frequencies.get(k);
+					v += 1;
+
+					frequencies.put(k, new Integer(v));
+				}
+				else
+				{
+					frequencies.put(k, new Integer(1));
+				}
+			}
+
+			selectivity = new double[max-min+1];
+
+			for(int i = min, index = 0; i <= max; i++, index++)
+			{
+				v = frequencies.get(new Integer(i));
+
+				if(v != null)
+				{
+					selectivity[index] = v.intValue() / ((double)sample_size);
+				}
+				else
+				{
+					selectivity[index] = 0;
+				}
+			}
+
+			for(int i = 0; i < (max-min+1); i++)
+			{
+				query_selectivity += selectivity[i];
+			}
+
+			for(int i = 0; i < (max-min+1); i++)
+			{
+				sum += selectivity[i] * (min+i) * db_size;
+			}
+
+			solution2_min = SumSolver2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, false);
+			solution2_max = SumSolver2.sumSolver(min, max, query_selectivity, selectivity, eta, .02, true);
+
+			solution2_min.objective_value *= db_size;
+			solution2_max.objective_value *= db_size;
+
+            result_str += sum + ": (" + solution2_min.objective_value + ", " + solution2_max.objective_value + ")";
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(System.out);
+			//System.out.println(e.getMessage());
+		}
+
+		return result_str;
+    }
 	
 	public static int processResultSumSampled(ResultSet result, BufferedWriter result_out)
 	{
@@ -271,7 +450,7 @@ public class QueryExecuter
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.getMessage()); 
+			e.printStackTrace(System.out);
 		}
 		
 		return c; 

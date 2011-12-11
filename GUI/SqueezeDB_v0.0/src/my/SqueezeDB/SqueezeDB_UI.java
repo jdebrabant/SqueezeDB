@@ -18,6 +18,8 @@ import java.sql.*;
  */
 public class SqueezeDB_UI extends javax.swing.JFrame {
 
+    static QueryExecuter qe;
+
     /** Creates new form SqueezeDB_UI */
     public SqueezeDB_UI() {
         initComponents();
@@ -42,10 +44,8 @@ public class SqueezeDB_UI extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -78,11 +78,15 @@ public class SqueezeDB_UI extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SUM", "AVG", "COUNT" }));
 
+        jTextField1.setText("c_1");
+
         jLabel3.setText("Min Value:");
 
         jLabel4.setText("Max Value:");
 
-        jLabel5.setText("Max Error:");
+        jTextField2.setText("0");
+
+        jTextField3.setText("100");
 
         jLabel6.setText("Progress:");
 
@@ -93,23 +97,21 @@ public class SqueezeDB_UI extends javax.swing.JFrame {
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jProgressBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                    .add(jProgressBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                             .add(jLabel1)
                             .add(jLabel2)
                             .add(jLabel3)
-                            .add(jLabel4)
-                            .add(jLabel5))
+                            .add(jLabel4))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                             .add(jComboBox1, 0, 313, Short.MAX_VALUE)
                             .add(jTextField1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
                             .add(jTextField2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                            .add(jTextField3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                            .add(jTextField4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)))
+                            .add(jTextField3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)))
                     .add(jLabel6)
-                    .add(jSeparator1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
+                    .add(jSeparator1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,11 +133,7 @@ public class SqueezeDB_UI extends javax.swing.JFrame {
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel4)
                     .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel5)
-                    .add(jTextField4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 39, Short.MAX_VALUE)
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel6)
@@ -197,7 +195,7 @@ public class SqueezeDB_UI extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jButton4)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextField5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)))
+                        .add(jTextField5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -218,10 +216,28 @@ public class SqueezeDB_UI extends javax.swing.JFrame {
 
 private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
     System.out.println("[INFO]: You clicked on 'Exact'.");
+
+    String columnName = jTextField1.getText();
+    int minValue = Integer.parseInt(jTextField2.getText());
+    int maxValue = Integer.parseInt(jTextField3.getText());
+    String aggFunction = (String) jComboBox1.getSelectedItem();
+
+    System.out.println("Function: "+aggFunction+"; Column: "+columnName+"; Min: "+minValue+"; Max: "+maxValue);
+
+    qe.executeQuery(aggFunction, columnName, minValue, maxValue, false);
 }//GEN-LAST:event_jButton4ActionPerformed
 
 private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     System.out.println("[INFO]: You clicked on 'Approximate'.");
+
+    String columnName = jTextField1.getText();
+    int minValue = Integer.parseInt(jTextField2.getText());
+    int maxValue = Integer.parseInt(jTextField3.getText());
+    String aggFunction = (String) jComboBox1.getSelectedItem();
+
+    System.out.println("Function: "+aggFunction+"; Column: "+columnName+"; Min: "+minValue+"; Max: "+maxValue);
+    System.out.println(qe.executeQuery(aggFunction, columnName, minValue, maxValue, true));
+
 }//GEN-LAST:event_jButton3ActionPerformed
 
 private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -267,8 +283,8 @@ private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             }
         });
         
-        System.out.println("Started");        
-        QueryExecuter.DBConnect(user, pass, db);
+        System.out.println("[INFO]: Started.");
+        qe = new QueryExecuter();
         
         
         
@@ -284,7 +300,6 @@ private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -297,7 +312,6 @@ private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables

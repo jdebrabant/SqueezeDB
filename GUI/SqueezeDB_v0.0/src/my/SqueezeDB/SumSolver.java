@@ -1,3 +1,5 @@
+package my.SqueezeDB;
+
 
 
 import ilog.concert.*;

@@ -1,3 +1,5 @@
+package my.SqueezeDB;
+
 /***************************************************************************************************
  * File: QueryExecuter.java
  * Authors: Justin A. DeBrabant (debrabant@cs.brown.edu)
@@ -5,7 +7,6 @@
  ***************************************************************************************************/ 
 
 import java.util.*; 
-import java.lang.*; 
 import java.io.*; 
 import java.sql.*; 
 

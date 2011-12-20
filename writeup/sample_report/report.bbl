@@ -1,0 +1,32 @@
+\begin{thebibliography}{1}
+
+\bibitem{Aqua}
+Swarup Acharya, Phillip~B. Gibbons, Viswanath Poosala, and Sridhar Ramaswamy.
+\newblock The aqua approximate query answering system.
+\newblock In {\em Proceedings of the 1999 ACM SIGMOD international conference
+  on Management of data}, SIGMOD '99, pages 574--576, New York, NY, USA, 1999.
+  ACM.
+
+\bibitem{Haas}
+Peter~J. Haas.
+\newblock Large-sample and deterministic confidence intervals for online
+  aggregation.
+\newblock In {\em SSDBM}, pages 51--63. IEEE Computer Society Press, 1996.
+
+\bibitem{Hellerstein}
+Joseph~M. Hellerstein, Peter~J. Haas, and Helen~J. Wang.
+\newblock Online aggregation.
+\newblock In {\em Proceedings of the 1997 ACM SIGMOD international conference
+  on Management of data}, SIGMOD '97, pages 171--182, New York, NY, USA, 1997.
+  ACM.
+
+\bibitem{Matteo}
+Matteo Riondato, Mert Akdere, U\v{g}ur \c{C}etintemel, Stanley~B. Zdonik, and
+  Eli Upfal.
+\newblock The vc-dimension of sql queries and selectivity estimation through
+  sampling.
+\newblock In {\em Proceedings of the 2011 European conference on Machine
+  learning and knowledge discovery in databases - Volume Part II}, ECML
+  PKDD'11, pages 661--676, Berlin, Heidelberg, 2011. Springer-Verlag.
+
+\end{thebibliography}

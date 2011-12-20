@@ -124,10 +124,7 @@ public class QueryExecuter
 		
 		try
 		{
-			while(result.next())
-			{
-				sum += result.getInt("c_1"); 
-			}
+			sum += result.getInt(0); 
 			
 			System.out.println("sum: " + sum); 
 			
@@ -148,8 +145,8 @@ public class QueryExecuter
 		
 		double [] selectivity;  
 		
-		int sample_size = 15379; 
-		int db_size = 1000000; 
+		int sample_size = 9129; 
+		int db_size = 1000000000; 
 		
 		double eta = db_size/((double)sample_size); 
 		

@@ -45,9 +45,20 @@ tables, \texttt{Customers} and \texttt{CarColors}.
   \label{tab:example}
 \end{table}
 
+A \emph{query} $q$ is a function that takes as input one or more tables and
+returns a set of elements the Cartesian product of the input tables. This set
+depends on the database $\Db$ which the input tables to $q$ belong to, and we
+denote with $\Out_\Db(q)$ and we call it the output of $q$ on $\Db$. The
+\emph{cardinality} $\card_\Db(q)$ of $q$ on $\Db$ is the size
+$|\Out_\Db(q)|$. The \emph{selectivity} $\selectivity_\Db(q)$ of $q$ on $\Db$ is
+the ratio between $\card_\Db(q)$ and the \emph{product} of the sizes of the
+input tables of $q$.  Clearly, $0\le\selectivity_\Db(q)\le 1$.
+
+There are multiple types of queries. We now introduce the ones we are interested
+in for our purposes.
 \begin{definition}\label{def:selectquery}
   Given a table $\Tab$ with columns $\Tab.C_1,\dotsc,\Tab.C_\ell$, a
-  \emph{selection query} $q$ on $\Tab$ is an operation which returns a subset
+  \emph{selection query} $q$ on $\Tab$ is a function which returns a subset
   $S$ of the tuples of $\Tab$ such that a tuple $t$ of $\Tab$ belongs to $S$ if
   and only if the values in $t$ satisfy a condition $\mathcal{C}$
   (the \emph{selection predicate}) expressed by $q$. In full
@@ -63,6 +74,7 @@ As an example, the selection query
 \]
 would return the first and second row of Table~\ref{tab:example}.
 
+\note{Maybe the following should go on top, rephrased.}
 We assume that, for each column $\Tab_C$ of each table $\Tab$, the domain
 $\domain{\Tab.C_i}$ is such that it is possible to build a total order relations
 on it. This assumptions does not exclude categorical domains from our
@@ -72,8 +84,8 @@ for the categories in the domain.
 
 \begin{definition}\label{def:joinquery}
   Given two tables $\Tab_1$ and $\Tab_2$, a $\emph{join query}$ $q$ on a common
-  column $C$ (i.e., a column present both in $\Tab_1$ and $\Tab_2$) is an
-  operation which returns a subset of the Cartesian product of the tuples in
+  column $C$ (i.e., a column present both in $\Tab_1$ and $\Tab_2$) is a
+  function which returns a subset of the Cartesian product of the tuples in
   $\Tab_1$ and $\Tab_2$. The returned subset is defined as the set $ \{(t_1,t_2)
   ~:~ t_1\in\Tab_1, t_2\in\Tab_2, \mbox{ s.t. } t_1.C \op t_2.C \}$ where
   ``$\op$'' is one of $\{<,>,\ge,\le,=,\neq\}$.
@@ -100,14 +112,14 @@ Our definition of a join query is basically equivalent to that of a
 \emph{theta-join}~\citep[Sect.5.2.7]{GarciaMolinaUW02}, with the limitation that
 the join condition $\mathcal{C}$ can only contain a single clause, ,i.e., a single
 condition on the relationship of the values in the shared column $C$ and only
-involve the operators $\{<,>,\ge,\le,=,\neq\}$ (with their meaning on $D(C)$).
-The pairs of tuples composing the output of the join in our definition have a
-one-to-one correspondence with the tuples in the output of the corresponding
-theta-join.
+involve the operators $\{<,>,\ge,\le,=,\neq\}$ (with their meaning on
+$\domain{C}$). The pairs of tuples composing the output of the join in our
+definition have a one-to-one correspondence with the tuples in the output of the
+corresponding theta-join.
 
 \begin{definition}\label{def:general query}
   Given a set of $\ell$ tables $\Tab_1,\dotsc,\Tab_\ell$, a \emph{combination of
-  select and join operations} returns a subset of the Cartesian
+  select and join queries} is a function that returns a subset of the Cartesian
   product of the tuples in the sets $S_1,\dotsc,S_\ell$, where $S_i$ is the
   output of a selection query on $\Tab_i$. The returned set is defined by the
   selection queries and by a set of join queries on $S_1,\dotsc,S_\ell$.
@@ -131,7 +143,7 @@ there is no individual reported in both tables with zipcode $02906$ and a red
 car.
 
 When not further specified, we use the term ``query'' to denote a combination of
-select and join operations.
+select and join queries.
 
 \begin{definition}\label{def:groupbyquery}
   Let $\Db$ be a set of tables $\Db=\{\Tab_1,\dotsc,\Tab_\ell\}$, and
@@ -201,25 +213,17 @@ The output of this query would be ``25'', the average between the values in the
 
 \begin{fact}\label{fact:aggregquery}
   Let $f$ be a function as in Def.~\ref{def:aggregquery}, and let $A$ be a 
-  subset of $\multivalues{\Tab.C}$. We can see $A$ as a collection of pairs $(v,c)$,
-  where $v\in \domain{C}$ and $c$ is a non-negative integer representing the number of
+  subset of $\multivalues{\Tab.C}$. We can see $A$ as a collection of pairs
+  $(v,c_v)$,
+  where $v\in \domain{C}$ and $c_v$ is a non-negative integer representing the number of
   times $v$ appears in $A$. So, $f$ can be seen as a function from
-  $\domain{C}\times\mathbb{N}_0$ to $\mathbb{R}$.
+  $\mathcal{P}(\domain{C}\times\mathbb{N}_0)$ to $\mathbb{R}$.
 \end{fact}
-\todo{Add example with AVG.}
-
-A key concept that we will use throughout the paper is that of
-\emph{selectivity} of a query. 
-
-\begin{definition}\label{def:cardsel}
-  Given a query $q$, the \emph{cardinality} of its output is the number of
-  elements (tuples if $q$ is a selection queries, pairs of tuples if $q$ is a
-  join query, and $\ell$-uples of tuples for combinations of join and select)
-  in its output.
-
-  The \emph{selectivity} $\sigma(q)$ of $q$ is the ratio between its cardinality
-  and the \emph{product} of the sizes of its input tables.
-\end{definition}
+For example, if we consider $f$ to be the average function, it is easy to see
+that
+\[
+f(S)=\frac{1}{\sum_{(v,c_v)\in S} c_v}\sum_{(v,c_v)\in S}(vc_v), \forall
+S\in\mathcal{P}(\domain{C}\times\mathbb{N}_0)\enspace.\]
 
 \subsection{VC-Dimension}\label{sec:prelvcdim}
 The Vapnik-Chernovenkis (VC) Dimension of a space of points is a measure of the

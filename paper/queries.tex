@@ -19,8 +19,8 @@ range space of different classes of queries.
 \begin{lemma}[\citep{RiondatoACZU11}]\label{lem:vcdimselgen}
   Let $\Tab$ be a table with $m$ columns, let $b>0$ and let $\Sigma^{b*}_\Tab$
   be the set of selection queries on $\Tab$ whose selection predicate is a
-  Boolean combination of $b$ clauses. Then, the VC-dimension of the range space
-  $S_b = (\Tab, \Sigma^{b*}_\Tab)$ is at most $3((m+1)b)\log((m+1)b)$.  
+  Boolean combination of up to $b$ clauses. Then, the VC-dimension of the range
+  space $S_b = (\Tab, \Sigma^{b*}_\Tab)$ is at most $3((m+1)b)\log((m+1)b)$.  
 \end{lemma}
 
 \begin{lemma}[\citep{RiondatoACZU11}]\label{lem:vcdimjoinmul}
@@ -66,21 +66,23 @@ joins $b$. We can then define the function
 
 \citet{RiondatoACZU11} used Thm.~\ref{thm:eapprox} and the above bound to the
 VC-dimension of the range space $S=(X,Q)$ for a collection of queries $Q$ to
-compute a sample size $m$ such that a sample of size $m$ of the database can be
-used to compute high-quality approximations of the selectivities of all queries
-in $Q$. Formally, if we let $\sigma(q)$ be the selectivity of a query $q\in Q$
-when run on the original database $\Db$ and let $\tilde\sigma(q)$ be the
-selectivity of $q$ when run on the sample, \citet{RiondatoACZU11} proved that
+compute a sample size $m$ such that a sample $\Sam$ of size $m$ of the database
+$\Db$ can be used to compute high-quality approximations of the selectivities on
+$\Db$ of all queries in $Q$ b. More precisely, the selectivity
+$\selectivity_\Sam(q)$ of $q\in Q$ on $\Sam$ can be used as a good estimation
+for $\selectivity_\Db(q)$. Formally, \citet{RiondatoACZU11} proved that it is
+possible to build a sample $\Sam$ such that
 \[
 \Pr\left(\exists q\in Q \mbox{ s.t.~}
-|\sigma(q)-\tilde\sigma(q)|\ge\varepsilon\right)\le\delta,
+|\selectivity_\Db(q)-\selectivity_\Sam(q)|>\varepsilon\right)\le\delta,
 \]
 for some $\varepsilon$ and $\delta$ in $(0,1)$.
 
 \todo{Say something about how to create the sample.}
 
 In this present work, we leverage on this result to compute good approximations
-of the values of aggregate queries using a sample.
+(and confidence bounds) of the values of aggregate queries using a random sample
+of $\Db$.
 
 \subsection{Estimating the Selectivity of \texttt{GROUP BY} Queries}\label{sec:groupby}
 To warm up, we show how to use the results introduced above to compute the
@@ -88,10 +90,10 @@ selectivity of group-by queries.
 
 Let $\Db={\Tab_1,\dots,\Tab_u}$, and $\mathcal{C_i}$ ($1\le i \le u$), $m$, $b$,
 and $Q_{u,m,b}$ be as in Thm.~\ref{thm:vcdimgenqueries}. For a positive integer
-$k$, let $Q^k_{u,m,b}$ be the class of group-by queries $q(q^*,\mathcal{G})$
+$k$, let $Q^k_{u,m,b}$ be the class of group-by queries $q=(q^*,\mathcal{G})$
 where $q^*\in Q_{u,m,b}$ and $\mathcal{G}=\{G_1,\dots,G_\ell\}$ is a subset of
 the columns in the tables of $\Db$, under the condition that no more than $k$
-columns per table are in $\mathcal{G}$. We use the equivalence from
+columns \emph{per table} are in $\mathcal{G}$. We use the equivalence from
 Fact~\ref{fact:groupbyequiv} to show how to compute an approximation of the
 sizes of the groups in the output of a group-by query. 
 
@@ -100,8 +102,10 @@ be the set of queries with selection/join predicate as
 in~\eqref{eq:groupbyequiv}. It is easy to see that all $q'\in E_{q,\mathcal{G}}$
 are members of the class $Q_{u,p,b+2k}$, where $p=\max\{|C_i\cap\mathcal{G}|
 ~:~ 1\le i\le u\}$ ($p\le m+k$. The class $Q_{u,p,b+2k}$ contains also other
-queries that are not members of any $E_q$). From Thm.~\ref{thm:vcdimgenqueries},
-we have that $\VC((\Db,Q_{u,p,b+2k}))\le\vc(u,p,b+2k)$.
+queries that are not members of any $E_q$). 
+\begin{fact}
+From Thm.~\ref{thm:vcdimgenqueries}, we have that $\VC((\Db,Q_{u,p,b+2k}))\le\vc(u,p,b+2k)$.
+\end{fact}
 
 Hence, if we build an $\varepsilon$-approximation $\Sam$ for the range space
 $(\Db,Q_{u,p,b+2k})$ (for example using Theorem~\ref{thm:eapprox}) and execute
@@ -111,7 +115,7 @@ the equivalence from Fact~\ref{fact:groupbyequiv}, this means that we can
 estimate the sizes of the groups in the output of a query $q\in Q^k_{u,m,b}$ by
 looking at the sizes of the groups in the output of $q$ when run on $\Sam$.
 
-\note{I wonder whether the above should be more formal.}
+\question{Should the above be more formal and end with a lemma?}
 
 Note that our guarantees do not extend to the number of groups, i.e., we cannot
 guarantee that the number of groups in the output of the query when run on the

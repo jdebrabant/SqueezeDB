@@ -1,0 +1,205 @@
+\begin{thebibliography}{24}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Agarwal et~al.(2013)Agarwal, Mozafari, Panda, Milner, Madden, and
+  Stoica]{AgarwalMPMMS13}
+Sameer Agarwal, Barzan Mozafari, Aurojit Panda, Henry Milner, Samuel Madden,
+  and Ion Stoica.
+\newblock Blinkdb: queries with bounded errors and bounded response times on
+  very large data.
+\newblock In \emph{Proceedings of the 8th ACM European Conference on Computer
+  Systems}, pages 29--42. ACM, 2013.
+
+\bibitem[Alon and Spencer(2008)]{AlonS08}
+Noga Alon and Joel~H. Spencer.
+\newblock \emph{The Probabilistic Method}.
+\newblock Interscience Series in Discrete Mathematics and Optimization. John
+  Wiley {\&} Sons, Hoboken, NJ, USA, third edition, 2008.
+
+\bibitem[Chaudhuri et~al.(2001)Chaudhuri, Das, Datar, Motwani, and
+  Narasayya]{ChaudhuriDDMN01}
+Surajit Chaudhuri, Gautam Das, Mayur Datar, Rajeev Motwani, and Vivek
+  Narasayya.
+\newblock Overcoming limitations of sampling for aggregation queries.
+\newblock In \emph{Proceedings of the 17th International Conference on Data
+  Engineering}, ICDE '01, pages 534--542, 2001.
+\newblock \doi{10.1109/ICDE.2001.914867}.
+
+\bibitem[Chaudhuri et~al.(2007)Chaudhuri, Das, and Narasayya]{ChaudhuriDN07}
+Surajit Chaudhuri, Gautam Das, and Vivek Narasayya.
+\newblock Optimized stratified sampling for approximate query processing.
+\newblock \emph{ACM Trans. Database Syst.}, 32, June 2007.
+\newblock ISSN 0362-5915.
+\newblock \doi{http://doi.acm.org/10.1145/1242524.1242526}.
+\newblock URL \url{http://doi.acm.org/10.1145/1242524.1242526}.
+
+\bibitem[Chazelle(2000)]{Chazelle00}
+Bernard Chazelle.
+\newblock \emph{The discrepancy method: randomness and complexity}.
+\newblock Cambridge University Press, New York, NY, USA, 2000.
+\newblock ISBN 0-521-00357-1.
+
+\bibitem[Das(2009)]{Das09}
+Gautam Das.
+\newblock Sampling methods in approximate query answering systems.
+\newblock In John Wang, editor, \emph{Encyclopedia of Data Warehousing and
+  Mining}, pages 1702--1707. Information Science Publishing, second edition,
+  2009.
+
+\bibitem[Ganti et~al.(2000)Ganti, Lee, and Ramakrishnan]{GantiLR00}
+Venkatesh Ganti, Mong-Li Lee, and Raghu Ramakrishnan.
+\newblock {ICICLES}: Self-tuning samples for approximate query answering.
+\newblock In \emph{Proceedings of the 26th International Conference on Very
+  Large Data Bases}, VLDB '00, pages 176--187, San Francisco, CA, USA, 2000.
+  Morgan Kaufmann Publishers Inc.
+\newblock ISBN 1-55860-715-3.
+\newblock URL \url{http://portal.acm.org/citation.cfm?id=645926.672017}.
+
+\bibitem[Garcia-Molina et~al.(2002)Garcia-Molina, Ullman, and
+  Widom]{GarciaMolinaUW02}
+Hector Garcia-Molina, Jeffrey~D. Ullman, and Jennifer Widom.
+\newblock \emph{Database Systems - The Complete Book}.
+\newblock Prentice Hall, Upper Saddle River, NJ, USA, 2002.
+\newblock ISBN 978-0-13-187325-4.
+
+\bibitem[Haas(1996)]{Haas96}
+Peter~J. Haas.
+\newblock Hoeffding inequalities for join-selectivity estimation and online
+  aggregation.
+\newblock Technical Report RJ 10040, IBM Almaden Research Center, San Jose, CA,
+  USA, 1996.
+
+\bibitem[Haas(1997)]{Haas97}
+Peter~J. Haas.
+\newblock Large-sample and deterministic confidence intervals for online
+  aggregation.
+\newblock In \emph{Proceedings of the Ninth International Conference on
+  Scientific and Statistical Database Management}, pages 51--62, August 1997.
+\newblock \doi{10.1109/SSDM.1997.621151}.
+
+\bibitem[Har-Peled and Sharir(2011)]{HarPS11}
+Sariel Har-Peled and Micha Sharir.
+\newblock Relative $(p,\varepsilon)$-approximations in geometry.
+\newblock \emph{Discrete \& Computational Geometry}, 45\penalty0 (3):\penalty0
+  462--496, 2011.
+\newblock ISSN 0179-5376.
+\newblock URL \url{http://dx.doi.org/10.1007/s00454-010-9248-1}.
+
+\bibitem[K{\"{o}}nig and Weikum(1999)]{KonigW99}
+Arnd~Christian K{\"{o}}nig and Gerhard Weikum.
+\newblock Combining histograms and parametric curve fitting for feedback-driven
+  query result-size estimation.
+\newblock In \emph{Proceedings of the 25th International Conference on Very
+  Large Data Bases}, VLDB '99, pages 423--434, San Francisco, CA, USA, 1999.
+  Morgan Kaufmann Publishers Inc.
+\newblock ISBN 1-55860-615-7.
+\newblock URL \url{http://portal.acm.org/citation.cfm?id=645925.671668}.
+
+\bibitem[Lazaridis and Mehrotra(2001)]{LazaradisM01}
+Iosif Lazaridis and Sharad Mehrotra.
+\newblock Progressive approximate aggregate queries with a multi-resolution
+  tree structure.
+\newblock In \emph{Proceedings of the 2001 ACM SIGMOD international conference
+  on Management of data}, SIGMOD '01, pages 401--412, New York, NY, USA, 2001.
+  ACM.
+\newblock ISBN 1-58113-332-4.
+\newblock \doi{http://doi.acm.org/10.1145/375663.375718}.
+\newblock URL \url{http://doi.acm.org/10.1145/375663.375718}.
+
+\bibitem[Li et~al.(2001)Li, Long, and Srinivasan]{LiLS01}
+Yi~Li, Philip~M. Long, and Aravind Srinivasan.
+\newblock Improved bounds on the sample complexity of learning.
+\newblock \emph{Journal of Computer and System Sciences}, 62\penalty0
+  (3):\penalty0 516--527, 2001.
+\newblock ISSN 0022-0000.
+\newblock \doi{DOI: 10.1006/jcss.2000.1741}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/B6WJ0-45B65MX-H/2/3b0f2dd50a30dcee8b995d701959f15f}.
+
+\bibitem[L\"{o}ffler and Phillips(2009)]{LofflerP09}
+Maarten L\"{o}ffler and Jeff~M. Phillips.
+\newblock Shape fitting on point sets with probability distributions.
+\newblock In Amos Fiat and Peter Sanders, editors, \emph{Algorithms - ESA
+  2009}, volume 5757 of \emph{Lecture Notes in Computer Science}, pages
+  313--324. Springer-Verlag, 2009.
+\newblock URL \url{http://dx.doi.org/10.1007/978-3-642-04128-0_29}.
+
+\bibitem[Matou\v{s}ek(2002)]{Matousek02}
+Ji\v{r}\'{i} Matou\v{s}ek.
+\newblock \emph{Lectures on Discrete Geometry}.
+\newblock Springer-Verlag, Secaucus, NJ, USA, 2002.
+\newblock ISBN 0387953744.
+
+\bibitem[Miller(1981)]{Miller81}
+Rupert~G. Miller.
+\newblock \emph{Simultaneous Statistical Inference}.
+\newblock Springer series in statistics. Springer-Verlag, New York, NY, USA,
+  1981.
+
+\bibitem[Mohri et~al.(2012)Mohri, Rostamizadeh, and Talwalkar]{MohriRT12}
+Mehryar Mohri, Afshin Rostamizadeh, and Ameet Talwalkar.
+\newblock \emph{Foundations of machine learning}.
+\newblock The MIT Press, 2012.
+
+\bibitem[Pol and Jermaine(2005)]{PolJ05}
+Abhijit Pol and Christopher Jermaine.
+\newblock Relational confidence bounds are easy with the bootstrap.
+\newblock In \emph{Proceedings of the 2005 ACM SIGMOD international conference
+  on Management of data ACM SIGMOD international conference on Management of
+  data}, SIGMOD '05, pages 587--598, New York, NY, USA, 2005. ACM.
+\newblock ISBN 1-59593-060-4.
+\newblock \doi{http://doi.acm.org/10.1145/1066157.1066224}.
+\newblock URL \url{http://doi.acm.org/10.1145/1066157.1066224}.
+
+\bibitem[Riondato et~al.(2011)Riondato, Akdere, \c{C}etintemel, Zdonik, and
+  Upfal]{RiondatoACZU11}
+Matteo Riondato, Mert Akdere, U\u{g}ur \c{C}etintemel, Stanley~B. Zdonik, and
+  Eli Upfal.
+\newblock The {VC}-dimension of {SQL} queries and selectivity estimation
+  through sampling.
+\newblock In Dimitrios Gunopulos, Thomas Hofmann, Donato Malerba, and Michalis
+  Vazirgiannis, editors, \emph{Machine Learning and Knowledge Discovery in
+  Databases - European Conference, ECML PKDD 2011, Athens, Greece, September
+  5-9, 2011. Proceedings, Part II}, volume 6912 of \emph{Lecture Notes in
+  Computer Science}, pages 661--676, Berlin / Heidelberg, 2011. Springer.
+\newblock ISBN 978-3-642-23782-9.
+
+\bibitem[R{\"{o}}sch and Lehner(2009)]{RoschL09}
+Philipp R{\"{o}}sch and Wolfgang Lehner.
+\newblock Sample synopses for approximate answering of group-by queries.
+\newblock In \emph{Proceedings of the 12th International Conference on
+  Extending Database Technology: Advances in Database Technology}, EDBT '09,
+  pages 403--414, New York, NY, USA, 2009. ACM.
+\newblock ISBN 978-1-60558-422-5.
+\newblock \doi{http://doi.acm.org/10.1145/1516360.1516408}.
+\newblock URL \url{http://doi.acm.org/10.1145/1516360.1516408}.
+
+\bibitem[Vapnik(1999)]{Vapnik99}
+Vladimir~N. Vapnik.
+\newblock \emph{The Nature of Statistical Learning Theory}.
+\newblock Statistics for engineering and information science. Springer-Verlag,
+  New York, NY, USA, 1999.
+\newblock ISBN 9780387987804.
+
+\bibitem[Vapnik and Chervonenkis(1971)]{VapnikC71}
+Vladimir~N. Vapnik and Alexey~J. Chervonenkis.
+\newblock On the uniform convergence of relative frequencies of events to their
+  probabilities.
+\newblock \emph{Theory of Probability and its Applications}, 16\penalty0
+  (2):\penalty0 264--280, 1971.
+\newblock \doi{10.1137/1116025}.
+
+\bibitem[Xu et~al.(2008)Xu, Jermaine, and Dobra]{XuJD08}
+Fei Xu, Christopher Jermaine, and Alin Dobra.
+\newblock Confidence bounds for sampling-based {GROUP BY} estimates.
+\newblock \emph{ACM Trans. Database Syst.}, 33\penalty0 (3):\penalty0
+  16:1--16:44, September 2008.
+\newblock ISSN 0362-5915.
+\newblock \doi{http://doi.acm.org/10.1145/1386118.1386122}.
+\newblock URL \url{http://doi.acm.org/10.1145/1386118.1386122}.
+
+\end{thebibliography}

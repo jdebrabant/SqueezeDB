@@ -1,0 +1,21 @@
+\begin{abstract}
+  We present a new method to compute high quality approximations of aggregate
+  database queries. Our method executes the queries on a fixed static sample of the original
+  database, created off-line. It does not require any information about the
+  underlying data distribution. The sample size does not depend on the size of
+  the dataset but only on the complexity of the class of queries to be run,
+  expressed through the VC-Dimension of the class. An upper bound to this
+  quantity can be easily computed from the SQL expression of the queries. The
+  values computed by running the queries on the sample are, with high
+  probability, good approximations to the real values. To quantify the accuracy
+  of the estimated value, we develop a method  to compute confidence intervals
+  around the estimation. This method is based on a convex
+  optimization problem, which can be efficiently solved using known techniques.
+  With high probability the confidence intervals contain the real values, for
+  all queries. To our knowledge this is the first work that can achieve this
+  guarantee for all queries in a given class simultaneously. We performed an
+  extensive experimental evalution of our methods, showing that they achieve
+  high accuracy and great speed-up compared to running the queries on the
+  original dataset.
+\end{abstract}
+

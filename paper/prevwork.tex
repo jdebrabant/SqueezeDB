@@ -1,0 +1,68 @@
+\section{Previous Work}\label{sec:prevwork}
+Many of the early contributions and developments in the area of Approximate
+Query Processing (AQP) using sampling are presented in the survey by~\citet{Das09}. Here we focus on the contributions that are more related to
+ours.
+
+Using workload information to improve the quality of AQP was explored by many
+authors~\citep{KonigW99,GantiLR00,ChaudhuriDDMN01,LazaradisM01,ChaudhuriDN07}. The
+usual approach is to use this information to assign different weights to the
+tuples in the database and then use weighted sampling to ensure that tuples that
+are used more often have higher probability of appearing in the sample. Although
+we also develop our results for classes of queries representing the workload of
+the database, these classes can be completely defined by their SQL expression
+and are therefore completely data-independent, with the effect of making our
+results much more general and flexible.
+
+\citet{Haas96,Haas97} developed Hoeffding-like inequalities to derive
+accurate estimations of query answers and confidence bounds to them.
+Simultaneous statistical inference techniques like the union
+bound~\citep{Miller81} must be used in order to derive uniform guarantees over a
+class of queries, which are known to be overly conservative when the number of
+queries is large.  The work is nevertheless interesting because it presents a
+class of deterministic confidence intervals which can be compared with the ones
+we present in Sect.~\ref{sec:aggreg}.
+
+In the work by~\citet{ChaudhuriDN07}, the solution of an
+optimization problem suggests good strata into which partition the tuples,
+before using stratified sampling, in order to achieve higher quality in AQP.
+The obtained sample is such that the mean square error in estimating the
+selectivity of queries belonging to a given workload is minimized, but there is
+no quality guarantee on the maximum error. We instead solve optimization
+problems to find confidence bounds to our estimate of the query answer, giving a
+guarantee on the error we make.
+
+\citet{PolJ05} use the bootstrap, a statistical tool, to derive
+confidence bounds to the estimates. In its simplest form, their work requires
+running the query multiple (possibly thousands) of times, but additional data
+structures allows for running the query only once. The major difference from our
+work is that the boostrap gives \emph{experimental} confidence bounds, while we
+give an \emph{analytical} procedures and guarantees to derive the bounds.
+
+The work of~\citet{XuJD08} also deals with developing confidence bounds
+to estimates of answers to queries involving \texttt{GROUP BY} conditions. They
+suggest that correlation between groups answers should be taken into account
+when computing the bounds. This can be done by solving an inference problem
+which can not be solved in polynomial time unless $P=NP$. The authors examine
+different heuristics to circumvent this limitation. In our work we do not need
+to take correlation between groups into account because the guarantees on the
+group size estimates hold uniformly and independently for all groups.
+
+\citet{RoschL09} suggest a biased sample approach to improve
+the quality of estimates for small-sized groups. Their technique exploits the
+standard deviation of the aggregate values in a group to compute how many tuples
+from that group should be sampled. In order to do this, a fixed set of aggregate
+attributes must be specified. Our approach, on the other hand, is much more
+general in that we do not need this information, and aggregates can be computed
+on any column.
+
+\citet{AgarwalMPMMS13} present BlinkDB, a parallel engine for query processing
+that uses stratified sampling to approximate aggregate queries. BlinkDB exploits
+query workload information to select the best group of columns for the strata.
+The samples are selected depending on the query and on additional constraints on
+runtime and accuracy specified by the user. The system can not actually
+guarantee that the estimation has the required accuracy for all queries, as no
+correction for multiple queries (e.g.~the union bound) is considered when
+computing sample size. On the contrary, our approach guarantees that, with
+probability at least $1-\delta$, the confidence interval it compute contains the
+real value for all queries.
+

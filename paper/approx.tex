@@ -1,0 +1,70 @@
+\documentclass[10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+%\usepackage{mathtools}
+%\usepackage[cm]{fullpage}
+\usepackage{graphicx}
+\usepackage[numbers,sort&compress,square]{natbib}
+\usepackage[pdftex,bookmarks=true,pdfstartview={FitH},pdfauthor={XXX},pdftitle={Approximate Query Processing with Confidence Bounds},pdfsubject={Approximate Query Processing}]{hyperref} % Must be included after natbib
+\usepackage{subfig}
+\usepackage{url}
+
+% Temporary Packages
+\usepackage{fullpage}
+\usepackage[show]{notes-alt}
+\usepackage{times}
+
+%\newtheorem{proof}{Proof}
+\newtheorem{corollary}{Corollary}
+\newtheorem{conj}{Conjecture}
+\newtheorem{claim}{Claim}
+\newtheorem{fact}{Fact}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\newcommand{\Db}{{\cal D}}
+\newcommand{\Sam}{{\cal S}}
+\newcommand{\Tab}{{\cal T}}
+\newcommand{\VC}{\mathsf{VC}}
+\newcommand{\vc}{\mathsf{vc}}
+\newcommand{\domain}[1]{\mathsf{D}\left(#1\right)}
+\newcommand{\values}[1]{\mathsf{V}\left(#1\right)}
+\newcommand{\multivalues}[1]{\mathsf{M}\left(#1\right)}
+\newcommand{\SELECT}{\mbox{\texttt{SELECT }}}
+\newcommand{\FROM}{\mbox{\texttt{ FROM }}}
+\newcommand{\WHERE}{\mbox{\texttt{ WHERE }}}
+\newcommand{\AND}{\mbox{\texttt{ AND }}}
+\newcommand{\GROUPBY}{\mbox{\texttt{ GROUP BY }}}
+
+\DeclareMathOperator{\op}{op}
+\DeclareMathOperator{\bool}{bool}
+\DeclareMathOperator{\eqop}{eqop}
+
+\begin{document}
+\title{Approximate Query Processing with Confidence Bounds}
+\author{}
+\maketitle
+
+\input{abstract}
+\input{intro}
+\input{prelims}
+\input{queries}
+\input{experiments}
+\input{prevwork}
+\input{concl}
+
+\bibliographystyle{plainnat}
+\bibliography{approxbib,riondapubs,vcfreq,vcmine}
+
+\end{document}
+

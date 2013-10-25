@@ -51,7 +51,7 @@ public class SumSolver
 			{
 				ieExpr[i] = cplex.prod(1.0, epsilonV[i]);
 			}
-			
+			// Constraints
 			IloNumExpr sumExpr = cplex.sum(ieExpr);
 			cplex.addLe(sumExpr, epsilon);
 			cplex.addGe(sumExpr, -epsilon);

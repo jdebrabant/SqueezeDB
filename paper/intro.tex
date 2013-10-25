@@ -1,0 +1,58 @@
+\section{Introduction}\label{sec:intro}
+\todo{Write.
+
+Ideas:
+\begin{itemize}
+  \item Aggregate queries gives you an intuition, a condensed piece of
+    information, a rough picture of the data. The collection of statistics has
+    somewhat an exploratory flavour.
+  \item Computing them exactly is not worth it at takes a lot of time due to the
+    desire to squeeze each possible amount of information from the DB.
+  \item Given the goal, it is actually ok to settle for approximate answers.
+    These still give enough information about the data, and they 
+  \item Online aggregation bad (slow)
+  \item Guarantees are important. Not easy to achieve guarantees over all the
+    queries. Need to use more powerful statistical techniques.
+\end{itemize}
+}
+
+\paragraph{Our Contributions.} In this work we introduce a new method for
+computing \emph{high-quality approximate answers to aggregate queries}. We run
+queries on a \emph{fixed static sample} of the dataset created off-line. The
+method does not make any assumption on the distribution of the data in the
+database, i.e., it is \emph{distribution-free}. It does not requires any
+knowledge of the workload except for the
+\emph{maximum complexity} of the queries that the user is interested in running. Our
+definition of complexity depends on the maximum number $b$ of conditions in
+the selection predicate, the maximum number $m$ of columns the maximum number of
+joins $u$. Starting from this information, our method derives a sample size
+such that a random sample of the database of that size can be used to compute good
+approximations of the values of all the queries with the specified complexity by
+running the queries on the sample. The sample fits in main memory and is computed only once off-line and only
+needs to be updated after major changes in the original database. This results
+in a huge speedup in the execution of the queries. Given two user-specified
+parameters $\varepsilon$ and $\delta$ which control the
+accuracy and the confidence of the approximate answers, the sample size is
+$O(\varepsilon^{-2}(\mathsf{poly}(b,m,u)+\log(1/\delta)))$ and it does not depend
+on the size of the original database, but only on the maximum query complexity
+and on $\varepsilon$ and $\delta$. Deriving such a sample size is possible thanks to an
+application of VC-dimension theory to database queries. In order to be more
+informative about the quality of the approximate answers, we also developed a
+method based compute \emph{deterministic confidence intervals} for the answers.
+The confidence intervals can be computed efficiently, as the method requires the
+solution of a \emph{convex optimization problem}. We can guaranteed that, with
+probability at least $1-\delta$, the computed interval will contain the true
+value of the aggregate query for all queries \emph{simultaneously}. We conducted
+an extensive experimental evaluation of the accuracy of our estimations and
+confidence intervals and of the speedup achieved by our method, showing that it
+is very accurate and fast.
+\todo{We are missing stuff like ``we are the first to do this and that''.}
+
+\paragraph{Outline.} We introduced the basic definitions, concepts and tools in
+Sect.~\ref{sec:prelims}. Our method for computing good approximations of
+aggregated queries is presented in Sect.~\ref{sec:aggreg}. We conducted an
+extensive experimental evaluation of our approach and report the results in
+Sect.~\ref{sec:exper}. Sect.~\ref{sec:prevwork} contains a review of the
+relevant previous work.  We wrap up with conclusions and future work in
+Sect.~\ref{sec:concl}.
+

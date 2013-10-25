@@ -1,0 +1,86 @@
+This is BibTeX, Version 0.99d (TeX Live 2011)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: approx.aux
+The style file: plainnat.bst
+Database file #1: approxbib.bib
+Database file #2: riondapubs.bib
+Database file #3: vcfreq.bib
+Repeated entry---line 12 of file vcfreq.bib
+ : @techreport{Haas96
+ :                   ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 90 of file vcfreq.bib
+ : @incollection{Das09
+ :                    ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 723 of file vcfreq.bib
+ : @inproceedings{GantiLR00
+ :                         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 851 of file vcfreq.bib
+ : @article{ChaudhuriDN07
+ :                       ,
+I'm skipping whatever remains of this entry
+Database file #4: vcmine.bib
+Repeated entry---line 480 of file vcmine.bib
+ : @book{Miller81
+ :               ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 490 of file vcmine.bib
+ : @incollection{LofflerP09
+ :                         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 526 of file vcmine.bib
+ : @article{VapnikC71
+ :                   ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 542 of file vcmine.bib
+ : @book{Matousek02
+ :                 ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 553 of file vcmine.bib
+ : @article{LiLS01
+ :                ,
+I'm skipping whatever remains of this entry
+You've used 24 entries,
+            2773 wiz_defined-function locations,
+            807 strings with 10636 characters,
+and the built_in function-call counts, 12536 in all, are:
+= -- 1229
+> -- 597
+< -- 29
++ -- 202
+- -- 178
+* -- 954
+:= -- 1886
+add.period$ -- 117
+call.type$ -- 24
+change.case$ -- 124
+chr.to.int$ -- 24
+cite$ -- 48
+duplicate$ -- 618
+empty$ -- 1023
+format.name$ -- 218
+if$ -- 2747
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 30
+newline$ -- 161
+num.names$ -- 102
+pop$ -- 238
+preamble$ -- 1
+purify$ -- 105
+quote$ -- 0
+skip$ -- 480
+stack$ -- 0
+substring$ -- 497
+swap$ -- 131
+text.length$ -- 14
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 229
+warning$ -- 0
+while$ -- 115
+width$ -- 0
+write$ -- 413
+(There were 9 error messages)

@@ -1,0 +1,504 @@
+\subsection{VC-Dimension and SQL Queries}\label{sec:vcdimquer}
+\citet{RiondatoACZU11} defined a range space for SQL queries and computed a
+bound to its VC-Dimension. We recall here some of their results that we will use
+throughout the paper.
+
+Let $Q$ be a collection of (non-group-by, non-aggregate) queries. We define a
+range space $S_Q=(X,\mathcal{R})$ associated to $Q$ as follows. The domain $X$
+is the \emph{Cartesian product} of the tables involved in queries of $Q$. For
+each query $q\in Q$, let $R_q$ be the subset of $X$ in the output of $q$. The
+set $\mathcal{R}$ is the collection of all the ranges $R_q$ for each $q\in Q$.
+In the rest of the paper we will often identify a query $q$ with its range $R_q$
+(i.e., with its output) and the set of range $\mathcal{R}$ with the class of
+queries $Q$. When the ranges represent all the possible outputs of queries in a class $Q$
+applied to database tables $\Db$, the VC-dimension of the range space is the maximum
+number of tuples such that any subset of them is the output of a query in $Q$.
+The following lemmas show how to bound the VC-dimension of the
+range space of different classes of queries.
+
+\begin{lemma}[\citep{RiondatoACZU11}]\label{lem:vcdimselgen}
+  Let $\Tab$ be a table with $m$ columns, let $b>0$ and let $\Sigma^{b*}_\Tab$
+  be the set of selection queries on $\Tab$ whose selection predicate is a
+  Boolean combination of $b$ clauses. Then, the VC-dimension of the range space
+  $S_b = (\Tab, \Sigma^{b*}_\Tab)$ is at most $3((m+1)b)\log((m+1)b)$.  
+\end{lemma}
+
+\begin{lemma}[\citep{RiondatoACZU11}]\label{lem:vcdimjoinmul}
+  Consider the class $Q$ of queries that can be seen as combinations of select
+  and joins on $u>2$ tables $\Tab_1,\dotsc,\Tab_u$. Let $S_i=(\Tab_i,R_i)$,
+  $i=1,\dotsc,u$ be the range space associated with the select queries on the $u$
+  tables. Let $v_i=VC(S_i)$. Let $m$ be the maximum number of columns in a table
+  $\Tab_i$. We assume $m\le \sum_i v_i$.\footnote{The assumption $m\le \sum_i
+  v_i$ is reasonable for any practical case.} Let $S_Q = (\Tab_1\times\dotsb\times
+  \Tab_u, R_Q)$ be the range space associated with the class $Q$. The range set
+  $R_Q$ is defined as follows. Let $\rho = (r_1,\dotsc,r_u)$, $r_i\in R_i$, and
+  let $\omega$ be a sequence of
+  $u-1$ join conditions representing a possible way to join the $u$ tables $\Tab_i$,
+  using the operators $\{>,<,\ge,\le,=,\neq\}$. We define the range 
+  \[
+  J^\omega_{\rho} = \{(t_1,\dotsc,t_u) ~:~ t_i\in r_i, \mbox{ s.t. }
+  (t_1,\dotsc,t_u) \mbox{ satisfies } \omega\}.\]
+  $R_Q$ is the set of all possible $J^\omega_{\rho}$. Then,
+  \[
+  VC(S_Q)\leq 4u(\sum_i VC(S_i))\log(u\sum_i VC(S_i)).
+  \]
+\end{lemma}
+
+\note{We can probably remove the above two lemmas and just state the following.}
+The following Theorem can be obtained by combining the above results.
+
+\begin{theorem}\label{thm:vcdimgenqueries}
+Let $b$ be a positive integer parameter. Given a set
+$\Db=\{\Tab_1,\dotsc,\Tab_u\}$ of $u$ tables and a set $\mathcal{C}_i$ of
+up to $m$ columns for each table $T_i$, consider the class $Q_{u,m,b}$ of all
+queries on $\Db$ with up to $u-1$ join and $u$ select operations, where the
+part of the selection predicate involving table $\Tab_i$ has conditions about
+some of the columns from $\mathcal{C}_i$ and up to $b$ Boolean operations, then 
+\[
+\VC((\Db,Q_{u,m,b})) \leq 
+12u^2(m+1)b\log((m+1)b)\log(3u^2(m+1)b\log((m+1)b)).\]
+\end{theorem}
+It is clear from this Theorem that the bound to the VC-dimension depends
+only on the number of tables $u$, the number of columns $m$, and the number of
+joins $b$. We can then define the function
+\[
+\vc(u,m,b)=12u^2(m+1)b\log((m+1)b)\log(3u^2(m+1)b\log((m+1)b)).\]
+
+\citet{RiondatoACZU11} used Thm.~\ref{thm:eapprox} and the above bound to the
+VC-dimension of the range space $S=(X,Q)$ for a collection of queries $Q$ to
+compute a sample size $m$ such that a sample of size $m$ of the database can be
+used to compute high-quality approximations of the selectivities of all queries
+in $Q$. Formally, if we let $\sigma(q)$ be the selectivity of a query $q\in Q$
+when run on the original database $\Db$ and let $\tilde\sigma(q)$ be the
+selectivity of $q$ when run on the sample, \citet{RiondatoACZU11} proved that
+\[
+\Pr\left(\exists q\in Q \mbox{ s.t.~}
+|\sigma(q)-\tilde\sigma(q)|\ge\varepsilon\right)\le\delta,
+\]
+for some $\varepsilon$ and $\delta$ in $(0,1)$.
+
+\todo{Say something about how to create the sample.}
+
+In this present work, we leverage on this result to compute good approximations
+of the values of aggregate queries using a sample.
+
+\subsection{Estimating the Selectivity of \texttt{GROUP BY} Queries}\label{sec:groupby}
+To warm up, we show how to use the results introduced above to compute the
+selectivity of group-by queries.
+
+Let $\Db={\Tab_1,\dots,\Tab_u}$, and $\mathcal{C_i}$ ($1\le i \le u$), $m$, $b$,
+and $Q_{u,m,b}$ be as in Thm.~\ref{thm:vcdimgenqueries}. For a positive integer
+$k$, let $Q^k_{u,m,b}$ be the class of group-by queries $q(q^*,\mathcal{G})$
+where $q^*\in Q_{u,m,b}$ and $\mathcal{G}=\{G_1,\dots,G_\ell\}$ is a subset of
+the columns in the tables of $\Db$, under the condition that no more than $k$
+columns per table are in $\mathcal{G}$. We use the equivalence from
+Fact~\ref{fact:groupbyequiv} to show how to compute an approximation of the
+sizes of the groups in the output of a group-by query. 
+
+Given $\mathcal{G}$, for any query $q\in Q^k_{u,m,b}$, let $E_{q,\mathcal{G}}$
+be the set of queries with selection/join predicate as
+in~\eqref{eq:groupbyequiv}. It is easy to see that all $q'\in E_{q,\mathcal{G}}$
+are members of the class $Q_{u,p,b+2k}$, where $p=\max\{|C_i\cap\mathcal{G}|
+~:~ 1\le i\le u\}$ ($p\le m+k$. The class $Q_{u,p,b+2k}$ contains also other
+queries that are not members of any $E_q$). From Thm.~\ref{thm:vcdimgenqueries},
+we have that $\VC((\Db,Q_{u,p,b+2k}))\le\vc(u,p,b+2k)$.
+
+Hence, if we build an $\varepsilon$-approximation $\Sam$ for the range space
+$(\Db,Q_{u,p,b+2k})$ (for example using Theorem~\ref{thm:eapprox}) and execute
+queries from $Q^k_{u,m,b}$ on $\Sam$, then the selectivities on $\Sam$ of queries
+from $E_q$ will be within $\varepsilon$ from their real selectivities. Thanks to
+the equivalence from Fact~\ref{fact:groupbyequiv}, this means that we can
+estimate the sizes of the groups in the output of a query $q\in Q^k_{u,m,b}$ by
+looking at the sizes of the groups in the output of $q$ when run on $\Sam$.
+
+\note{I wonder whether the above should be more formal.}
+
+Note that our guarantees do not extend to the number of groups, i.e., we cannot
+guarantee that the number of groups in the output of the query when run on the
+sample is within $\varepsilon$ from the number of groups in the output of the
+query when run on the large database.
+
+\section{Approximately Answering Aggregate Queries}\label{sec:aggreg}
+The focus of this work is computing approximate answers to aggregate database
+queries by running them on a random sample of the original database. In this
+section we first describe our method to compute the \emph{point estimation}
+(i.e., the estimation of the value of the query) and then show how to derive
+deterministic confidence intervals for our estimations by solving convex
+optimization problems.
+
+\subsection{Point Estimation}\label{sec:pointest}
+Given a database $\Db$, let $q=(q^*,f)$ be an aggregate query with
+$f:\domain{C_f}\times\mathbb{N}_0\to\mathbb{R}$ for some column $C_f$ of some
+table of $\Db$ (we used Fact~\ref{fact:aggregquery} to define $f$). Let $S$ be the
+set of pairs $(v,c_v)$ where $v\in \domain{C_f}$ and $c_v$ is the number of times
+that $v$ appears in the column $C_f$ in the output of $q^*$ when $q^*$ is run on
+$\Db$.
+
+We approximate $f(S)$, i.e., the output of $q$, with $f(\tilde{S})$ where
+$\tilde{S}$ is a collection of pairs $(v,\tilde{c}_v)$ such that there is a pair
+$(v,c_v)\in S$ and $c_v-\gamma_v \le\tilde{c}_v\le c+\gamma_v$ where $0\le
+\gamma_v \le \gamma$, for some fixed parameter $\gamma$. In particular,
+$\tilde{c}_v$ is a function of \emph{1.} the number of times that $v$ appears in the
+column $C_f$ in the output of $q^*$ when $q^*$ is run on a sample, and \emph{2.}
+the size of the sample.
+
+Let $Q_{u,m,b}$ be as in Thm.~\ref{thm:vcdimgenqueries}, and let
+$\mathcal{A}=Q_{u,m,b}\times\mathcal{F}$ \itodo{$\leftarrow$ Is this
+the right expression?} be a class of aggregate queries $(q^*,f)$
+where $q^*\in Q_{u,m,b}$ and $f\in\mathcal{F}$, for some family $\mathcal{F}$ of
+functions such that each $f\in\mathcal{F}$ goes from
+$\domain{\Tab.C}\times\mathbb{Z}^+$ to $\mathbb{R}$, where $\Tab.C$ is a column
+in some table $\Tab$ of $\Db$. For any query $q^*\in Q_{u,m,b}$, let
+$\mathcal{C}_{q^*}$ be its selection/join predicate.
+We can see the output of any $q^*\in Q_{u,m,b}$ as the union of the
+outputs of the queries whose selection/join predicate is $\mathcal{C}_{q^*}$
+\texttt{AND}'ed with a condition on the column $C_f$, i.e., whose selection/join
+predicate is in the form
+\begin{equation}\label{eq:aggregselpred}
+  \mathcal{C}_{q^*} \AND C_f=v;
+\end{equation}
+where $v\in\domain{C_f}$. Formally, let $q^*_v$ be a query with selection
+predicate as in~\eqref{eq:aggregselpred}, for $v\in\domain{C_f}$, and let
+$B_{q^*,f}=\{q^*_v ~:~ v\in\domain{C_f}\}$. Then, the output of $q^*$ is the union of the
+outputs of all queries in $B_{q^*,f}$.
+
+Let now $\mathsf{A}(Q_{u,m,b},\mathcal{F})$ be the union of all $B_{q^*,f}$, for
+all $q^*\in Q_{u,m,b}$ and $f\in\mathcal{F}$. Consider the class
+$\bar{Q}=Q_{u,m,b}\cup A(Q_{u,m,b},\mathcal{F})$. The range space $(\Db,\bar{Q})$ has
+VC-dimension at most $\vc(u,m+1,b+1)$ because $\tilde{Q}$ is a subset of the
+class $Q_{u,m+1,b+1}$. We can then build an $\varepsilon$-approximation $\Sam$ for
+the range space $(\Db,\bar{Q})$ and the selectivity $\tilde\sigma(Q)$ of each query
+$q\in\bar{Q}$ when run on $\Sam$ will be within $\varepsilon$ from its
+selectivity $\sigma(q)$ when run on $\Db$. If we fix
+$\varepsilon,\delta\in(0,1)$ and use Thm.~\ref{thm:eapprox} to
+compute the sample $\Sam$, we have
+\[
+\Pr(\exists q\in\bar{Q} \mbox{ s.t. }
+|\tilde\sigma(q)-\sigma(q)|\ge\varepsilon)\le\delta\enspace.
+\]
+
+Let $\eta$ be the ratio between the size of $\Db$ and the size
+of $\Sam$ \itodo{Explain better what it means.}. Given an aggregate query $q\in\mathcal{A}$, we will approximate
+$f(S)$ with $f(\tilde{S})$, where the members of $\tilde{S}$ are the pairs
+$(v,\sigma_v\cdot\eta)$ with $\sigma_v$ being the selectivity on $\Sam$ of the
+query from $A(Q_{u,m,b},\mathcal{F})$ corresponding to $(q^*,f)$ and $v$, for
+all $v\in D(C)$. To compute this we do not need to run all such queries on $\Sam$ and
+it suffices to run $q$ on $\Sam$. 
+Note that we are not yet using the relevant properties of
+$\varepsilon$-approximation (Def.~\ref{defn:eapprox}), but the advantages of
+building such an $\Sam$ will be evident after the following discussion.
+
+\note{It may look like the above discussion does not need to be that convoluted, and we
+may just say that we run the query on the sample. The problem is that the result
+of the query on the sample may have to be ``scaled up'' to the entire database.
+Think about sum.}
+\todo{Make example with sum or average?}
+
+\paragraph{Properties of the estimation.} When using a sample to compute an
+estimation for a quantity, it is highly desirable that the estimation has some
+properties that make it more informative about the real value of the quantity.
+One of the most desirable properties is the \emph{absence of bias}.
+\todo{Describe how, in order to achieve this, one may neet/want to compute a slightly
+different function for the aggregate, rather than the original. E.g.~for
+variance and stddev.}
+Another relevant property for the estimation is \emph{consistency}.
+\todo{Same as above.}
+
+\subsection{Deterministic confidence intervals}\label{sec:confint}
+Single point estimations for a parameter $\theta$ of interes, although useful on their own, become much more
+informative when accompanied with \emph{confidence intervals}. These are
+intervals of the domain of $\theta$ and give information about
+the accuracy of the estimation (which falls within the interval) and the
+location of the real value of $\theta$. Usually,
+confidence bounds are \emph{probabilistic}, in the following sense. Given a
+quantity $\theta$ to be estimated, a $1-\alpha$ confidence interval $I$ is an
+interval of the domain of $\theta$ such that $I$ contains $\theta$ with
+probability $1-\alpha$. The probability $1-\alpha$ should be interpreted in a
+frequentist framework. It represents the fraction of times that the interval
+(computed according to a fix procedure) contains the real value of quantity
+$\theta$, over an infinite number of repetitions of the procedure to compute the
+interval. In our settings and given our goals
+\itodo{which we never formally specified\ldots}, deriving probabilistic confidence bounds
+is not a viable option: \todo{Here we should explain that we cannot use these
+because we would have to apply a union bound over a very high number of queries,
+defeating the purpose.}. Our approach instead guarantees that, if the sample
+$\Sam$ is an $\varepsilon$-approximation for the range space $(\Db,Q)$ (where $Q$ is the
+class of queries that one may want to run), then the confidence interval we
+compute contains the real value of the query, for all aggregate queries built in
+$Q$. Another advantage of our method compared to probabilistic confidence intervals
+is that deriving a procedure to compute the latter is highly-specific on the
+aggregate function to be estimated (e.g., average rather than standard
+deviation), while our method is valid for \emph{any} aggregate function. \citet{Haas96}
+developed deterministic confidence intervals for aggregate queries, but our
+method computes intervals that are \emph{uniformly more powerful} than those
+of~\cite{Haas96} thanks to the fact that we can leverage the properties of
+$\varepsilon$-approximations.
+
+\todo{\citep{Haas96} has some tricks that may help us getting better
+estimations. Check those.}
+
+\paragraph{The method.} Our method for computing deterministic confidence
+intervals exploits the properties of the $\varepsilon$-approximation. 
+In particular, we use the fact that the selectivity on $\Sam$ of all the queries in an
+appropriately defined class of queries, is close (within $\varepsilon$) from
+their real selectivity on $\Db$.
+
+Let $\mathcal{A}$ \ldots \itodo{Add the others} be as in
+Sect.~\ref{sec:pointest}.
+
+Given and aggregate query $q=(q^*,f)\in$\itodo{In what?}, let $V_{q^*}(C_f)$ be
+the set of values from $\domain{C_f}$ that appear in the column $C_f$ in the
+output of $q^*$ when run on $\Db$. For now, assume that we know $V_{q^*}(C_f)$.
+We will remove this assumption later. Consider the set
+$B_{q^*,f}=\{q^*_v ~:~ v\in V_{q^*}(C_f)\}$. We want to find the sets
+$E^-=\{\varepsilon^-_v ~:~ v\in V_{q^*}(C_f)\}$, $E^+\{\varepsilon^+_v ~:~ v\in
+V_{q^*}(C_f)\}$ %$|\varepsilon^-_v|\le\varepsilon$, $|\varepsilon^+_v|\le\varepsilon$,
+%$\left|\displaystyle\sum_{v\in V_{q^*}(C_f)}\varepsilon^-_v\right|\le\varepsilon$,
+%$\left|\displaystyle\sum_{v\in V_{q^*}(C_f)}\varepsilon^+_v\right|\le\varepsilon$ and
+such that the sets $\tilde{S}^-$ and $\tilde{S}^+$, whose members are
+respectively the pairs
+$(v,(\tilde\sigma(q^*_v)+\varepsilon^-_v)\cdot\eta)$ and
+$(v,(\tilde\sigma(q^*_v)+\varepsilon^+_v)\cdot\eta)$ for all $v\in
+V_{q^*}(C_f)$, are such that $f(\tilde{S}^-)$ minimizes and $f(\tilde{S}^+)$
+maximizes $f(\cdot)$ among all possible choices of the sets $E^-$ and $E^+$
+which satisfy some constraints explained in the following which are derived from
+the fact that $\Sam$ is a $\varepsilon$-approximation.
+
+
+Since we assume we can build a total order relationship on $\domain{C_f}$, let
+$v_1,\dotsc,v_\ell$ be a labelling of the values in $V_{q^*}(C_f)$ in increasing
+sorted order. Let $q=(q^*,f)$, and let $\mathcal{C}$ be the selection/join
+predicate of $q^*$. Let $a,b$ be two values in $V_{q^*}(C_f)$. W.l.o.g.~assume
+$a\le b$. Consider the query $q^*_{a,b}$ whose selection predicate is
+\[
+\mathcal{C} \AND C_f < a \AND C_f < b
+\]
+\todo{Is that $\le$ ?}
+Given that $\Sam$ is a $\varepsilon$-approximation for $(\Db,Q)$ \itodo{Fix
+$Q$}, we have that the selectivity $\tilde\sigma(q_{a,b})$ of $q_{a,b}$ when run on $\Sam$ is within
+$\varepsilon$ from its selectivity $\sigma(q_{a,b})$ on $\Db$. More precisely,
+if we let $c_{a,b}$ be the cardinality of $q_{a,b}$ on $\Db$ and $\tilde c_{a,b}$ the cardinality of
+$q_{a,b}$ on $\Sam$, we have that
+\[
+\max\{\tilde c_{a,b},(\tilde\sigma(q_{a,b})-\varepsilon)\eta\} \le c_{a,b}\le
+\min\{1, (\tilde\sigma(q_{a,b})-\varepsilon)\eta\}\enspace.\]
+
+It should be evident that $\tilde c_{a,b}=\sum_{i=a}^b \tilde c_{i,i}$, and analogously for
+$c_{a,b}$, $\sigma(q_{a,b})$, and $\tilde\sigma(q_{a,b})$. This implies that the
+difference between \itodo{complete.}
+
+The optimization problem to solve to compute the sets $E^-$ and $E^+$ is then
+the following (for $E^-$, and analogously for $E^+$):
+\begin{itemize}
+  \item{\bf Constants:} $0\le\varepsilon\le 1$,$0\le \tilde\sigma_v\le 1, \forall v\in
+    V_{q^*}(C.f)$.
+  \item{\bf Variables:} $\varepsilon^-_v$ 
+  \item{\bf Goal} minimize the function $f(\tilde{S}^-)$.
+  \item{\bf Constraints:} 
+    \begin{itemize}
+      \item $\max\{0, \} \le \sum_{\ell=i}^j \sigma $.
+      \item $|\varepsilon^-_v|\le\varepsilon,\forall v\in V_{q^*}(C_f)$.
+      \item $\left|\displaystyle\sum_{v\in V_{q^*}(C_f)}\varepsilon^-_v\right|\le\varepsilon$.
+
+    \end{itemize}
+\end{itemize}
+The properties of the $\varepsilon$-approximation are used in the constraints.
+For all $v\in V_{q^*}(C_f)$, the selectivity $\sigma_v$ is within $\varepsilon$ from the
+real selectivity of the query with selection/join predicate as
+in~\eqref{eq:aggregselpred}, and this fact is reflected in the first constraint.
+The same is true for the query $q^*$ and given that its selectivity is the sum
+of the $\sigma_v$, then the absolute of the sum of the possible errors for each
+of the $\sigma_v$ must be bounded by $\varepsilon$, as in the second constraint.
+
+\begin{lemma}\label{lem:confbounds}
+  For any function $f$, let $S$, $\tilde{S}^+$, and $\tilde{S}^-$ be defined as
+  above. Then, $f(\tilde{S}^-)\le f(S)\le f(\tilde{S}^+)$.
+\end{lemma}
+\begin{proof}
+  It follows from the properties of the $\varepsilon$-approximation that $S$ is
+  one of the sets whose elements satisfy the constraints in the optimization
+  problems. Hence, $f(S)$ is considered as a possible solution to each
+  optimization problems, and the thesis follows.
+\end{proof}
+
+Until now, we assume to have perfect knowledge of $V_{q*}(C_f)$, the set of
+values appearing in the column $C_f$ in the output of $q^*$ when the query is
+run on $\Db$. When we run $q^*$ on a
+sample (as we do to approximate the aggregate query), the output of $q^*$ may
+only contain a subset $\tilde{V}_{q^*}$ of the values and if we only considered
+the values in $\tilde{V}_{q*}$, the obtained confidence bounds may not contain the
+real output. We therefore have to drop the assumption of knowing $V_{q^*}(C_f)$
+and assume instead to know two values $m$ and $M$, with $m\le M$ such that $m$
+is a lower bound to the values in $V_{q^*}(C_f)$ and $M$ is an upper bound to
+the values in $V_q$. We have $V_q\subseteq[m,M]$. The values $m$ and $M$ can be
+derived either from the selection predicate of $q^*$, if it involves the column
+$C_f$, or are usually available, for each column, in the set of statistics
+stored by the DMBS for query optimization\inote{Hass calls this the ``system
+catalog'', I don't know if that is correct.}
+Consider the optimization problem defined on $[m,M]$.
+We have
+
+\begin{lemma}\label{lem:equivoptprobs}
+  Every solution to the optimization problem on $V_q$ is a solution to the
+  optimization problem on $[m,M]$.
+\end{lemma}
+\begin{proof}
+  By setting the variables in $[m,M]\setminus V_q$ to $0$.
+\end{proof}
+
+\begin{corollary}
+  The solution to the maximization problem on $[m,M]$ is greater or equal to the
+  solution to the maximization problem on $V_q$. Analogously for the
+  minimization problems.
+\end{corollary}
+
+
+In what follows we derive analytical bounds to the confidence bounds for some
+widely utilized functions. The formulas we obtain are a pessimization of the
+confidence bounds found by solving the optimization problem, in the sense that
+the confidence intervals obtained by using the formulas will be larger than the
+one suggested by the optimization problem. The bound we derive for
+$\texttt{SUM}$ is of particular interest because we will use it to derive the
+other bounds.
+
+%\paragraph{Confidence bounds for \texttt{SUM}.}
+%Consider the optimization problem when the function $f$ is $\texttt{SUM}$, i.e., the output is
+%the sum of the values on a given column $C$ in the tuples satisfying the selection
+%predicate. Let $V_q$ be the set of values in $C$ in the output of the query $q$. The
+%function to be optimized is then $\sum_{v\in V_q}(\sigma_v+\varepsilon_v)|\Db|v$,
+%under the constraints $|\varepsilon_v|\le\varepsilon$ and $\sum_{v\in
+%V}\varepsilon_v\le \varepsilon$. Note that we can just optimize the function
+%$\sum_{v\in V_q}\varepsilon_v|\Db|v$. To express the optimization problem in standard
+%form, we change the variables, substituting $\varepsilon_v$ with
+%$\varepsilon^*_v=\varepsilon_v-\varepsilon$. The function to be optimized
+%becomes $\sum_{v\in V_q}\varepsilon^*_v|\Db|v$, under the constraints
+%$\varepsilon^*_v\le 2\varepsilon$ and $\sum_{v\in V}\varepsilon^*_v\le
+%(|V|+1)\varepsilon$. 
+
+%The optimization problem must be solved on $V_q$, but when we run $q$ on a
+%sample, the output of the $q$ may only contain a subset $\tilde{V}_q$ of the
+%values and if we only considered the values in $\tilde{V}_q$, the obtained
+%confidence bounds may not contain the real output. Let then $m$ be a lower bound
+%to the values in $V_q$ and let $M$ be an upper bound to the values in $V_q$. We
+%have $V_q\subseteq[m,M]$. Consider the optimization problem defined on $[m,M]$.
+%We have
+%
+%\begin{lemma}\label{lem:equivoptprobs}
+%  Every solution to the optimization problem on $V_q$ is a solution to the
+%  optimization problem on $[m,M]$.
+%\end{lemma}
+%\begin{proof}
+%  By setting the variables in $[m,M]\setminus V_q$ to $0$.
+%\end{proof}
+%
+%\begin{corollary}
+%  The solution to the maximization problem on $[m,M]$ is greater or equal to the
+%  solution to the maximization problem on $V_q$. Analogously for the
+%  minimization problems.
+%\end{corollary}
+
+%Consider now the solution obtained as follows. For
+%$v\in[m,m+\lceil\frac{M-m+1}{2}\rceil-2 ]$ set
+%$\varepsilon^*_v=0$ and for $v\in [m+\lceil\frac{M-m+1}{2}-1\rceil,M]$ set
+%$\varepsilon^*_v=2\varepsilon$. Then the corresponding value of the function to
+%be optimized is a maximum. It is easy to see that the given setting of values
+%corresponds to an extreme point of the convex polytope on which the problem is
+%defined and that any movement from that point would result either on a
+%constraint violation or on a decrement of the function to be optimized.
+%
+%Similarly, for the minimization problem, we set $\varepsilon^*_v=2\varepsilon$
+%for $v\in[m,m+\lceil\frac{M-m+1}{2}\rceil-2]$ and $\varepsilon^*_v=0$ for
+%$v\in[m+\lceil\frac{M-m+1}{2}-1\rceil,M]$.
+%
+%The resulting solution gives
+%$\Sigma_{m,M}=\lfloor\frac{M-m+1}{2}\rfloor(\lceil\frac{M-m+1}{2}\rceil)+\varepsilon(M-m+1)M$.
+%
+%From now on, given an interval $[a,b]$, we will denote with $\Sigma^+_{a,b}$ the
+%solution to the maximization problem on the interval $[a,b]$, and with
+%$\Sigma^-_{a,b}$ the solution to the minimization problem.
+
+\paragraph{Confidence bounds for \texttt{AVERAGE}.}
+
+The function to be optimized would be \[
+\frac{1}{\sum_{v\in V_q}(\sigma_v+\varepsilon_v)|\Db|}\sum_{v\in
+V_q}(\sigma_v+\varepsilon_v)|\Db|v.\]
+This function is not linear, so instead of using it, we will use a linear
+function such that the confidence interval obtained by solving the optimization
+problems will be larger or equal than the one obtained by using the above.
+We will actually use two different functions, depending on whether we re
+maximizing or minimizing. In the first case, we use the function
+$\frac{1}{(\sigma_q-\varepsilon)|\Db|}\sum_{v\in V_q}(\sigma_v+\varepsilon_v)|\Db|v$.
+In the second case, the function will be
+$\frac{1}{(\sigma_q+\varepsilon)|\Db|}\sum_{v\in V_q}(\sigma_v+\varepsilon_v)|\Db|v$.
+It is easy to see that solving the respective optimization problems will give
+solutions that are worse (in an ``interval width'' sense) than the ones
+obtained using the original function. What is more, we now just need to optimize
+the second term of the product in each function (i.e., the sum), which we
+already did in the previous Paragraph. We then obtain the following results: 
+
+\begin{itemize}
+  \item {\bf Upper Bound:} $\frac{1}{(\sigma_q-\varepsilon)|\Db|}\Sigma^+_{m,M}$.
+  \item {\bf Lower Bound:} $\frac{1}{(\sigma_q+\varepsilon)|\Db|}\Sigma^-_{m,M}$.
+\end{itemize}
+
+\paragraph{Confidence bounds for \texttt{VARIANCE}.} 
+The function to be optimized is 
+\[
+\frac{1}{(\sigma_q+\sum_{v\in V_q}\varepsilon_v)|\Db|}\sum_{v\in
+V_q}(\sigma_q+\varepsilon_v)|\Db|\left(v - \frac{1}{(\sigma_q+\sum_{w\in
+V_q}\varepsilon_w)|\Db|}\sum_{w\in V_q}(\sigma_q+\varepsilon_w)|\Db|w)\right).\]
+
+We use the following equivalence, which holds for any $n>1$ and any sequence of i.i.d. random
+variables $X_i$ ($\mu$ is the average of the $X_i$'s).
+\[
+\frac{1}{n-1}\sum_i(X_i-\mu)^2=\frac{1}{n-1}\sum_iX_i^2-\frac{1}{n^2-n}\left(\sum_iX_i\right)^2.\]
+
+Consider now the following pair of functions. It easy to see that they are
+respectively greater or equal and smaller or equal to the original function,
+point by point (i.e., for the same setting of $\varepsilon_v$).
+\begin{itemize}
+  \item {\bf Maximization:}
+    \[\frac{1}{(\sigma_q-\varepsilon)|\Db|-1}\sum_{v\in
+    V_q}(\sigma_v+\varepsilon_v)|\Db|v^2-\frac{1}{(\sigma_q-\varepsilon)^2|\Db|^2-(\sigma_q+\varepsilon)|\Db|}\left(\sum_{v\in
+    V_q}(\sigma_v+\varepsilon_v)|\Db|v\right)^2.\]
+  \item {\bf Minimization:} 
+    \[\frac{1}{(\sigma_q+\varepsilon)|\Db|-1}\sum_{v\in
+    V_q}(\sigma_v+\varepsilon_v)|\Db|v^2-\frac{1}{(\sigma_q+\varepsilon)^2|\Db|^2-(\sigma_q-\varepsilon)|\Db|}\left(\sum_{v\in
+    V_q}(\sigma_v+\varepsilon_v)|\Db|v\right)^2.\]
+\end{itemize}
+
+These functions are still not linear but we could bound them if we could find
+upper and lower bounds to $\sum_{v\in V_q}(\sigma_v+\varepsilon_v)|\Db|v^2$. Such
+upper and lower bounds, which we denote as $\Psi^+_{m,M}$ and $\Psi^-_{m,M}$ can
+be found in a way similar to the one we followed for $\Sigma^+_{m,M}$ and
+$\Sigma^-_{m,M}$. 
+
+We can then derive the following bounds to the confidence interval for VARIANCE:
+\begin{itemize}
+  \item{\bf Upper Bound:}
+\[
+\frac{1}{(\sigma_q-\varepsilon)|\Db|-1}\Psi^+_{m,M}-\frac{1}{(\sigma_q-\varepsilon)^2|\Db|^2-(\sigma_q+\varepsilon)|\Db|}\times
+\Sigma^-_{a,b}.\]
+
+  \item{\bf Lower Bound:}
+\[
+\frac{1}{(\sigma_q+\varepsilon)|\Db|-1}\Psi^-_{m,M}-\frac{1}{(\sigma_q+\varepsilon)^2|\Db|-(\sigma-\varepsilon)|\Db|} \Sigma^+_{a,b}.\]
+\end{itemize}
+
+\paragraph{Confidence bounds for \texttt{STDEV}.} 
+\todo{Square root of the ones for
+VARIANCE? It looks like it.}
+
+\paragraph{Comparison with previous results} In this Paragraph we
+compare our confidence bounds with the deterministic confidence bounds presented
+by Haas~\cite{Haas97}. 
+\todo{Fill.}
+
+
+\paragraph{Solving the optimization problems efficiently.} The constraints are convex
+functions, therefore if $f$ is a convex function, the problems are
+convex optimization problems and can be solved in polynomial time.
+\note{It seems to be that the functions we are interested in are actually
+quadratic and the constraints define a convex polytope, so it is even better.}
+\todo{What else can we say here?}
+

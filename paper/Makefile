@@ -6,7 +6,7 @@ UPLOADURI = ssh.cs.brown.edu:public_html/
 
 all : archive
 
-$(MAINFILE).aux: *.tex $(wildcard *.eps)
+$(MAINFILE).aux: *.tex $(wildcard *.sty) $(wildcard *.eps) Makefile
 	$(LATEX) $(MAINFILE).tex
 
 $(MAINFILE).blg: *.tex  *.bib

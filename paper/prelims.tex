@@ -1,5 +1,5 @@
 \section{Preliminaries}\label{sec:prelims}
-In this Section, we introduce the necessary terminology, concepts, and tools
+In this section, we introduce the necessary terminology, concepts, and tools
 that we will use to develop our results in the following sections.
 
 \subsection{Databases and Queries}\label{sec:dbqueries}
@@ -23,11 +23,11 @@ tables, \texttt{Customers} and \texttt{CarColors}.
     %\toprule
     \multicolumn{4}{c}{\emph{Customers}} \\
     \midrule
-    \emph{Name} & \emph{Age} & \emph{Street} & \emph{ZipCode} & \emph{PhoneNumber} \\
+    \emph{Name} & \emph{Age} & \emph{Street} & \emph{ZipCode} & \emph{CarBrand} \\
     \midrule
-    \texttt{John Doe} & \texttt{20} & \texttt{Pratt Av.} & \texttt{02906} & \texttt{401-1234567} \\
-    \texttt{Jim Clark} &  \texttt{30} &\texttt{Morris Rd.} & \texttt{02906} & \texttt{502-8902134} \\
-    \texttt{Greta Garbo} & \texttt{60} & \texttt{Pratt Av.} & \texttt{05902} & \texttt{853-9876543} \\
+    \texttt{John Doe} & \texttt{20} & \texttt{Pratt Av.} & \texttt{02906} & \texttt{BMW} \\
+    \texttt{Jim Clark} &  \texttt{30} &\texttt{Morris Rd.} & \texttt{02906} & \texttt{Lotus} \\
+    \texttt{Greta Garbo} & \texttt{60} & \texttt{Pratt Av.} & \texttt{05902} & \texttt{Rolls-Royce} \\
     \bottomrule
   \end{tabular}
   \hfill
@@ -36,7 +36,7 @@ tables, \texttt{Customers} and \texttt{CarColors}.
     \midrule
     \emph{Name} & \emph{Color} \\
     \midrule
-    \texttt{John Doe} & \texttt{Blue} \\
+    \texttt{John Doe} & \texttt{Black} \\
     \texttt{Jane Doe} & \texttt{Red} \\
     \texttt{Greta Garbo} & \texttt{Red}\\ 
     \bottomrule
@@ -54,7 +54,7 @@ $|\Out_\Db(q)|$. The \emph{selectivity} $\selectivity_\Db(q)$ of $q$ on $\Db$ is
 the ratio between $\card_\Db(q)$ and the \emph{product} of the sizes of the
 input tables of $q$.  Clearly, $0\le\selectivity_\Db(q)\le 1$.
 
-There are multiple types of queries. We now introduce the ones we are interested
+There are many different types of queries. We now introduce the ones we are interested
 in for our purposes.
 \begin{definition}\label{def:selectquery}
   Given a table $\Tab$ with columns $\Tab.C_1,\dotsc,\Tab.C_\ell$, a
@@ -70,7 +70,7 @@ in for our purposes.
 
 As an example, the selection query 
 \[
-\SELECT * \FROM \mbox{\emph{Customers}} \WHERE \mbox{\emph{Customers.ZipCode}} = 02906;
+\SELECT * \FROM \text{\emph{Customers}} \WHERE \text{\emph{Customers.ZipCode}} = 02906;
 \]
 would return the first and second row of Table~\ref{tab:example}.
 
@@ -87,7 +87,7 @@ for the categories in the domain.
   column $C$ (i.e., a column present both in $\Tab_1$ and $\Tab_2$) is a
   function which returns a subset of the Cartesian product of the tuples in
   $\Tab_1$ and $\Tab_2$. The returned subset is defined as the set $ \{(t_1,t_2)
-  ~:~ t_1\in\Tab_1, t_2\in\Tab_2, \mbox{ s.t. } t_1.C \op t_2.C \}$ where
+  ~:~ t_1\in\Tab_1, t_2\in\Tab_2, \text{ s.t. } t_1.C \op t_2.C \}$ where
   ``$\op$'' is one of $\{<,>,\ge,\le,=,\neq\}$.
 %  A join query can be expressed in SQL as
 %  \[
@@ -98,19 +98,19 @@ for the categories in the domain.
 \end{definition}
 An example of a join query is the following:
 \[
-\SELECT * \FROM \mbox{\emph{Customers}, \emph{CarColors}} \WHERE \mbox{ 
-\emph{Customers.Name}} = \mbox{\emph{CarColors.Name}}
+\SELECT * \FROM \text{\emph{Customers}, \emph{CarColors}} \WHERE \text{ 
+\emph{Customers.Name}} = \text{\emph{CarColors.Name}};
 \]
 This query would return the following tuples:
 \begin{align*}
-  &(\mbox{John Doe}, 21, \mbox{Pratt Av.}, \mbox{02906}, \mbox{401-1234567}, \mbox{Blue}), \\
-  &(\mbox{Greta Garbo}, 60, \mbox{Pitman St.}, \mbox{05902}, \mbox{853-9876543}, \mbox{Red})
+  &(\text{John Doe}, 21, \text{Pratt Av.}, \text{02906}, \text{BMW}, \text{Black}), \\
+  &(\text{Greta Garbo}, 60, \text{Pitman St.}, \text{05902}, \text{Rolls-Royce}, \text{Red})
 \end{align*}
 The column \emph{Name} is reported only once for clarity.
 
 Our definition of a join query is basically equivalent to that of a
 \emph{theta-join}~\citep[Sect.5.2.7]{GarciaMolinaUW02}, with the limitation that
-the join condition $\mathcal{C}$ can only contain a single clause, ,i.e., a single
+the join condition $\mathcal{C}$ can only contain a single clause, i.e., a single
 condition on the relationship of the values in the shared column $C$ and only
 involve the operators $\{<,>,\ge,\le,=,\neq\}$ (with their meaning on
 $\domain{C}$). The pairs of tuples composing the output of the join in our
@@ -133,10 +133,11 @@ corresponding theta-join.
 
 As an example, the query 
 \begin{align*}
-\SELECT &* \FROM \mbox{\emph{Customers},
+\SELECT &* \FROM \text{\emph{Customers},
 \emph{CarColors}} \WHERE 
-\mbox{\emph{Customers.Name}} = \mbox{\emph{CarColors.Name}} \\
-& \AND \mbox{\emph{Customers.ZipCode}}=02906 \AND \mbox{\emph{CarColors.Color}}=\mbox{\emph{Red}}
+\text{\emph{Customers.Name}} = \text{\emph{CarColors.Name}} \\
+& \AND \text{\emph{Customers.ZipCode}}=02906 \AND
+\text{\emph{CarColors.Color}}=\text{\emph{Red}};
 \end{align*}
 combines select and joins operations. It returns no tuple (empty answer), as
 there is no individual reported in both tables with zipcode $02906$ and a red
@@ -166,8 +167,8 @@ select and join queries.
 \end{definition}
 For example, the group-by query
 \[
-\SELECT * \FROM \mbox{\emph{Customers}}  \WHERE \mbox{\emph{Customers.Street}} =
-\mbox{"Pratt Av."} \GROUPBY \mbox{\emph{Customers.ZipCode}}
+\SELECT * \FROM \text{\emph{Customers}}  \WHERE \text{\emph{Customers.Street}} =
+\text{"Pratt Av."} \GROUPBY \text{\emph{Customers.ZipCode}}
 \]
 would return two sets, one for the value ``02906'' in \emph{Customers.ZipCode},
 containing the first tuple of the \emph{Customers}
@@ -205,8 +206,8 @@ and quantile computation \iquestion{Are there standard SQL expressions for these
 These are typically integrated in the query processing engine of commercial
 database management systems. An example of an aggregate query is the following:
 \[
-\SELECT \mbox{\texttt{AVG}}(\mbox{\emph{Customers.Age}}) \FROM
-\mbox{\emph{Customers}} \WHERE \mbox{\emph{Customers.ZipCode}} = 02906;
+\SELECT \text{\texttt{AVG}}(\text{\emph{Customers.Age}}) \FROM
+\text{\emph{Customers}} \WHERE \text{\emph{Customers.ZipCode}} = 02906;
 \]
 The output of this query would be ``25'', the average between the values in the
 \emph{Age} column in the first two tuples of the \emph{Customers} table.
@@ -215,15 +216,15 @@ The output of this query would be ``25'', the average between the values in the
   Let $f$ be a function as in Def.~\ref{def:aggregquery}, and let $A$ be a 
   subset of $\multivalues{\Tab.C}$. We can see $A$ as a collection of pairs
   $(v,c_v)$,
-  where $v\in \domain{C}$ and $c_v$ is a non-negative integer representing the number of
+  where $v\in \domain{\Tab.C}$ and $c_v$ is a non-negative integer representing the number of
   times $v$ appears in $A$. So, $f$ can be seen as a function from
-  $\mathcal{P}(\domain{C}\times\mathbb{N}_0)$ to $\mathbb{R}$.
+  $\mathcal{P}(\domain{\Tab.C}\times\mathbb{N}_0)$ to $\mathbb{R}$.
 \end{fact}
 For example, if we consider $f$ to be the average function, it is easy to see
 that
 \[
 f(S)=\frac{1}{\sum_{(v,c_v)\in S} c_v}\sum_{(v,c_v)\in S}(vc_v), \forall
-S\in\mathcal{P}(\domain{C}\times\mathbb{N}_0)\enspace.\]
+S\in\mathcal{P}(\domain{\Tab.C}\times\mathbb{N}_0)\enspace.\]
 
 \subsection{VC-Dimension}\label{sec:prelvcdim}
 The Vapnik-Chernovenkis (VC) Dimension of a space of points is a measure of the
@@ -233,8 +234,7 @@ the VC-dimension of a structure implies a bound on the number of random samples
 required for approximately learning that structure. We outline here some basic
 definitions and results and refer the reader to the works
 of~\citet[Sect.~14.4]{AlonS08},~\citet{MohriRT12} and~\citet{Vapnik99} for more details
-on VC-dimension. See Sect.~\ref{sec:prevwork} for applications of VC-dimension in 
-computer science.
+on VC-dimension. %See Sect.~\ref{sec:prevwork} for applications of VC-dimension in computer science.
 
 %VC-dimension is defined on {\em range spaces}:
 %

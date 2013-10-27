@@ -7,7 +7,7 @@ Ideas:
     information, a rough picture of the data. The collection of statistics has
     somewhat an exploratory flavour.
   \item Computing them exactly is not worth it at takes a lot of time due to the
-    desire to squeeze each possible amount of information from the DB.
+    desire to squeeze each possible bit of information from the database.
   \item Given the goal, it is actually ok to settle for approximate answers.
     These still give enough information about the data, and they 
   \item Online aggregation bad (slow)
@@ -46,13 +46,16 @@ value of the aggregate query for all queries \emph{simultaneously}. We conducted
 an extensive experimental evaluation of the accuracy of our estimations and
 confidence intervals and of the speedup achieved by our method, showing that it
 is very accurate and fast.
-\todo{We are missing stuff like ``we are the first to do this and that''.}
+\todo{We are missing stuff like ``we are the first to do this and that''. We are
+also not saying anything about group-by queries.}
 
 \paragraph{Outline.} We introduced the basic definitions, concepts and tools in
-Sect.~\ref{sec:prelims}. Our method for computing good approximations of
-aggregated queries is presented in Sect.~\ref{sec:aggreg}. We conducted an
-extensive experimental evaluation of our approach and report the results in
-Sect.~\ref{sec:exper}. Sect.~\ref{sec:prevwork} contains a review of the
-relevant previous work.  We wrap up with conclusions and future work in
-Sect.~\ref{sec:concl}.
+Sect.~\ref{sec:prelims}. Our methods for computing good approximations of
+aggregate queries and deterministic confidence intervals is presented in
+Sect.~\ref{sec:aggreg}. We conducted an extensive experimental evaluation of our
+approach and report the results in Sect.~\ref{sec:exper}.
+Sect.~\ref{sec:prevwork} contains a review of the relevant previous work.  We
+wrap up with conclusions and future work in Sect.~\ref{sec:concl}.
+\note{At the moment we are following the ``database/system'' style of putting
+previous work at the end. We may change that in the future.}
 

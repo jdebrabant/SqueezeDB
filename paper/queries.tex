@@ -68,7 +68,7 @@ joins $b$. We can then define the function
 VC-dimension of the range space $S=(X,Q)$ for a collection of queries $Q$ to
 compute a sample size $m$ such that a sample $\Sam$ of size $m$ of the database
 $\Db$ can be used to compute high-quality approximations of the selectivities on
-$\Db$ of all queries in $Q$ b. More precisely, the selectivity
+$\Db$ of all queries in $Q$. More precisely, the selectivity
 $\selectivity_\Sam(q)$ of $q\in Q$ on $\Sam$ can be used as a good estimation
 for $\selectivity_\Db(q)$. Formally, \citet{RiondatoACZU11} proved that it is
 possible to build a sample $\Sam$ such that
@@ -127,8 +127,10 @@ The focus of this work is computing approximate answers to aggregate database
 queries by running them on a random sample of the original database. In this
 section we first describe our method to compute the \emph{point estimation}
 (i.e., the estimation of the value of the query) and then show how to derive
-deterministic confidence intervals for our estimations by solving convex
-optimization problems.
+deterministic confidence intervals for our estimations by solving appropriate
+optimization problems defined on a polytope.
+\todo{State clearly and formarly our goals:``compute good approximation and deterministic
+confidence intervals for all queries in a certain class, etc etc''}
 
 \subsection{Point Estimation}\label{sec:pointest}
 Given a database $\Db$, let $q=(q^*,f)$ be an aggregate query with
@@ -153,33 +155,27 @@ queries in $B_{q^*,f}$:
 \]
 Given a sample $\Sam$ of $\Db$, we approximate $f(S)$, i.e., the output value of $q$,
 with $\tilde f(\tilde S)$ where $\tilde S$ is the collection of pairs
-$(v,\card_\Sam(q^*_v)$ for $v\in\domain{C_f}$ and $\tilde f$ is a function from
+$(v,\card_\Sam(q^*_v))$ for $v\in\domain{C_f}$ and $\tilde f$ is a function from
 $\mathcal{P}(\domain{C_f}\times\mathbb{N}_0)$ to $\mathbb{R}$ that can be
 specified by the user and describe a procedure to compute an estimator for
 $f(S)$. In some cases, for example for $f=\text{\texttt{AVG}}$ we may have
 $f=\tilde f$ but in other cases this may not
 be true. For example when $f=\text{\texttt{SUM}}$ we need to ``scale up'' the
 values $\card_\Sam(q^*_v)$ by multiplying each of them by the ratio between the
- product of the sizes of the input tables to $q^*$ and the product of the sizes
- of the corresponding sampled tables. Other cases for having $\tilde f\neq f$
- include $f=\text{\texttt{VAR}}$ or $f=\text{\texttt{STDEV}}$: if an unbiased
- and/or consistent estimator for $f(S)$ is desired, appropriate statistical
- procedures exist to achieve this goal using a specific function $\tilde f$.
-
+product of the sizes of the input tables to $q^*$ and the product of the sizes
+of the corresponding sampled tables. Other cases for having $\tilde f\neq f$
+include $f=\text{\texttt{VAR}}$ or $f=\text{\texttt{STDEV}}$: if an unbiased
+and/or consistent estimator for $f(S)$ is desired, appropriate statistical
+procedures exist to achieve this goal using a specific function $\tilde f$.
+\question{Make an example?}
 Note that we are not yet assuming anything about $\Sam$ or requiring that it has
 any specific property: it can be any sample of the database $\Db$. In the next
 section instead, we will require that $\Sam$ is a $\varepsilon$-approximation of
 an appropriate range space so that we can compute deterministic confidence
 intervals for the point estimation.
-\question{Make an example?}
-
-\note{It may look like the above discussion does not need to be that convoluted, and we
-may just say that we run the query on the sample. The problem is that the result
-of the query on the sample may have to be ``scaled up'' to the entire database
-(think SUM) and and that we may use different estimators.}
 
 \subsection{Deterministic confidence intervals}\label{sec:confint}
-Single point estimations for a parameter $\theta$ of interes, although useful on
+Single point estimations for a parameter $\theta$ of interest, although useful on
 their own, are much more informative when accompanied with \emph{confidence
 intervals}. These are intervals of the domain of $\theta$ and give information
 about the accuracy of the estimation (which falls within the interval) and the
@@ -193,9 +189,11 @@ procedure) contains the real value of quantity $\theta$, over an infinite number
 of repetitions of the procedure to compute the
 interval. In our settings and given our goals \itodo{which we never formally
 specified\ldots}, deriving probabilistic confidence bounds is not a viable
-option: \todo{Here we should explain that we cannot use these because we would
+option. 
+\todo{Here we should explain that we cannot use these because we would
 have to apply a union bound over a very high number of queries, defeating the
-purpose.}. Our approach instead guarantees that, if the sample $\Sam$ is an
+purpose.} 
+Our approach instead guarantees that, if the sample $\Sam$ is an
 $\varepsilon$-approximation for the range space $(\Db,Q)$ (where $Q$ is the
 class of queries that one may want to run), then the confidence interval we
 compute contains the real value of the query with probability $1$, for all
@@ -249,9 +247,13 @@ compute the sample $\Sam$, we have that
 \Pr(\exists q\in Q_{u,m+1,b+1} \text{ s.t. }
 |\selectivity_\Db(q)-\selectivity_\Sam(q)|>\varepsilon)\le\delta\enspace.
 \]
+From now on we will assume that the sample $\Sam$ is a
+$\varepsilon$-approximation for $(\Db,Q_{u,m+1,b+1})$. \citet{RiondatoACZU11}
+describe how to build $\Sam$.
 
 Let $V_{q^*}(C_f)$ be the set of values from $\domain{C_f}$ that appear in the
-column $C_f$ in the output of $q^*$ when run on $\Db$. For now, assume that we
+column $C_f$ in the output of $q^*$ when run on $\Db$ (each value only appears
+once:  $V_{q^*}(C_f)$ is \emph{not} a multi-set). For now, assume that we
 know $V_{q^*}(C_f)$. We will remove this assumption later. Since we assume we
 can build a total order relationship on $\domain{C_f}$, let $v_1,\dotsc,v_\ell$
 be a labelling of the values in $V_{q^*}(C_f)$ in increasing sorted order, with
@@ -260,11 +262,10 @@ $q=(q^*,f)$, and let $\mathcal{C}$ be the selection/join predicate of $q^*$. Let
 $a,b$ be two values in $[1,\ell]$. W.l.o.g.~assume $a\le b$. Consider the
 query $q^*_{a,b}$ whose selection predicate is
 \begin{equation}\label{eq:aggregselpredab}
-\mathcal{C} \AND C_f > v_a \AND C_f < v_b\enspace.
+\mathcal{C} \AND C_f \ge v_a \AND C_f \le v_b\enspace.
 \end{equation}
-\question{Is that $\le$ and $\ge$ ?}
-Clearly $q^*_{v_i}=q^*_{i,i}$ for all $v_i\in V_{q^*}(C_f)$ \itodo{$\Leftarrow$ Adjust the above definition so that this is true.}. Let now
-$\varepsilon_i=\selectivity_\Db(q^*_{v_i})-\selectivity_\Sam(q^*_{v_i})$. Since we
+Clearly $q^*_{v_i}=q^*_{i,i}$ for all $v_i\in V_{q^*}(C_f)$. Let now
+$\varepsilon_{v_i}=\selectivity_\Db(q^*_{v_i})-\selectivity_\Sam(q^*_{v_i})$. Since we
 do not know $\selectivity_\Db(q^*_{v_i})$, we do not know $\varepsilon_{v_i}$ either.
 Nevertheless, given that $\Sam$ is a $\varepsilon$-approximation for
 $(\Db,Q_{u,m+1,b+1})$, we have that
@@ -290,9 +291,8 @@ This holds for \emph{all} intervals $[a,b]\subseteq[1,\ell]$.
 A similar argument can be made for the queries $q^*_{a,b,\mathrm{rev}}$ with
 selection predicate
 \[
-\mathcal{C} \AND C_f < v_a \AND C_f > v_b\enspace.
+\mathcal{C} \AND C_f \le v_a \AND C_f \ge v_b\enspace.
 \]
-\question{Is that $\le$ and $\ge$?}
 
 These considerations give us the intuition for developing optimization
 problems that give deterministic upper and lower bounds to $f(S)$.
@@ -316,7 +316,7 @@ for the maximization):
     $\selectivity_\Sam(q^*_{a,b,\mathrm{rev}})$,
     $\card_\Sam(q^*_{a,b,\mathrm{rev}})$ for each $[a,b]\subseteq[1,\ell]$.
   \item[Variables:] $\varepsilon_{v_i}, \forall v_i\in V_{q^*}(C_f)$ 
-  \item[Goal:] minimize the function $f(\tilde S^-)$, where
+  \item[Objective:] minimize the function $f(\tilde S^-)$, where
     $S^-=\{(v_i,(\selectivity_\Sam(q^*_{v_i})+\varepsilon_{v_i})\eta), 1\le i\le
     \ell\}$.
   \item[Constraints:]
@@ -339,6 +339,10 @@ for the maximization):
 %The same is true for the query $q^*$ and given that its selectivity is the sum
 %of the $\sigma_v$, then the absolute of the sum of the possible errors for each
 %of the $\sigma_v$ must be bounded by $\varepsilon$, as in the second constraint.
+Note that to compute the quantities $\selectivity_\Sam(q^*_{a,b})$,
+$\card_\Sam(q^*_{a,b})$, $\selectivity_\Sam(q^*_{a,b,\mathrm{rev}})$, and
+$\card_\Sam(q^*_{a,b,\mathrm{rev}})$, we only need to run $q^*$ on $\Sam$, not
+each of the $q^*_{a,b}$ and $q^*_{a,b,\mathrm{rev}}$ queries.
 
 The following lemma shows that the optimal solutions to the optimization problems
 can be used as deterministic confidence bounds for the real value of the
@@ -374,8 +378,7 @@ lower bound to the values in $V_{q^*}(C_f)$ and $M$ is an upper bound to the
 values in $V_{q^*}(C_f)$. We have $V_{q^*}(C_f)\subseteq[m,M]$. The values $m$
 and $M$ can be derived either from the selection predicate of $q^*$, if it
 involves the column $C_f$, or are usually available, for each column, in the set
-of statistics stored by the DMBS for query optimization\iquestion{Haas calls
-this the ``system catalog'', is that correct?} Consider the optimization
+of statistics stored by the DMBS for query optimization. Consider the optimization
 problems defined on $[m,M]$, that is, we now have a variable $\varepsilon_v$ for
 each $v\in[m,M]$. 
 \question{Shall we be more formal in defining the problem on
@@ -406,7 +409,9 @@ are particularly interested in the computational complexity of solving the
 optimization problems for these aggregate functions.
 For sum, there are no particular issues: the objective function is obviously
 linear and, given that so are the constraints, the optimization problems can be
-solved efficiently (in polynomial time), using any linear program solver.
+solved efficiently (in polynomial time), using any linear program
+solver\citemissing.
+
 For average, the function to be optimized is
 \[
 \frac{1}{(\selectivity_\Sam(q^*)+\sum_{i=1}^\ell\varepsilon_{v_i})\eta}\sum_{i=1}^\ell
@@ -425,7 +430,7 @@ conservative confidence bounds:
 (the above is for maximization, but an analogous function can be defined for
 minimization). As we said, optimal solution to linear programs can be found in
 polynomial time.
-\todo{What I'd like to argue is that (in many cases) the optimal solution to the
+\todo{I'd like to argue that (in many cases) the optimal solution to the
 original problem and the optimal solution to the ``linearized'' problem are the
 same. I just have an intuition about this, I'm not sure it is true.}
 
@@ -447,7 +452,7 @@ stddev, depending on whether the data in the columns are seen as the entire
 population or as a sample of it. The only thing that changes should be the
 normalization. We should be able to do both.}
 
-For median \todo{Take care of median. I don't really know much about it, and
+For median/quantile\ldots \todo{Take care of median. I don't really know much about it, and
 need to think about the worst case. It seems like you just want to add /
 remove elements from the }
 

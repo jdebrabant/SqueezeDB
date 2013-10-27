@@ -17,33 +17,40 @@ the columns of $\Tab$, $t\in \domain{\Tab.C_1}\times\dotsb\times
 \domain{\Tab.C_m}$. Table~\ref{tab:example} shows two examples of database
 tables, \texttt{Customers} and \texttt{CarColors}. 
 
-\begin{table}[htb]
-  \centering
-  \begin{tabular}{c|c|c|c|c}
-    %\toprule
-    \multicolumn{4}{c}{\emph{Customers}} \\
-    \midrule
-    \emph{Name} & \emph{Age} & \emph{Street} & \emph{ZipCode} & \emph{CarBrand} \\
-    \midrule
-    \texttt{John Doe} & \texttt{20} & \texttt{Pratt Av.} & \texttt{02906} & \texttt{BMW} \\
-    \texttt{Jim Clark} &  \texttt{30} &\texttt{Morris Rd.} & \texttt{02906} & \texttt{Lotus} \\
-    \texttt{Greta Garbo} & \texttt{60} & \texttt{Pratt Av.} & \texttt{05902} & \texttt{Rolls-Royce} \\
-    \bottomrule
-  \end{tabular}
+\begin{figure}[htb]
+  \begin{subtable}[b]{0.6\textwidth}
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+      %\toprule
+      \multicolumn{5}{c}{\emph{Customers}} \\
+      \midrule
+      \emph{Name} & \emph{Age} & \emph{Street} & \emph{ZipCode} & \emph{CarBrand} \\
+      \midrule
+      \texttt{John Doe} & \texttt{20} & \texttt{Pratt Av.} & \texttt{02906} & \texttt{BMW} \\
+      \texttt{Jim Clark} &  \texttt{30} &\texttt{Morris Rd.} & \texttt{02906} & \texttt{Lotus} \\
+      \texttt{Greta Garbo} & \texttt{60} & \texttt{Pratt Av.} & \texttt{05902} & \texttt{Rolls-Royce} \\
+      \bottomrule
+    \end{tabular}
+    \caption{A database table with four columns}
+  \end{subtable}
   \hfill
-  \begin{tabular}{c|c}
-    \multicolumn{2}{c}{\emph{CarColor}} \\
-    \midrule
-    \emph{Name} & \emph{Color} \\
-    \midrule
-    \texttt{John Doe} & \texttt{Black} \\
-    \texttt{Jane Doe} & \texttt{Red} \\
-    \texttt{Greta Garbo} & \texttt{Red}\\ 
-    \bottomrule
-  \end{tabular}
-  \caption{Example of database tables.}
+  \begin{subtable}[b]{0.3\textwidth}
+    \centering
+    \begin{tabular}{c|c}
+      \multicolumn{2}{c}{\emph{CarColor}} \\
+      \midrule
+      \emph{Name} & \emph{Color} \\
+      \midrule
+      \texttt{John Doe} & \texttt{Black} \\
+      \texttt{Jane Doe} & \texttt{Red} \\
+      \texttt{Greta Garbo} & \texttt{Red}\\ 
+      \bottomrule
+    \end{tabular}
+    \caption{A database table with two columns}
+  \end{subtable}
+  \caption{Example of two database tables.}
   \label{tab:example}
-\end{table}
+\end{figure}
 
 A \emph{query} $q$ is a function that takes as input one or more tables and
 returns a set of elements the Cartesian product of the input tables. This set

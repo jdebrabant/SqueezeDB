@@ -78,7 +78,8 @@ possible to build a sample $\Sam$ such that
 \]
 for some $\varepsilon$ and $\delta$ in $(0,1)$.
 
-\todo{Say something about how to create the sample.}
+\todo{Say something about how to create the sample.
+Reference~\citep{RiondatoACZU11}.}
 
 In this present work, we leverage on this result to compute good approximations
 (and confidence bounds) of the values of aggregate queries using a random sample
@@ -129,7 +130,7 @@ section we first describe our method to compute the \emph{point estimation}
 (i.e., the estimation of the value of the query) and then show how to derive
 deterministic confidence intervals for our estimations by solving appropriate
 optimization problems defined on a polytope.
-\todo{State clearly and formarly our goals:``compute good approximation and deterministic
+\todo{State clearly and formally our goals:``compute good approximation and deterministic
 confidence intervals for all queries in a certain class, etc etc''}
 
 \subsection{Point Estimation}\label{sec:pointest}
@@ -332,6 +333,12 @@ for the maximization):
     \min\{1,\lfloor(\selectivity_\Sam(q^*_{a,b,\mathrm{rev}})+\varepsilon)\eta\rfloor\}, \forall [a,b]\subseteq[1,\ell]
     \end{align*}
 \end{description}
+\question{To be really, really, accurate, one should replace
+$\selectivity_\Sam()$ with $\card_\Sam()$ and $\varepsilon_{v_i}$ with an
+\emph{integer} variable. As a consequence, the optimization problems become
+mixed-integer, and I don't know what the consequences are for the less ``nice''
+ones (quasi-linear, quadratic, \ldots). Shall we do that? 
+}
 %The properties of the $\varepsilon$-approximation are used in the constraints.
 %For all $v\in V_{q^*}(C_f)$, the selectivity $\sigma_v$ is within $\varepsilon$ from the
 %real selectivity of the query with selection/join predicate as
@@ -360,11 +367,13 @@ aggregate query.
   the thesis follows.
 \end{proof}
 
-Note that the constraints are \emph{linear functions} of the variables, which is
-a highly desirable property to be able to solve the optimization problem
-efficiently. 
-\todo{Say how many there are and perhaps explain the presence of $\min$ and
-$\max$ .}
+Note that the $\ell(\ell-1)$constraints are \emph{linear functions} of the
+variables, which is a highly desirable property to be able to solve the
+optimization problem efficiently. The bounds in the constraints are more
+sophisticated than those as in~\eqref{eq:constraints1} to ensure that the
+optimal solution is ``realistic'', i.e., it is actually possible in practice.
+This has the net effect of strengthening the bounds, reducing the feasibility
+space, and potentially shortening the width of the computed confidence interval.
 
 Until now, we assumed to have perfect knowledge of $V_{q*}(C_f)$, the set of
 values appearing in the column $C_f$ in the output of $q^*$ when the query is
@@ -413,13 +422,13 @@ solved efficiently (in polynomial time), using any linear program
 solver\citemissing.
 
 For average, the function to be optimized is
-\[
+\begin{equation}\label{eq:average}
 \frac{1}{(\selectivity_\Sam(q^*)+\sum_{i=1}^\ell\varepsilon_{v_i})\eta}\sum_{i=1}^\ell
 \left(v_i(\selectivity_\Sam(q^*_{v_i})+\varepsilon_{v_i})\eta\right)\enspace.
-\]
-This is an \emph{quasi-linear function} as it is linear-fractional\citemissing
-(BoydVandenberghe Example 3.32). It can then be solved efficiently in polynomial
-time\citemissing \itodo{see
+\end{equation}
+This is a \emph{linear-fractional function} and therefore
+\emph{quasi-linear}~\citep[Example 3.32]{BoydV04}. It can then be solved
+efficiently in polynomial time\citemissing \itodo{see
 \url{https://en.wikipedia.org/wiki/Quasiconvex_function}}. Alternatively, one
 can use a modified \emph{linear} objective function which gives more
 conservative confidence bounds:
@@ -435,19 +444,68 @@ original problem and the optimal solution to the ``linearized'' problem are the
 same. I just have an intuition about this, I'm not sure it is true.}
 
 For variance the objective function is
-\[
+%\[
+%\frac{1}{(\selectivity_\Sam(q^*)+\sum_{i=1}^\ell\varepsilon_{v_i})\eta}\sum_{i=1}^\ell
+%\left(\selectivity_\Sam(q^*_{v_i}+\varepsilon_{v_i})\eta\left(v_i - \frac{1}{(\selectivity_\Sam(q^*)+\sum_{i=1}^\ell\varepsilon_{v_i})\eta}\sum_{i=1}^\ell
+%v_i(\selectivity_\Sam(q^*_{v_i})+\varepsilon_{v_i})\eta \right)^2\right)\enspace.
+%\]
+%
+\begin{equation}\label{eq:variance}
+  \underbrace{
 \frac{1}{(\selectivity_\Sam(q^*)+\sum_{i=1}^\ell\varepsilon_{v_i})\eta}\sum_{i=1}^\ell
-\left(\selectivity_\Sam(q^*_{v_i}+\varepsilon_{v_i})\eta\left(v_i - \frac{1}{(\selectivity_\Sam(q^*)+\sum_{i=1}^\ell\varepsilon_{v_i})\eta}\sum_{i=1}^\ell
-v_i(\selectivity_\Sam(q^*_{v_i})+\varepsilon_{v_i})\eta \right)^2\right)\enspace.
+\left(\selectivity_\Sam(q^*_{v_i}+\varepsilon_{v_i})\eta v_i\right)^2}_{T} -
+\underbrace{\left(\frac{1}{(\selectivity_\Sam(q^*)+\sum_{i=1}^\ell\varepsilon_{v_i})\eta}\sum_{i=1}^\ell
+v_i(\selectivity_\Sam(q^*_{v_i})+\varepsilon_{v_i})\eta \right)^2}_{R}\enspace.
+\end{equation}
+Let $T^--(R^-)^2$ be the solution to the optimization problem for minimization
+using~\eqref{eq:variance} as objective function. Let now $R^+_{\mathrm{avg}}$ be
+the solution to the optimization problem for \emph{maximization} for the
+average, i.e., using~\eqref{eq:average} as objective function. Clearly 
+\[
+T^--(R^+_{\mathrm{avg}})^2\le T^--(R^-)^2\enspace.
 \]
+Consider now $T$ as function of the variables $\varepsilon_{v_i}$'s. We have
+$T=Q/A$, where $Q$ is a \emph{quadratic} function of the variables, and $A$ is
+a \emph{positive affine} function of the variables. Then their ratio is
+convex~\citep{BoydV04}. Consider the minimization problem using $T$ as an
+objective function, and let $T'^-$ be the optimal solution to this problem. This
+optimization problem can be solved in polynomial time.
+\question{One can actually replace $A$ with an upper bound and have a quadratic
+optimization problem. Shall we mention that?}
+We have
+\[
+T'^--(R^+_{\mathrm{avg}})^2\le T^--(R^+_{\mathrm{avg}})^2\le T^--(R^-)^2\enspace,
+\]
+hence we can use the leftmost term of the above expression as a deterministic
+\emph{lower} bound for the variance. Consider now the problem of finding an
+upper bound to the variance. The situation is more complex. Let $T^+-(R^+)^2$ be
+the optimal solution to the \emph{maximization} problem with~\eqref{eq:variance}
+as objective function, and let $(R^-_\mathrm{avg})^2$ be the optimal solution to
+the \emph{minimization} problem with~\eqref{eq:average} as objective function.
+We have
+\[
+T^+-(R^+)^2\le T^+-(R^-_\mathrm{avg})^2\enspace.
+\]
+Consider the \emph{maximization} problem with $T$ as objective function and let
+$T'^+$ be the optimal solution. Clearly,
+\[
+T^+-(R^+)^2\le T^+-(R^-_\mathrm{avg})^2\le T'^+-(R^-_\mathrm{avg})^2\enspace.
+\]
+The issue is though that the maximization problem with $T$ as objective
+function is a \emph{convex maximization problem over a polytope}, or equivalent a
+\emph{concave minimization problem}~\citep{Benson95}. Concave minimization is
+known to be a NP-hard problem even under the mildest conditions, but it is known
+that the optimal solution can be found at one of the extremal points of the
+polytope. Thanks to this and other interesting mathematical properties, there
+are a number of algorithms try to solve this problem as efficiently as
+possible~\citep{Benson95},\citemissing.
+\todo{complete.}
 
-\todo{I'm trying to understand what we can do here and whether this is a
-(quasi-)convex function or what or whether we can at least lower/upper bound it
-by a (quasi)-convex function.}
+\todo{I want to check what~\citet{Haas96} does for maximization of the variance.}
 
 For standard deviation, we get the same conclusions as for variance, given that
 the former is just the squared root of the latter.
-\todo{DBMS's actually have two functions for variance and two function for
+\todo{DBMS's actually have two functions for variance and two functions for
 stddev, depending on whether the data in the columns are seen as the entire
 population or as a sample of it. The only thing that changes should be the
 normalization. We should be able to do both.}

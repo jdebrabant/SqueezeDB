@@ -77,7 +77,7 @@
 	\newcommand{\itodo}[1]{\ingreen{$\lceil${{\Checkedbox} }} {\sf #1} \ingreen{$\rfloor$}}
 	\newcommand{\ireply}[1]{\inblue{$\lceil${{\Writinghand} }} {\sf #1} \inblue{$\rfloor$}}
 	\newcommand{\iquestion}[1]{\inorange{$\lceil${{\Biohazard} }} {\sf #1} \inorange{$\rfloor$}}
-	\newcommand{\citemissing}[0]{\inred{[citation]}}
+	\newcommand{\citemissing}[1][]{\inred{[citation} {\sf #1}\inred{]}}
 	\newcommand{\refmissing}[0]{\inred{???}}
 }
 \DeclareOption{hide}{

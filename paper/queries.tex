@@ -311,7 +311,7 @@ The optimization problem that has to be solved to compute the values
 $\varepsilon_{v_i}$ is then the following (for the minimization, and analogously
 for the maximization):
 \begin{description}
-  \item[Constants:] $0\le\varepsilon\le 1$,
+  \item[Constants:] $\varepsilon$, $\eta$,
     $\selectivity_\Sam(q^*_{a,b})$, $\card_\Sam(q^*_{a,b})$,
     $\selectivity_\Sam(q^*_{a,b,\mathrm{rev}})$,
     $\card_\Sam(q^*_{a,b,\mathrm{rev}})$ for each $[a,b]\subseteq[1,\ell]$.
@@ -322,14 +322,14 @@ for the maximization):
   \item[Constraints:]
     \begin{align*}
     &\max\{\card_\Sam(q^*_{a,b}),
-    (\selectivity_\Sam(q^*_{a,b})-\varepsilon)\eta\} \le
+    \lceil(\selectivity_\Sam(q^*_{a,b})-\varepsilon)\eta\rceil\} \le
     \left(\selectivity_\Sam(q^*_{a,b})+\sum_{i=a}^b\varepsilon_{v_i}\right)\eta \le
-    \min\{1,(\selectivity_\Sam(q^*_{a,b})+\varepsilon)\eta\}, \forall
+    \min\{\eta,\lfloor(\selectivity_\Sam(q^*_{a,b})+\varepsilon)\eta\rfloor\}, \forall
     [a,b]\subseteq[1,\ell] \\
     &\max\{\card_\Sam(q^*_{a,b,\mathrm{rev}}),
-    (\selectivity_\Sam(q^*_{a,b,\mathrm{rev}})-\varepsilon)\eta\} \le
+    \lceil(\selectivity_\Sam(q^*_{a,b,\mathrm{rev}})-\varepsilon)\eta\rceil\} \le
     \left(\selectivity_\Sam(q^*_{a,b,\mathrm{rev}})+\sum_{i=1}^a\varepsilon_{v_i}+\sum_{i=b}^\ell\varepsilon_{v_i}\right)\eta \le
-    \min\{1,(\selectivity_\Sam(q^*_{a,b,\mathrm{rev}})+\varepsilon)\eta\}, \forall [a,b]\subseteq[1,\ell]
+    \min\{1,\lfloor(\selectivity_\Sam(q^*_{a,b,\mathrm{rev}})+\varepsilon)\eta\rfloor\}, \forall [a,b]\subseteq[1,\ell]
     \end{align*}
 \end{description}
 %The properties of the $\varepsilon$-approximation are used in the constraints.

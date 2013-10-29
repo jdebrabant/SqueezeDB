@@ -465,13 +465,24 @@ average, i.e., using~\eqref{eq:average} as objective function. Clearly
 T^--(R^+_{\mathrm{avg}})^2\le T^--(R^-)^2\enspace.
 \]
 Consider now $T$ as function of the variables $\varepsilon_{v_i}$'s. We have
-$T=Q/A$, where $Q$ is a \emph{quadratic} function of the variables, and $A$ is
-a \emph{positive affine} function of the variables. Then their ratio is
-convex~\citep{BoydV04}. Consider the minimization problem using $T$ as an
-objective function, and let $T'^-$ be the optimal solution to this problem. This
-optimization problem can be solved in polynomial time.
-\question{One can actually replace $A$ with an upper bound and have a quadratic
-optimization problem. Shall we mention that?}
+\[
+T=\sum_i=1^\ell (g_i)^2/A
+\], where $A$ is a \emph{positive affine} function of the variables and $g_i$ is
+an non-negative affine function of the variables defined as
+\[
+g_i=\selectivity_\Sam(q^*_{v_i})v_i + \sum_{j=1}^\ell a^{(i)}_j
+\varepsilon_{v_i}
+\]
+with $a^{(i)}_j=0$ for $j\neq i$, and $a^{i}_i=v_i$, $1\le i,j\le \ell$.
+
+Then each of the functions $(g_i)^2/A$ is
+convex, as the composition of affine functions with the quadratic-over-linear
+function, which is convex.%~\citep[Exerc.~2.4]{BoydVEx13}. 
+Then $T$ is also convex because sum of convex functions. Consider the
+minimization problem using $T$ as an objective function, and let $T'^-$ be the
+optimal solution to this problem. This optimization problem can be solved in
+polynomial time.  \question{One can actually replace $A$ with an upper bound and
+have a quadratic optimization problem. Shall we mention that?}
 We have
 \[
 T'^--(R^+_{\mathrm{avg}})^2\le T^--(R^+_{\mathrm{avg}})^2\le T^--(R^-)^2\enspace,
@@ -494,14 +505,14 @@ T^+-(R^+)^2\le T^+-(R^-_\mathrm{avg})^2\le T'^+-(R^-_\mathrm{avg})^2\enspace.
 The issue is though that the maximization problem with $T$ as objective
 function is a \emph{convex maximization problem over a polytope}, or equivalent a
 \emph{concave minimization problem}~\citep{Benson95}. Concave minimization is
-known to be a NP-hard problem even under the mildest conditions, but it is known
-that the optimal solution can be found at one of the extremal points of the
-polytope. Thanks to this and other interesting mathematical properties, there
-are a number of algorithms try to solve this problem as efficiently as
-possible~\citep{Benson95},\citemissing.
-\todo{complete.}
-
-\todo{I want to check what~\citet{Haas96} does for maximization of the variance.}
+known to be a NP-hard problem even under very mild conditions (quadratic
+objective over a hypercube). Nevertheless, the optimal solution must be at one
+of the extremal points of the polytope. Thanks to this and other interesting
+mathematical properties, there are a number of algorithms try to solve this
+problem as efficiently as possible and software solvers that implement these
+algorithms. If the solution of a convex maximization problem is deemed to
+expensive, one can resort at using the deterministic upper bounds to the
+variance presented by~\citet{Haas96}, as they require minimal computation.
 
 For standard deviation, we get the same conclusions as for variance, given that
 the former is just the squared root of the latter.
@@ -512,7 +523,7 @@ normalization. We should be able to do both.}
 
 For median/quantile\ldots \todo{Take care of median. I don't really know much about it, and
 need to think about the worst case. It seems like you just want to add /
-remove elements from the }
+remove elements from one hand to the other.}
 
 \subsection{Discussion}\label{sec:discussion}
 \todo{Write.}

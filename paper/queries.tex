@@ -339,6 +339,14 @@ $\selectivity_\Sam()$ with $\card_\Sam()$ and $\varepsilon_{v_i}$ with an
 mixed-integer, and I don't know what the consequences are for the less ``nice''
 ones (quasi-linear, quadratic, \ldots). Shall we do that? 
 }
+\todo{The maximum attainable value is not actually
+$\min\{\selectivity_\Sam(q)+\varepsilon,1\}$. Instead of $1$, should be
+\[
+\frac{\eta - (\eta_\Sam - \card_\Sam(q))}{\eta}
+\]
+where I'm using $\eta_\Sam$ to denote the product of the sizes of the input
+tables of $q$ in the sample.
+}
 %The properties of the $\varepsilon$-approximation are used in the constraints.
 %For all $v\in V_{q^*}(C_f)$, the selectivity $\sigma_v$ is within $\varepsilon$ from the
 %real selectivity of the query with selection/join predicate as
